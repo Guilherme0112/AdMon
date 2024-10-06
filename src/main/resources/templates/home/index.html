@@ -7,11 +7,15 @@
     <title>AdMon</title>
 </head>
 <body>
-    <header>
-        <a href="">Início</a>
-        <a href="">Add Conta</a>
-        <a href="">Add Ganhos</a>
-        <a href="">Sair</a>
-    </header>
+
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:replace="components/component :: header"></header>
+
+    <main>
+
+    </main>
+
+    <!-- Componente footer importado do diretório /components/component.html -->
+    <footer th:replace="components/component :: footer"></footer>
 </body>
 </html>
