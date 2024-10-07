@@ -17,6 +17,10 @@ body{
     max-width: 1500px;
     height: 100%;
     background: linear-gradient(to top, #25e94c, #0b8a26);
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 header{
     width: 100%;
@@ -29,4 +33,12 @@ header{
 header a{
     color: white;
     text-decoration: none;
+}
+
+
+footer{
+    width: 90%;
+    background-color: white;
+    border-radius: 1px;
+    max-height: 200px;
 }
