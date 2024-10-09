@@ -1,15 +1,19 @@
 package com.br.AdMon.models;
 
 import java.io.ObjectInputFilter.Status;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="contas")
 public class Contas {
 
     @Id
@@ -26,10 +30,11 @@ public class Contas {
     private String anotacao;
     
     @Column(name="status")
+    @Enumerated(EnumType.STRING)
     private Status status;
     
     @Column(name="vencimento")
-    private LocalDateTime vencimento;
+    private LocalDate vencimento;
 
     // Geters
 
@@ -48,7 +53,7 @@ public class Contas {
     public Status getStatus(){
         return status;
     }
-    public LocalDateTime vencimento(){
+    public LocalDate getVencimento(){
         return vencimento;
     }
 
@@ -69,7 +74,7 @@ public class Contas {
     public void setStatus(Status status){
         this.status = status;
     }
-    public void setVencimento(LocalDateTime vencimento){
+    public void setVencimento(LocalDate vencimento){
         this.vencimento = vencimento;
     }
 }

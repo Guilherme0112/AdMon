@@ -1,0 +1,30 @@
+h1{
+    color: white;
+}
+form{
+    max-width: 800px;
+    display: grid;
+    background-color: white;
+    padding: 10px;
+    border-radius: 2px;
+}
+input, textarea{
+    width: 300px;
+    border: 0;
+    padding:  0 5px;
+    border-bottom: 2px solid #0b8a26;
+    background-color: transparent;
+    color: #0b8a26;
+    resize: vertical;
+    margin: 10px 0;
+}
+button{
+    cursor: pointer;
+    background-color: #0b8a26;
+    color: white;
+    height: 30px;
+    border: 0;
+}
+button:focus{
+    background-color: #005112;
+}
