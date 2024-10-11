@@ -1,0 +1,44 @@
+body{
+    align-items: start;
+}
+.box-conta{
+    width: 100%;
+}
+table{
+    width: 90%;
+    border-radius: 2px;
+    background-color: white;
+    margin: 10px 0;
+    text-align: center;
+}
+table * {
+    color: #0b8a26;
+}
+section, main{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    flex-wrap: wrap;
+}
+.saldo, .devendo, .total{
+    width: 300px;
+    height: 200px;
+    background-color: white;
+    border-radius: 2px;
+    margin: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+.saldo{
+    color: #0b8a26;
+}
+.devendo{
+    color: rgb(181, 9, 9);
+}
+.total{
+    color: rgb(0, 80, 240);
+}

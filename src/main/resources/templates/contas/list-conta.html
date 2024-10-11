@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/list.css">
+    <link rel="shortcut icon" href="img/logo.jpg" type="image/x-icon">
+    <title>AdMon</title>
+</head>
+<body>
+
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:replace="components/component :: header"></header>
+
+    <main>
+        <section>
+            <div class="saldo">
+                <h1>R$</h1>
+            </div>
+            <div class="devendo">
+                <h1>R$</h1>
+            </div>
+            <div class="total">
+                <h1>R$</h1>
+            </div>
+        </section>
+        <table th:each="contas : ${contas}">
+            <thead>
+                <th>Conta</th>
+                <th>Anotações</th>
+                <th>Valor</th>
+                <th>Status</th>
+                <th>Vencimento</th>
+            </thead>
+            <tbody>
+
+                <td th:text="${contas.conta}"></td>
+                <td th:text="${contas.anotacao}"></td>
+                <td th:text="${contas.valor}"></td>
+                <td th:text="${contas.status}"></td>
+                <td th:text="${contas.vencimento}"></td>
+                <td>
+                    <a th:href="@{editar/{id}(id=${contas.id})}">Editar</a>
+                </td>
+                <td>
+                    <a th:href="@{excluir/{id}(id=${contas.id})}">Excluir</a>
+                </td>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

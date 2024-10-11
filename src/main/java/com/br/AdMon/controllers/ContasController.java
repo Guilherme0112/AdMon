@@ -15,8 +15,10 @@ public class ContasController {
     @Autowired
     private ContaDao contarepositorio;
 
+    // Adicionar Contas
     @GetMapping("/addConta")
     public ModelAndView InserirConta(Contas conta){
+
         ModelAndView mv = new ModelAndView();
         mv.setViewName("contas/add-conta");
         mv.addObject("conta", new Contas());
@@ -25,10 +27,20 @@ public class ContasController {
 
     @PostMapping("addConta")
     public ModelAndView InserirContaPost(Contas conta){
+
         ModelAndView mv = new ModelAndView();
         contarepositorio.save(conta);
         mv.setViewName("redirect:/");
         return mv;
     }
 
+    // Listar Contas
+    @GetMapping("/listaConta")
+    public ModelAndView ListarConta(Contas conta){
+
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("contas", contarepositorio.findAll());
+        mv.setViewName("contas/list-conta");
+        return mv;
+    }
 }
