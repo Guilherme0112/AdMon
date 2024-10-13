@@ -25,6 +25,8 @@ public class Contas {
     
     @Column(name="valor")
     private Double valor;
+
+    private String valorF;
     
     @Column(name="anotacao")
     private String anotacao;
@@ -47,6 +49,9 @@ public class Contas {
     public Double getValor(){
         return valor;
     }
+    public String getValorF(){
+        return valorF;
+    }
     public String getAnotacao(){
         return anotacao;
     }
@@ -67,6 +72,9 @@ public class Contas {
     }
     public void setValor(Double valor){
         this.valor = valor;
+    }
+    public void setValorF(String valorF){
+        this.valorF = valorF;
     }
     public void setAnotacao(String anotacao){
         this.anotacao = anotacao;

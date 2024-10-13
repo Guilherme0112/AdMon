@@ -1,5 +1,9 @@
 package com.br.AdMon.controllers;
 
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +43,19 @@ public class ContasController {
     public ModelAndView ListarConta(Contas conta){
 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("contas", contarepositorio.findAll());
+
+        // Buscando dados no banco de dados
+        List<Contas> contas = contarepositorio.findAll();
+
+        Locale locale = Locale.of("pt", "BR");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
+        for (Contas contaI : contas) {
+            String valorString = formatter.format(contaI.getValor());
+            contaI.setValorF(valorString);
+        }
+
+
+        mv.addObject("contas", contas);
         mv.setViewName("contas/list-conta");
         return mv;
     }
