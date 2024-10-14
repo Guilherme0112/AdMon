@@ -18,7 +18,7 @@
         <h1>+ Adicionar Conta</h1>
         <form action="/addConta" method="post" th:object="${conta}">
             <input type="text" th:field="*{conta}" placeholder="Nome da Conta" required>
-            <input type="number" th:field="*{valor}" placeholder="Valor da Conta" required>
+            <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor da Conta" required>
             <textarea th:field="*{anotacao}" placeholder="Anotação da Conta"></textarea>
             <input type="date" th:field="*{vencimento}" required>
             <button>Enviar</button>

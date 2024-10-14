@@ -8,6 +8,7 @@ class AdMonApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

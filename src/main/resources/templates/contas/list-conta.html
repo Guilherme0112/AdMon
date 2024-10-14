@@ -19,7 +19,7 @@
                 <h1>R$</h1>
             </div>
             <div class="devendo">
-                <h1>R$</h1>
+                <h1 th:text="${total}"></h1>
             </div>
             <div class="total">
                 <h1>R$</h1>
@@ -39,7 +39,7 @@
                 <td th:text="${contas.anotacao}"></td>
                 <td th:text="${contas.valorF}"></td>
                 <td th:text="${contas.status}"></td>
-                <td th:text="${contas.vencimento}"></td>
+                <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
                 <td>
                     <a th:href="@{editar/{id}(id=${contas.id})}">Editar</a>
                 </td>

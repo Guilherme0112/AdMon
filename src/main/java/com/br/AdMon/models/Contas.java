@@ -1,12 +1,12 @@
 package com.br.AdMon.models;
 
 import java.io.ObjectInputFilter.Status;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,13 +18,13 @@ public class Contas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private BigInteger id;
     
     @Column(name="conta")
     private String conta;
     
     @Column(name="valor")
-    private Double valor;
+    private BigDecimal valor;
 
     private String valorF;
     
@@ -32,54 +32,56 @@ public class Contas {
     private String anotacao;
     
     @Column(name="status")
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private String status;
     
     @Column(name="vencimento")
     private LocalDate vencimento;
 
-    // Geters
+    // Getters
 
-    public Integer getId(){
+    public BigInteger getId(){
         return id;
     }
     public String getConta(){
         return conta;
     }
-    public Double getValor(){
+    public BigDecimal getValor(){
         return valor;
     }
+    // Este é o valor mostrado na view
     public String getValorF(){
         return valorF;
     }
     public String getAnotacao(){
         return anotacao;
     }
-    public Status getStatus(){
+    public String getStatus(){
         return status;
     }
     public LocalDate getVencimento(){
         return vencimento;
     }
 
-    // Seters
+    // Setters
 
-    public void setId(Integer id){
+    public void setId(BigInteger id){
         this.id = id;
     }
     public void setConta(String conta){
         this.conta = conta;
     }
-    public void setValor(Double valor){
+    public void setValor(BigDecimal valor){
         this.valor = valor;
     }
+
+    // Este é o valor mostrado na view
     public void setValorF(String valorF){
         this.valorF = valorF;
     }
     public void setAnotacao(String anotacao){
         this.anotacao = anotacao;
     }
-    public void setStatus(Status status){
+    public void setStatus(String status){
         this.status = status;
     }
     public void setVencimento(LocalDate vencimento){

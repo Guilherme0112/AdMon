@@ -2,7 +2,7 @@
 
 <p>
     <b>
-        Projeto de administração de finanças simples e prático, o usuário cadastra as contas e seus ganhos, o site te diz os que estão perto de vencer e faz a subtração dos ganhos pelas contas, também tem um sistema de login básico.
+        Projeto de administração de finanças simples e prático, o usuário cadastra as contas e seus ganhos, o site te diz os que estão perto de vencer e faz a subtração das contas pelos ganhos, também tem um sistema de login básico.
     </b>
 </p>
 
