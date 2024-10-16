@@ -1,6 +1,7 @@
 package com.br.AdMon.controllers;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -8,6 +9,7 @@ import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -79,5 +81,36 @@ public class ContasController {
         mv.addObject("total", totalString);
         mv.setViewName("contas/list-conta");
         return mv;
+    }
+
+    @GetMapping("/editar/{id}")
+    public ModelAndView EditarConta(@PathVariable("id") BigInteger id){
+        ModelAndView mv = new ModelAndView();
+
+        Contas conta = contarepositorio.findById(id).orElse(null);
+
+        if(conta == null){
+            mv.setViewName("redirect:/listaConta");
+        } else {
+            mv.setViewName("contas/editar-conta");
+            mv.addObject("conta", conta);
+        }
+        return mv;
+    }
+
+    @PostMapping("editConta")
+    public ModelAndView Editar(Contas conta){
+
+        ModelAndView mv = new ModelAndView();
+        conta.setStatus("Pendente");
+        contarepositorio.save(conta);
+        mv.setViewName("redirect:/listaConta");
+        return mv;
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String Excluir(@PathVariable("id") BigInteger id){
+        contarepositorio.deleteById(id);
+        return "redirect:/listaConta";
     }
 }

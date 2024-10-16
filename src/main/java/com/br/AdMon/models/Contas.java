@@ -1,6 +1,5 @@
 package com.br.AdMon.models;
 
-import java.io.ObjectInputFilter.Status;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
