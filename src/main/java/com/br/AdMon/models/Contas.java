@@ -4,8 +4,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 
+import com.br.AdMon.Enums.Status;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,17 +28,16 @@ public class Contas {
     
     @Column(name="valor")
     private BigDecimal valor;
-
-    private String valorF;
     
     @Column(name="anotacao")
     private String anotacao;
     
-    @Column(name="status")
-    private String status;
-    
     @Column(name="vencimento")
     private LocalDate vencimento;
+
+    @Column(name="vecimento")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     // Getters
 
@@ -47,18 +50,15 @@ public class Contas {
     public BigDecimal getValor(){
         return valor;
     }
-    // Este é o valor mostrado na view
-    public String getValorF(){
-        return valorF;
-    }
+
     public String getAnotacao(){
         return anotacao;
     }
-    public String getStatus(){
-        return status;
-    }
     public LocalDate getVencimento(){
         return vencimento;
+    }
+    public Status getStatus(){
+        return status;
     }
 
     // Setters
@@ -72,18 +72,13 @@ public class Contas {
     public void setValor(BigDecimal valor){
         this.valor = valor;
     }
-
-    // Este é o valor mostrado na view
-    public void setValorF(String valorF){
-        this.valorF = valorF;
-    }
     public void setAnotacao(String anotacao){
         this.anotacao = anotacao;
     }
-    public void setStatus(String status){
-        this.status = status;
-    }
     public void setVencimento(LocalDate vencimento){
         this.vencimento = vencimento;
+    }
+    public void setStatus(Status status){
+        this.status = status;
     }
 }

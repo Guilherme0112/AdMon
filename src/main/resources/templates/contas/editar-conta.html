@@ -17,14 +17,13 @@
         <!-- Formulário -->
         <h1>Editar Conta</h1>
         <form action="/editConta" method="post" th:object="${conta}">
+            <input type="hidden" th:field="*{id}">
             <input type="text" th:field="*{conta}" placeholder="Nome da Conta" required>
             <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor da Conta" required>
             <textarea th:field="*{anotacao}" placeholder="Anotação da Conta"></textarea>
-            <input type="date"  th:field="*{vencimento}" th:value="${#temporals.format(conta.vencimento, 'yyyy-MM-dd')}" required>
+            <input type="date" th:value="${vencimento}" name="vencimento" required>
             <select th:field="*{status}">
-                <option value="0">Pendente</option>
-                <option value="1">Vencido</option>
-                <option value="2">Pago</option>
+                <option th:each="status : ${T(com.br.AdMon.Enums.Status).values()}" th:value="${status}" th:text="${status}"></option>
             </select>
             <button>Enviar</button>
         </form>

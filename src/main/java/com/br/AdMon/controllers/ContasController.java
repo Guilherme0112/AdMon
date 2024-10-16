@@ -3,6 +3,8 @@ package com.br.AdMon.controllers;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.br.AdMon.Enums.Status;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.models.Contas;
 
@@ -38,7 +41,7 @@ public class ContasController {
         ModelAndView mv = new ModelAndView();
 
         // Inserindo dados no banco de dados
-        conta.setStatus("Pendente");
+        conta.setStatus(Status.PENDENTE);
         contarepositorio.save(conta);
         mv.setViewName("redirect:/");
         return mv;
@@ -51,6 +54,7 @@ public class ContasController {
         // Valor total das contas
         BigDecimal total = BigDecimal.ZERO;
         String totalString = "R$ 0,00";
+        String valorString = "R$ 0,00";
 
         ModelAndView mv = new ModelAndView();
 
@@ -65,8 +69,7 @@ public class ContasController {
             for (Contas contaI : contas) {
 
                 // Formata o valor das contas
-                String valorString = formatter.format(contaI.getValor());
-                contaI.setValorF(valorString);
+                valorString = formatter.format(contaI.getValor());
 
                 // Calcula o total da conta
                 total = total.add(contaI.getValor());
@@ -77,6 +80,7 @@ public class ContasController {
         }
 
         // Retorna os valores
+        mv.addObject("valorF", valorString);
         mv.addObject("contas", contas);
         mv.addObject("total", totalString);
         mv.setViewName("contas/list-conta");
@@ -89,11 +93,19 @@ public class ContasController {
 
         Contas conta = contarepositorio.findById(id).orElse(null);
 
-        if(conta == null){
-            mv.setViewName("redirect:/listaConta");
-        } else {
+        // Por algum motivo a data já vem formatada o que impede a inserção no input date, este trecho formata a data para um formato que o input aceite
+        String vencimento = conta.getVencimento().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate vencimentoDate = LocalDate.parse(vencimento, formatter);
+
+        if(conta != null){
             mv.setViewName("contas/editar-conta");
+            mv.addObject("vencimento", vencimentoDate);
             mv.addObject("conta", conta);
+        } else {
+
+            // Se o id não existir no banco de dados, faz o redirecionamento
+            mv.setViewName("redirect:/listaConta");
         }
         return mv;
     }
@@ -102,7 +114,7 @@ public class ContasController {
     public ModelAndView Editar(Contas conta){
 
         ModelAndView mv = new ModelAndView();
-        conta.setStatus("Pendente");
+
         contarepositorio.save(conta);
         mv.setViewName("redirect:/listaConta");
         return mv;
