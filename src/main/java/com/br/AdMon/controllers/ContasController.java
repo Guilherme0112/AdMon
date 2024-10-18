@@ -2,11 +2,9 @@ package com.br.AdMon.controllers;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,36 +51,21 @@ public class ContasController {
 
         // Valor total das contas
         BigDecimal total = BigDecimal.ZERO;
-        String totalString = "R$ 0,00";
-        String valorString = "R$ 0,00";
 
         ModelAndView mv = new ModelAndView();
 
         // Buscando dados no banco de dados
         List<Contas> contas = contarepositorio.findAll();
 
-        // Formata o valor da conta para BRL
-        Locale locale = Locale.of("pt", "BR");
-        NumberFormat formatter = NumberFormat.getCurrencyInstance(locale);
-
         if(contas.size() > 0){
             for (Contas contaI : contas) {
-
-                // Formata o valor das contas
-                valorString = formatter.format(contaI.getValor());
-
-                // Calcula o total da conta
                 total = total.add(contaI.getValor());
-
-                // Formata o total da conta
-                totalString = formatter.format(total);
             }
         }
 
         // Retorna os valores
-        mv.addObject("valorF", valorString);
         mv.addObject("contas", contas);
-        mv.addObject("total", totalString);
+        mv.addObject("total", total);
         mv.setViewName("contas/list-conta");
         return mv;
     }

@@ -19,7 +19,9 @@
                 <h1>R$</h1>
             </div>
             <div class="devendo">
-                <h1 th:text="${total}"></h1>
+                <h1>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'COMMA')}"></td>
+                </h1>              
             </div>
             <div class="total">
                 <h1>R$</h1>
@@ -37,7 +39,7 @@
 
                 <td th:text="${contas.conta}"></td>
                 <td th:text="${contas.anotacao}"></td>
-                <td th:text="${valorF}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
                 <td th:text="${contas.status}"></td>
                 <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
                 <td>

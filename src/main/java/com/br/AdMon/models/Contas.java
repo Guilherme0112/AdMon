@@ -35,7 +35,7 @@ public class Contas {
     @Column(name="vencimento")
     private LocalDate vencimento;
 
-    @Column(name="vecimento")
+    @Column(name="status")
     @Enumerated(EnumType.STRING)
     private Status status;
 
