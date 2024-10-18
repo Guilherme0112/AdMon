@@ -50,6 +50,8 @@ public class ContasController {
     public ModelAndView ListarConta(Contas conta){
 
         // Valor total das contas
+        BigDecimal totalConta = BigDecimal.ZERO;
+        BigDecimal totalGanho = BigDecimal.ZERO;
         BigDecimal total = BigDecimal.ZERO;
 
         ModelAndView mv = new ModelAndView();
@@ -59,14 +61,17 @@ public class ContasController {
 
         if(contas.size() > 0){
             for (Contas contaI : contas) {
-                total = total.add(contaI.getValor());
+                totalConta = totalConta.add(contaI.getValor());
             }
         }
-
+        total = totalGanho.subtract(totalConta);
         // Retorna os valores
         mv.addObject("contas", contas);
+        mv.addObject("totalConta", totalConta);
+        mv.addObject("totalGanho", totalGanho);
         mv.addObject("total", total);
         mv.setViewName("contas/list-conta");
+
         return mv;
     }
 

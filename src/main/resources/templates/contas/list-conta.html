@@ -16,15 +16,19 @@
     <main>
         <section>
             <div class="saldo">
-                <h1>R$</h1>
+                <h1>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(totalGanho, 1, 'COMMA', 2, 'COMMA')}"></td>
+                </h1>
             </div>
             <div class="devendo">
                 <h1>
-                    <td th:text="'R$ ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'COMMA')}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(totalConta, 1, 'COMMA', 2, 'COMMA')}"></td>
                 </h1>              
             </div>
             <div class="total">
-                <h1>R$</h1>
+                <h1>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(total, 1, 'COMMA', 2, 'COMMA')}"></td>
+                </h1>
             </div>
         </section>
         <table th:each="contas : ${contas}">

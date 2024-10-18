@@ -24,6 +24,7 @@ public class Contas {
     private BigInteger id;
     
     @Column(name="conta")
+    // @Size(min = 3, max = 30, message = "O nome deve ter entre 3 e 30 caracteres")
     private String conta;
     
     @Column(name="valor")
