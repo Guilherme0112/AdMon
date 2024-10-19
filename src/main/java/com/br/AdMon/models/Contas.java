@@ -14,6 +14,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="contas")
@@ -24,16 +29,22 @@ public class Contas {
     private BigInteger id;
     
     @Column(name="conta")
-    // @Size(min = 3, max = 30, message = "O nome deve ter entre 3 e 30 caracteres")
+    @NotBlank(message = "O nome da conta não pode ser nulo")
+    @Size(min = 3, max = 30, message = "O nome da conta deve ter entre 3 e 30 caracteres")
     private String conta;
     
     @Column(name="valor")
+    @Min(value = 1, message = "O valor deve ser maior que 0")
+    @NotNull(message = "O valor da conta não pode ser nulo")
     private BigDecimal valor;
     
     @Column(name="anotacao")
+    @Size(max = 200, message = "A anotação deve ter menos que 200 caracteres")
     private String anotacao;
     
     @Column(name="vencimento")
+    @Future(message = "O vencimento deve estar no futuro")
+    @NotNull(message = "O vencimento da conta não pode ser nulo")
     private LocalDate vencimento;
 
     @Column(name="status")

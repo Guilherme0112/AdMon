@@ -17,10 +17,31 @@
         <!-- Formulário -->
         <h1>+ Adicionar Conta</h1>
         <form action="/addConta" method="post" th:object="${conta}">
-            <input type="text" th:field="*{conta}" placeholder="Nome da Conta" required>
-            <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor da Conta" required>
+
+            <!-- Nome da conta -->
+            <input type="text" th:field="*{conta}" placeholder="Nome da Conta" >
+            <div class="box-errors" th:if="${#fields.hasErrors('conta')}">
+                <p class="errors" th:errors="*{conta}"></p>
+            </div>
+
+            <!-- Valor da conta -->
+            <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor da Conta" >
+            <div class="box-errors" th:if="${#fields.hasErrors('valor')}">
+                <p class="errors" th:errors="*{valor}"></p>
+            </div>
+
+            <!-- Anotação da conta -->
             <textarea th:field="*{anotacao}" placeholder="Anotação da Conta"></textarea>
-            <input type="date" th:field="*{vencimento}" required>
+            <div class="box-errors" th:if="${#fields.hasErrors('anotacao')}">
+                <p class="errors" th:errors="*{anotacao}"></p>
+            </div>
+
+            <!-- Vencimento da conta -->
+            <input type="date" th:field="*{vencimento}" >
+            <div class="box-errors" th:if="${#fields.hasErrors('vencimento')}">
+                <p class="errors" th:errors="*{vencimento}"></p>
+            </div>
+
             <button>Enviar</button>
         </form>
     </main>

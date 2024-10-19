@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.br.AdMon.Enums.Status;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.models.Contas;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class ContasController {
@@ -34,14 +37,24 @@ public class ContasController {
     }
 
     @PostMapping("addConta")
-    public ModelAndView InserirContaPost(Contas conta){
+    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br){
 
         ModelAndView mv = new ModelAndView();
 
-        // Inserindo dados no banco de dados
-        conta.setStatus(Status.PENDENTE);
-        contarepositorio.save(conta);
-        mv.setViewName("redirect:/");
+        if(br.hasErrors()){
+
+            System.out.println(br);
+            // Retorna para exibir os erros
+            mv.setViewName("contas/add-conta");
+            mv.addObject("conta", conta);
+        } else {
+
+            // Adiciona os dados no banco de dados
+            conta.setStatus(Status.PENDENTE);
+            contarepositorio.save(conta);
+            mv.setViewName("redirect:/listaConta");
+        }
+
         return mv;
     }
 

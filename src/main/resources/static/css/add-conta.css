@@ -35,3 +35,12 @@ select {
     margin: 10px 0;
     color: #005112;
 }
+
+.box-errors{
+    width: 100%;
+    text-align: center;
+}
+.errors{
+    color: red;
+    font-size: 15px;
+}
