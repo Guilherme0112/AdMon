@@ -24,6 +24,7 @@ button{
     color: white;
     height: 30px;
     border: 0;
+    margin: 10px 0;
 }
 button:focus{
     background-color: #005112;
@@ -38,9 +39,8 @@ select {
 
 .box-errors{
     width: 100%;
-    text-align: center;
 }
 .errors{
     color: red;
-    font-size: 15px;
+    font-size: 13px;
 }

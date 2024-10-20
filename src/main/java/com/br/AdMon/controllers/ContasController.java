@@ -43,10 +43,11 @@ public class ContasController {
 
         if(br.hasErrors()){
 
-            System.out.println(br);
+            // System.out.println(br);
+
             // Retorna para exibir os erros
+            mv.addObject("contas", conta);
             mv.setViewName("contas/add-conta");
-            mv.addObject("conta", conta);
         } else {
 
             // Adiciona os dados no banco de dados
@@ -112,12 +113,21 @@ public class ContasController {
     }
 
     @PostMapping("editConta")
-    public ModelAndView Editar(Contas conta){
+    public ModelAndView Editar(@Valid Contas conta, BindingResult br){
 
         ModelAndView mv = new ModelAndView();
 
-        contarepositorio.save(conta);
-        mv.setViewName("redirect:/listaConta");
+        if(br.hasErrors()){
+
+            System.out.println(br);
+            mv.addObject("contas", conta);
+            mv.setViewName("contas/editar-conta");
+        } else { 
+
+            contarepositorio.save(conta);
+            mv.setViewName("redirect:/listaConta");
+        }
+
         return mv;
     }
 
