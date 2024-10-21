@@ -103,7 +103,7 @@ public class ContasController {
         if(conta != null){
             mv.setViewName("contas/editar-conta");
             mv.addObject("vencimento", vencimentoDate);
-            mv.addObject("conta", conta);
+            mv.addObject("contas", conta);
         } else {
 
             // Se o id não existir no banco de dados, faz o redirecionamento

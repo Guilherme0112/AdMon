@@ -15,8 +15,9 @@
     <main>
 
         <!-- Formulário -->
-        <h1>+ Adicionar Conta</h1>
         <form action="/addConta" method="post" th:object="${contas}">
+
+            <h1>Adicionar Conta</h1>
 
             <!-- Nome da conta -->
             <input type="text" th:field="*{conta}" placeholder="Nome da Conta" >
@@ -31,7 +32,7 @@
             </div>
 
             <!-- Anotação da conta -->
-            <textarea th:field="*{anotacao}" placeholder="Anotação da Conta"></textarea>
+            <textarea th:field="*{anotacao}" rows="1" cols="5" placeholder="Anotação da Conta"></textarea>
             <div class="box-errors" th:if="${#fields.hasErrors('anotacao')}">
                 <p class="errors" th:errors="*{anotacao}"></p>
             </div>

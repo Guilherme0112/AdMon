@@ -15,8 +15,9 @@
     <main>
 
         <!-- Formulário -->
-        <h1>Editar Conta</h1>
         <form action="/editConta" method="post" th:object="${contas}">
+
+            <h1>Editar Conta</h1>
             <input type="hidden" th:field="*{id}">
 
             <!-- Nome da Conta -->

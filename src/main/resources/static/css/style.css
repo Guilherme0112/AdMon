@@ -14,8 +14,7 @@ html{
 }
 body{
     width: 100%;
-    max-width: 1500px;
-    background-color: #0ea52f;
+    background-color: #0fa968;
 
     display: flex;
     justify-content: center;
@@ -33,11 +32,26 @@ header a{
     color: white;
     text-decoration: none;
 }
-
+main{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
 footer{
     width: 95%;
     background-color: white;
     border-radius: 1px;
     max-height: 200px;
+}
+
+/* Classes */
+
+.img_main_1{
+    width: 400px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+    object-position: center;
 }

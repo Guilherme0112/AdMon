@@ -1,0 +1,8 @@
+@media (max-width: 830px){
+    .box_main_1{
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+}
