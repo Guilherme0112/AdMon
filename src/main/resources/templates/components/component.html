@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
 
     <!-- Cabeçalho -->
     <header th:fragment="header">
-        <a th:href="@{/}">Início</a>
-        <a th:href="@{/listaConta}">Ver Total</a>
-        <a th:href="@{/addConta}">Add Conta</a>
-        <a href="">Add Ganhos</a>
-        <a href="">Sair</a>
+        <img src="img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
     </header>
 
+    <div class="nav hide"  th:fragment="nav">
+        <a th:href="@{/}">Ínicio</a>
+        <a th:href="@{/addConta}">Adicionar Contas</a>
+        <a th:href="@{/listaConta}">Ver Contas</a>
+        <a href="">Adicionar Ganhos</a>
+        <a href="">Ver Ganhos</a>
+        <a href="">Sair</a>
+    </div>
     <!-- Rodapé -->
     <footer th:fragment="footer">
         <ul>
