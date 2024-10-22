@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/list.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <script src="/js/scripts.js"></script>
-    <title>Lista de Contas</title>
+    <title>Lista de Ganhos</title>
 </head>
 <body>
 
@@ -20,30 +20,26 @@
         <section>
             <div class="devendo">
                 <h1>
-                    <td th:text="'R$ ' + ${#numbers.formatDecimal(totalConta, 1, 'COMMA', 2, 'COMMA')}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(totalGanho, 1, 'COMMA', 2, 'COMMA')}"></td>
                 </h1>              
             </div>
         </section>
-        <table th:each="contas : ${contas}">
+        <table th:each="ganhos : ${ganhos}">
             <thead>
-                <th>Conta</th>
+                <th>Ganho</th>
                 <th>Anotações</th>
                 <th>Valor</th>
-                <th>Status</th>
-                <th>Vencimento</th>
             </thead>
             <tbody>
 
-                <td th:text="${contas.conta}"></td>
-                <td th:text="${contas.anotacao}"></td>
-                <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
-                <td th:text="${contas.status}"></td>
-                <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
+                <td th:text="${ganhos.ganho}"></td>
+                <td th:text="${ganhos.anotacao}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
                 <td>
-                    <a th:href="@{/contas/editar/{id}(id=${contas.id})}">Editar</a>
+                    <a th:href="@{/ganhos/editar/{id}(id=${ganhos.id})}">Editar</a>
                 </td>
                 <td>
-                    <a th:href="@{/contas/excluir/{id}(id=${contas.id})}">Excluir</a>
+                    <a th:href="@{/ganhos/excluir/{id}(id=${ganhos.id})}">Excluir</a>
                 </td>
             </tbody>
         </table>

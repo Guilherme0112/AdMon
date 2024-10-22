@@ -18,34 +18,25 @@
     <main>
 
         <!-- Formulário -->
-        <form action="/editConta" method="post" th:object="${contas}">
+        <form action="/editGanho" method="post" th:object="${ganhos}">
 
             <h1>Editar Conta</h1>
             <input type="hidden" th:field="*{id}">
 
-            <!-- Nome da Conta -->
-            <input type="text" th:field="*{conta}" placeholder="Nome da Conta">
-            <div class="box-errors" th:if="${#fields.hasErrors('conta')}">
-                <p class="errors" th:errors="*{conta}"></p>
+            <!-- Nome do Ganho -->
+            <input type="text" th:field="*{ganho}" placeholder="Nome da Ganho">
+            <div class="box-errors" th:if="${#fields.hasErrors('ganho')}">
+                <p class="errors" th:errors="*{ganho}"></p>
             </div>
 
-            <!-- Valor da Conta -->
-            <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor da Conta">
+            <!-- Valor do Ganho -->
+            <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor do Ganho">
             <div class="box-errors" th:if="${#fields.hasErrors('valor')}">
                 <p class="errors" th:errors="*{valor}"></p>
             </div>
 
-            <textarea th:field="*{anotacao}" placeholder="Anotação da Conta"></textarea>
-
-            <!-- Vencimento da conta -->
-            <input type="date" th:value="${vencimento}" name="vencimento">
-            <div class="box-errors" th:if="${#fields.hasErrors('vencimento')}">
-                <p class="errors" th:errors="*{vencimento}"></p>
-            </div>
-
-            <select th:field="*{status}">
-                <option th:each="status : ${T(com.br.AdMon.Enums.Status).values()}" th:value="${status}" th:text="${status}"></option>
-            </select>
+            <textarea th:field="*{anotacao}" placeholder="Anotação do Ganho"></textarea>
+            
             <button>Enviar</button>
         </form>
     </main>

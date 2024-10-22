@@ -27,7 +27,7 @@ public class ContasController {
     private ContaDao contarepositorio;
 
     // Adicionar Contas
-    @GetMapping("/addConta")
+    @GetMapping("/contas/criar")
     public ModelAndView InserirConta(Contas conta){
 
         ModelAndView mv = new ModelAndView();
@@ -53,20 +53,18 @@ public class ContasController {
             // Adiciona os dados no banco de dados
             conta.setStatus(Status.PENDENTE);
             contarepositorio.save(conta);
-            mv.setViewName("redirect:/listaConta");
+            mv.setViewName("redirect:/contas/lista");
         }
 
         return mv;
     }
 
     // Listar Contas
-    @GetMapping("/listaConta")
+    @GetMapping("/contas/lista")
     public ModelAndView ListarConta(Contas conta){
 
         // Valor total das contas
         BigDecimal totalConta = BigDecimal.ZERO;
-        BigDecimal totalGanho = BigDecimal.ZERO;
-        BigDecimal total = BigDecimal.ZERO;
 
         ModelAndView mv = new ModelAndView();
 
@@ -78,18 +76,16 @@ public class ContasController {
                 totalConta = totalConta.add(contaI.getValor());
             }
         }
-        total = totalGanho.subtract(totalConta);
+        
         // Retorna os valores
         mv.addObject("contas", contas);
         mv.addObject("totalConta", totalConta);
-        mv.addObject("totalGanho", totalGanho);
-        mv.addObject("total", total);
         mv.setViewName("contas/list-conta");
 
         return mv;
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/contas/editar/{id}")
     public ModelAndView EditarConta(@PathVariable("id") BigInteger id){
         ModelAndView mv = new ModelAndView();
 
@@ -107,7 +103,7 @@ public class ContasController {
         } else {
 
             // Se o id não existir no banco de dados, faz o redirecionamento
-            mv.setViewName("redirect:/listaConta");
+            mv.setViewName("redirect:/contas/lista");
         }
         return mv;
     }
@@ -119,21 +115,20 @@ public class ContasController {
 
         if(br.hasErrors()){
 
-            System.out.println(br);
             mv.addObject("contas", conta);
             mv.setViewName("contas/editar-conta");
         } else { 
 
             contarepositorio.save(conta);
-            mv.setViewName("redirect:/listaConta");
+            mv.setViewName("redirect:/contas/lista");
         }
 
         return mv;
     }
 
-    @GetMapping("/excluir/{id}")
+    @GetMapping("/contas/excluir/{id}")
     public String Excluir(@PathVariable("id") BigInteger id){
         contarepositorio.deleteById(id);
-        return "redirect:/listaConta";
+        return "redirect:/contas/lista";
     }
 }

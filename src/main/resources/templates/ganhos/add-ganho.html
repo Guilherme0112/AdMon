@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/add-conta.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <script src="/js/scripts.js"></script>
-    <title>Adicionar Conta</title>
+    <title>Adicionar Ganho</title>
 </head>
 <body>
     <!-- Componente header importado do diretório /components/component.html -->
@@ -19,33 +19,28 @@
     <main>
 
         <!-- Formulário -->
-        <form action="/addConta" method="post" th:object="${contas}">
+        <form action="/addGanho" method="post" th:object="${ganhos}">
 
-            <h1>Adicionar Conta</h1>
+            <h1>Adicionar Ganho</h1>
 
             <!-- Nome da conta -->
-            <input type="text" th:field="*{conta}" placeholder="Nome da Conta" >
-            <div class="box-errors" th:if="${#fields.hasErrors('conta')}">
-                <p class="errors" th:errors="*{conta}"></p>
+            <input type="text" th:field="*{ganho}" placeholder="Nome do Ganho" >
+            <div class="box-errors" th:if="${#fields.hasErrors('ganho')}">
+                <p class="errors" th:errors="*{ganho}"></p>
             </div>
 
             <!-- Valor da conta -->
-            <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor da Conta" >
+            <input type="number" th:field="*{valor}" step="0.01" placeholder="Valor do Ganho" >
             <div class="box-errors" th:if="${#fields.hasErrors('valor')}">
                 <p class="errors" th:errors="*{valor}"></p>
             </div>
 
             <!-- Anotação da conta -->
-            <textarea th:field="*{anotacao}" rows="1" cols="5" placeholder="Anotação da Conta"></textarea>
+            <textarea th:field="*{anotacao}" rows="1" cols="10" placeholder="Anotação do Ganho"></textarea>
             <div class="box-errors" th:if="${#fields.hasErrors('anotacao')}">
                 <p class="errors" th:errors="*{anotacao}"></p>
             </div>
 
-            <!-- Vencimento da conta -->
-            <input type="date" th:field="*{vencimento}" >
-            <div class="box-errors" th:if="${#fields.hasErrors('vencimento')}">
-                <p class="errors" th:errors="*{vencimento}"></p>
-            </div>
 
             <button>Enviar</button>
         </form>

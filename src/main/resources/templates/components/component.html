@@ -9,15 +9,15 @@
 
     <!-- Cabeçalho -->
     <header th:fragment="header">
-        <img src="img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
+        <img src="/img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
     </header>
 
     <div class="nav hide"  th:fragment="nav">
         <a th:href="@{/}">Ínicio</a>
-        <a th:href="@{/addConta}">Adicionar Contas</a>
-        <a th:href="@{/listaConta}">Ver Contas</a>
-        <a href="">Adicionar Ganhos</a>
-        <a href="">Ver Ganhos</a>
+        <a th:href="@{/contas/criar}">Adicionar Contas</a>
+        <a th:href="@{/contas/lista}">Ver Contas</a>
+        <a th:href="@{/ganhos/criar}">Adicionar Ganhos</a>
+        <a th:href="@{/ganhos/lista}">Ver Ganhos</a>
         <a href="">Sair</a>
     </div>
     <!-- Rodapé -->
