@@ -34,7 +34,7 @@
 
                 <td th:text="${ganhos.ganho}"></td>
                 <td th:text="${ganhos.anotacao}"></td>
-                <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos.valor, 0, 'POINT', 2, 'COMMA')}"></td>
                 <td>
                     <a th:href="@{/ganhos/editar/{id}(id=${ganhos.id})}">Editar</a>
                 </td>

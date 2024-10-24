@@ -67,7 +67,7 @@ public class Ganhos {
         this.anotacao = anotacao;
     }
 
-    public void getValor(BigDecimal valor){
+    public void setValor(BigDecimal valor){
         this.valor = valor;
     }
 }
