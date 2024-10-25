@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/css/dashboard.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/dashboard.js"></script>
     <script src="/js/scripts.js"></script>
     <title>Dashboard</title>
 </head>
@@ -13,6 +16,12 @@
     <header th:replace="components/component :: header"></header>
 
     <div th:replace="components/component :: nav"></div>
+
+    <main>
+        <section class="graficos-total">
+            <div id="columnchart_values"></div>
+        </section>
+    </main>
 
 </body>
 </html>
