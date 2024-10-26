@@ -13,4 +13,11 @@ public class HomeController {
         mv.setViewName("home/index");
         return mv;
     }
+
+    @GetMapping("/dashboard")
+    public ModelAndView dashboard(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("dashboard/dashboard");
+        return mv;
+    }
 }
