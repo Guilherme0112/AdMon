@@ -1,28 +1,10 @@
-// Função que retorna os últimos 4 meses
-function obterUltimos4meses() {
-    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
-    const hoje = new Date();
-
-    const converterMes = hoje.getMonth();
-    const ultimosMeses = [];
-
-    for (let i = 0; i < 4; i++) {
-        const MesIndex = (converterMes - i + 12) % 12;
-        ultimosMeses.push(meses[MesIndex]);
-    }
-
-    return ultimosMeses;
-
-}
-
-const ultimos4Meses = obterUltimos4meses();
 
 // Busca os dados no end point
-fetch("/dashboard-rest")
+fetch("/dashboard-dado-1")
     .then(response => response.json())
     .then(resposta => {
-        console.log(resposta)
+        document.getElementById('load_1').style.display = "block";
+        // console.log(resposta)
 
         // Renderiza o gráfico com os dados do endpoint
         google.charts.load("current", { packages: ['corechart'] });
@@ -31,11 +13,8 @@ fetch("/dashboard-rest")
 
             // Valores do gráfico
             var data = google.visualization.arrayToDataTable([
-                [ultimos4Meses[0], "Total (R$)", { role: "style" }],
-                [ultimos4Meses[0], resposta[0].valor, "#b87333"],
-                [ultimos4Meses[1], 10.49, "silver"],
-                [ultimos4Meses[2], 19.30, "gold"],
-                [ultimos4Meses[3], -6.45, "color: #e5e4e2"]
+                ["", "Total (R$)", { role: "style" }],
+                ["", resposta, "#b87333"],
             ]);
 
             var view = new google.visualization.DataView(data);
@@ -50,14 +29,14 @@ fetch("/dashboard-rest")
 
             // Configurações da div do gráfico
             var options = {
-                title: "Últimos 4 meses",
+                title: "Últimos 28 dias",
                 titleTextStyle: {
                     color: "white",
-                    fontSize: 20,
+                    fontSize: 25,
                 },
                 width: 800,
                 height: 400,
-                bar: { groupWidth: "95%" },
+                bar: { groupWidth: "50%" },
                 legend: { position: "none" },
                 backgroundColor: "transparent",
                 hAxis: {
@@ -74,10 +53,63 @@ fetch("/dashboard-rest")
             };
             var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
             chart.draw(view, options);
+            document.getElementById('load_1').style.display = "none";
         }
     })
 
     // Se der erro, retorna a mensagem no  console
     .catch(err => {
         console.log(err)
+    })
+
+// Dado_2 
+
+fetch("/dashboard-dado-2")
+    .then(response => response.json())
+    .then(resposta => {
+        document.getElementById('load_2').style.display = "block";
+
+        // console.log(resposta)
+
+        // Cria o modelo de array 
+        var dados = [["Categoria", "Valor"]]; 
+        var index = [];
+        resposta.forEach(element => {
+
+            index = [element.conta, element.valor]
+            dados.push(index)
+
+        });
+
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+
+            // Converter a array para o modelo aceito
+            var data = google.visualization.arrayToDataTable(dados);
+
+            // Cofigurações
+            var options = {
+                title: 'Gráfico das Contas',
+                width: 700,
+                height: 400,
+                pieHole: 0.4,
+                backgroundColor: "transparent",
+                titleTextStyle: {
+                    color: "white",
+                    fontSize: 25,
+                },
+                legend: {
+                    textStyle: {
+                        color: 'white'
+                    }
+                }
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+
+            document.getElementById('load_2').style.display = "none";
+        }
     })

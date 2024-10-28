@@ -6,9 +6,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/css/dashboard.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script src="/js/dashboard.js"></script>
-    <script src="/js/scripts.js"></script>
     <title>Dashboard</title>
 </head>
 <body>
@@ -18,10 +15,32 @@
     <div th:replace="components/component :: nav"></div>
 
     <main>
+        <div class="load" id="load_1"></div>
         <section class="graficos-total">
-            <div id="columnchart_values"></div>
+            <div id="dado_1">
+                <div id="columnchart_values"></div>
+                <span class="box-info">
+                    Este gráfico mostra o total de ganhos e contas, ele exibe neste gráfico acima 
+                    o valor total sendo os ganhos subtraído pelas contas. Os valores exibidos são
+                    dos últimos 28 dias.
+                </span>
+            </div>
+
+            <div class="load" id="load_2"></div>
+            <div id="dado_2">
+                <div id="donutchart"></div>
+                <span class="box-info">
+                    Estes dados são remetentes das contas que estão cadastradas, aqui você pode 
+                    acompanhar todas as contas e fazer uma comparação dos valores. Os valores exibidos 
+                    correspondem ao período total.
+                </span>
+            </div>
         </section>
     </main>
 
+    <!-- Scripts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/scripts.js"></script>
 </body>
 </html>

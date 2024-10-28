@@ -72,6 +72,7 @@ footer{
     background-color: #108555;
     padding: 40px 5px;
     transition: .3s;
+    z-index: 500;
 }
 .nav a{ 
     display: block;
@@ -90,4 +91,12 @@ footer{
 }
 .show{
     left: 0;
+}
+
+.box-info{
+    background-color: #81f4c3;
+    color: #06613b;
+    padding: 10px;
+    border-radius: 10px;
+    width: 400px;
 }

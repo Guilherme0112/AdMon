@@ -35,6 +35,8 @@ public class Ganhos {
     @Min(value = 1, message = "O valor deve ser maior que 0")
     private BigDecimal valor;
 
+    private Long userId;
+
     // Getters
 
     public BigInteger getId(){
@@ -53,6 +55,10 @@ public class Ganhos {
         return valor;
     }
 
+    public Long getUserId(){
+        return userId;
+    }
+
     // Setters
 
     public void setId(BigInteger id){
@@ -69,5 +75,8 @@ public class Ganhos {
 
     public void setValor(BigDecimal valor){
         this.valor = valor;
+    }
+    public void setUserId(Long userId){
+        this.userId = Long.valueOf(1);
     }
 }

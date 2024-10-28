@@ -51,6 +51,8 @@ public class Contas {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private Long userId;
+
     // Getters
 
     public BigInteger getId(){
@@ -72,6 +74,9 @@ public class Contas {
     public Status getStatus(){
         return status;
     }
+    public Long getUserId(){
+        return userId;
+    }
 
     // Setters
 
@@ -92,5 +97,8 @@ public class Contas {
     }
     public void setStatus(Status status){
         this.status = status;
+    }
+    public void setUserId(Long userId){
+        this.userId = Long.valueOf(1);
     }
 }

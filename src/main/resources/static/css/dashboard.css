@@ -1,3 +1,11 @@
+@keyframes load{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
 body{
     display: flex;
     align-items: start;
@@ -8,4 +16,22 @@ body{
     justify-content: center;
     align-items: start;
     flex-wrap: wrap;
+}
+
+#dado_1, #dado_2 {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+
+.load{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 20px groove #81f4c3;
+    animation: load 1s linear infinite;
+    margin: 20px;
+    display: none;
 }
