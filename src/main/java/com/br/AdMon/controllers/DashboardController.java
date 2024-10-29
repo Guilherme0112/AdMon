@@ -14,7 +14,7 @@ import com.br.AdMon.models.Contas;
 import com.br.AdMon.models.Ganhos;
 
 
-// O Controller responsável pelo GET do dashboard é o HomeController
+// O Controller responsável pelo GET do dashboard é o HomeController.java
 
 @RestController
 public class DashboardController {
@@ -32,8 +32,8 @@ public class DashboardController {
         BigDecimal totalGanhos = BigDecimal.ZERO;
 
         // Busca os dados
-        List<Contas> contas = contarepositorio.findContasLastMonth();
-        List<Ganhos> ganhos = ganhorepositorio.findGanhosLastMonth();
+        List<Contas> contas = contarepositorio.findAll();
+        List<Ganhos> ganhos = ganhorepositorio.findAll();
 
         // Retorna a soma de todas as contas
         if (contas.size() > 0) {

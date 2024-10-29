@@ -32,7 +32,7 @@ fetch("/dashboard_grafico_1")
 
             // Configurações da div do gráfico
             var options = {
-                title: "Últimos 28 dias",
+                title: "Ganhos subtraído pelas contas",
                 titleTextStyle: {
                     color: "white",
                     fontSize: 25,

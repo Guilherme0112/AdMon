@@ -103,3 +103,10 @@ footer{
 
     display: flex;
 }
+
+hr{
+    width: 90%;
+    margin: 20px 0;
+    border: 1px solid #81f4c3;
+    border-radius: 40%;
+}
