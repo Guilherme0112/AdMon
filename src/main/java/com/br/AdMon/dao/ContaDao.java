@@ -16,4 +16,7 @@ public interface ContaDao extends JpaRepository<Contas, BigInteger>{
     List<Contas> findContasLastMonth();
 
 
+    @Query(value = "SELECT * FROM contas WHERE vencimento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)", nativeQuery = true)
+    List<Contas> findContasLast7Days();
+
 }

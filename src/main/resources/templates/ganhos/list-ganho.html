@@ -20,7 +20,7 @@
         <section>
             <div class="devendo">
                 <h1>
-                    <td th:text="'R$ ' + ${#numbers.formatDecimal(totalGanho, 1, 'COMMA', 2, 'COMMA')}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(totalGanho, 1, 'POINT', 2, 'COMMA')}"></td>
                 </h1>              
             </div>
         </section>

@@ -60,12 +60,13 @@ footer{
 
 /* Menu de navegação */
 .btn-nav-hbg{
+    position: fixed;
     width: 30px;
     aspect-ratio: 1/1;
     z-index: 999;
 }
 .nav{
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 300px;
     height: 100vh;
@@ -98,5 +99,7 @@ footer{
     color: #06613b;
     padding: 10px;
     border-radius: 10px;
-    width: 400px;
+    width: 80%;
+
+    display: flex;
 }

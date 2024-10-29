@@ -1,12 +1,10 @@
 package com.br.AdMon.controllers;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +12,9 @@ import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.models.Contas;
 import com.br.AdMon.models.Ganhos;
+
+
+// O Controller responsável pelo GET do dashboard é o HomeController
 
 @RestController
 public class DashboardController {
@@ -23,7 +24,7 @@ public class DashboardController {
     @Autowired
     private GanhoDao ganhorepositorio;
 
-    @GetMapping("/dashboard-dado-1")
+    @GetMapping("/dashboard_grafico_1")
     public BigDecimal Dashboard_1() {
 
         BigDecimal total = BigDecimal.ZERO;
@@ -53,11 +54,18 @@ public class DashboardController {
         return total; // Retorna o valor total calculado
     }
 
-    @GetMapping("/dashboard-dado-2")
+    @GetMapping("/dashboard_rosca_contas")
     public List<Contas> Dashboard_2() {
     
         List<Contas> contas = contarepositorio.findAll();
 
         return contas;
+    }
+    @GetMapping("/dashboard_rosca_ganhos")
+    public List<Ganhos> Dashboard_3() {
+    
+        List<Ganhos> ganhos = ganhorepositorio.findAll();
+
+        return ganhos;
     }
 }

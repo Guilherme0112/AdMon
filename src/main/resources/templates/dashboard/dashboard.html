@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/list.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/css/dashboard.css">
     <title>Dashboard</title>
 </head>
+
 <body>
     <!-- Componente header importado do diretório /components/component.html -->
     <header th:replace="components/component :: header"></header>
@@ -20,7 +23,7 @@
             <div id="dado_1">
                 <div id="columnchart_values"></div>
                 <span class="box-info">
-                    Este gráfico mostra o total de ganhos e contas, ele exibe neste gráfico acima 
+                    Este gráfico mostra o total de ganhos e contas, ele exibe neste gráfico acima
                     o valor total sendo os ganhos subtraído pelas contas. Os valores exibidos são
                     dos últimos 28 dias.
                 </span>
@@ -30,11 +33,50 @@
             <div id="dado_2">
                 <div id="donutchart"></div>
                 <span class="box-info">
-                    Estes dados são remetentes das contas que estão cadastradas, aqui você pode 
-                    acompanhar todas as contas e fazer uma comparação dos valores. Os valores exibidos 
+                    Estes dados são das contas que estão cadastradas, aqui você pode
+                    acompanhar todas as contas e fazer uma comparação dos valores. Os valores exibidos
                     correspondem ao período total.
                 </span>
             </div>
+
+            <div class="load" id="load_3"></div>
+            <div id="dado_3">
+                <div id="donutchart_2"></div>
+                <span class="box-info">
+                    Estes dados são dos ganhos que estão cadastrados, aqui você pode
+                    acompanhar todos os ganhos e fazer uma comparação dos valores. Os valores exibidos
+                    correspondem ao período total.
+                </span>
+            </div>
+        </section>
+        <section class="info">
+            <h1>Contas que vencem nos próximos 7 dias</h1>
+
+            <tr th:if="${#lists.isEmpty(contas)}">
+                <p class="box-info" style="margin: 20px 0;">Não há contas a vencer nos próximos 7 dias.</p>
+            </tr>
+
+            <table th:each="contas : ${contas}">
+            <thead>
+                <th>Ganho</th>
+                <th>Anotações</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+            </thead>
+            <tbody>
+
+                <td th:text="${contas.conta}"></td>
+                <td th:text="${contas.anotacao}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'POINT', 2, 'COMMA')}"></td>
+                <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
+                <td>
+                    <a th:href="@{/contas/editar/{id}(id=${contas.id})}">Editar</a>
+                </td>
+                <td>
+                    <a th:href="@{/contas/excluir/{id}(id=${contas.id})}">Excluir</a>
+                </td>
+            </tbody>
+        </table>
         </section>
     </main>
 
@@ -43,4 +85,5 @@
     <script src="/js/dashboard.js"></script>
     <script src="/js/scripts.js"></script>
 </body>
+
 </html>

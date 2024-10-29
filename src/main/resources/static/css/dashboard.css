@@ -18,14 +18,15 @@ body{
     flex-wrap: wrap;
 }
 
-#dado_1, #dado_2 {
+#dado_1, #dado_2, #dado_3 {
     width: 100%;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    position: relative;
 }
 
-
+/* Div de load quando inica */
 .load{
     width: 100px;
     height: 100px;
@@ -34,4 +35,17 @@ body{
     animation: load 1s linear infinite;
     margin: 20px;
     display: none;
+}
+
+
+/* Informações */
+.info{
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+.info h1{
+    margin: 10px calc(40% - 100px) 0 0;
+    color: white;
 }

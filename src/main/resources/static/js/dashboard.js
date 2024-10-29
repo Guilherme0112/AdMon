@@ -1,9 +1,12 @@
+// Animação de load, iniciado assim que a página é renderizada
+document.getElementById('load_1').style.display = "block";
+document.getElementById('load_2').style.display = "block";
+document.getElementById('load_3').style.display = "block";
 
-// Busca os dados no end point
-fetch("/dashboard-dado-1")
+// Dado 1
+fetch("/dashboard_grafico_1")
     .then(response => response.json())
     .then(resposta => {
-        document.getElementById('load_1').style.display = "block";
         // console.log(resposta)
 
         // Renderiza o gráfico com os dados do endpoint
@@ -62,12 +65,11 @@ fetch("/dashboard-dado-1")
         console.log(err)
     })
 
-// Dado_2 
+// Dado 2
 
-fetch("/dashboard-dado-2")
+fetch("/dashboard_rosca_contas")
     .then(response => response.json())
     .then(resposta => {
-        document.getElementById('load_2').style.display = "block";
 
         // console.log(resposta)
 
@@ -92,7 +94,7 @@ fetch("/dashboard-dado-2")
             // Cofigurações
             var options = {
                 title: 'Gráfico das Contas',
-                width: 700,
+                width: 1000,
                 height: 400,
                 pieHole: 0.4,
                 backgroundColor: "transparent",
@@ -112,4 +114,58 @@ fetch("/dashboard-dado-2")
 
             document.getElementById('load_2').style.display = "none";
         }
+
     })
+
+    // Dado 3
+
+    fetch("/dashboard_rosca_ganhos")
+    .then(response => response.json())
+    .then(resposta => {
+
+        // console.log(resposta)
+
+        // Cria o modelo de array 
+        var dados = [["Categoria", "Valor"]]; 
+        var index = [];
+        resposta.forEach(element => {
+
+            index = [element.ganho, element.valor]
+            dados.push(index)
+        });
+
+
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+
+
+            // Converter a array para o modelo aceito
+            var data = google.visualization.arrayToDataTable(dados);
+
+            // Cofigurações
+            var options = {
+                title: 'Gráfico dos Ganhos',
+                width: 800,
+                height: 400,
+                pieHole: 0.4,
+                backgroundColor: "transparent",
+                titleTextStyle: {
+                    color: "white",
+                    fontSize: 25,
+                },
+                legend: {
+                    textStyle: {
+                        color: 'white'
+                    }
+                }
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart_2'));
+            chart.draw(data, options);
+
+            document.getElementById('load_3').style.display = "none";
+        }
+
+    })
+

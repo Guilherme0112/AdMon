@@ -36,6 +36,13 @@ public class GanhosController {
 
         List<Ganhos> ganhos = ganhorepositorio.findAll();
 
+
+        if(ganhos.size() > 0){
+            for(Ganhos ganhosI : ganhos){
+                totalGanho = totalGanho.add(ganhosI.getValor());
+            }
+        }
+
         mv.addObject("totalGanho", totalGanho);
         mv.addObject("ganhos", ganhos);
         mv.setViewName("ganhos/list-ganho");
