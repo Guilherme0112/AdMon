@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/add-conta.css">
+    <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
+    <script src="/js/scripts.js"></script>
+    <title>Login</title>
+</head>
+<body>
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:fragment="header">
+        <img src="/img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
+    </header>
+    <div th:replace="components/component :: nav"></div>
+    
+    <main>
+
+        <!-- Formulário -->
+        <form action="/addUser" method="post" th:object="${usuarios}">
+
+            <h1>Login</h1>
+
+            
+            <!-- E-mail do usuário -->
+            <input type="email" th:field="*{email}" placeholder="E-mail" >
+            <div class="box-errors" th:if="${#fields.hasErrors('email')}">
+                <p class="errors" th:errors="*{email}"></p>
+            </div>
+
+            <!-- Senha do usuário -->
+            <input type="password" th:field="*{senha}" >
+            <div class="box-errors" th:if="${#fields.hasErrors('senha')}">
+                <p class="errors" th:errors="*{senha}"></p>
+            </div>
+            <button>Entrar</button>
+        </form>
+    </main>
+</body>
+</html>
