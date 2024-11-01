@@ -15,14 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.models.Ganhos;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jakarta.validation.Valid;
 
 @Controller 
 public class GanhosController {
-    private static final Logger log = LoggerFactory.getLogger(GanhosController.class);
 
     @Autowired
     private GanhoDao ganhorepositorio;
@@ -62,8 +58,6 @@ public class GanhosController {
     @PostMapping("/ganhos/criar")
     public ModelAndView InserirGanhosPost(@Valid Ganhos ganho, BindingResult br){
         ModelAndView mv = new ModelAndView();
-
-        log.info("Dados recebidos: {}", ganho); // Usando o logger para exibir os dados
 
         if(br.hasErrors()){
             mv.addObject("ganho", ganho);

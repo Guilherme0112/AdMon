@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/add-conta.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <script src="/js/scripts.js"></script>
-    <title>Login</title>
+    <title>Registrar</title>
 </head>
 <body>
     <!-- Componente header importado do diretório /components/component.html -->
@@ -19,14 +19,14 @@
     <main>
 
         <!-- Formulário -->
-        <form action="/addUser" method="post" th:object="${usuarios}">
+        <form action="" method="post" th:object="${usuarios}">
 
-            <h1>Login</h1>
+            <h1>Registrar</h1>
 
             <!-- Nome do usuário-->
-            <input type="text" th:field="*{usuario}" placeholder="Nome" >
-            <div class="box-errors" th:if="${#fields.hasErrors('user')}">
-                <p class="errors" th:errors="*{user}"></p>
+            <input type="text" th:field="*{nome}" placeholder="Nome" >
+            <div class="box-errors" th:if="${#fields.hasErrors('nome')}">
+                <p class="errors" th:errors="*{nome}"></p>
             </div>
 
             <!-- E-mail do usuário -->
@@ -36,15 +36,15 @@
             </div>
 
             <!-- Senha do usuário -->
-            <input type="password" th:field="*{senha}" >
+            <input type="password" th:field="*{senha}" placeholder="Senha">
             <div class="box-errors" th:if="${#fields.hasErrors('senha')}">
                 <p class="errors" th:errors="*{senha}"></p>
             </div>
 
             <!-- Confirmar senha do usuário -->
-            <input type="password" th:field="*{r-senha}" >
-            <div class="box-errors" th:if="${#fields.hasErrors('r-senha')}">
-                <p class="errors" th:errors="*{r-senha}"></p>
+            <input type="password" placeholder="Repita a senha">
+            <div class="box-errors">
+                <p class="errors"></p>
             </div>
 
             <button>Criar</button>
