@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.br.AdMon.Exceptions.CriptoException;
 import com.br.AdMon.Exceptions.EmailExistsException;
+import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.UsuarioDao;
 import com.br.AdMon.models.Usuarios;
@@ -35,4 +36,8 @@ public class ServiceUsuario {
         usuarioRepository.save(user);
     }
 
+    public Usuarios loginUsuario(String email, String senha) throws VerifyAuthException {
+        Usuarios usuario = usuarioRepository.findLogin(email, senha);
+        return usuario;
+    }
 }

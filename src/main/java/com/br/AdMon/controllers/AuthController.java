@@ -1,5 +1,7 @@
 package com.br.AdMon.controllers;
 
+import java.security.NoSuchAlgorithmException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -7,9 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.br.AdMon.Exceptions.VerifyAuthException;
+import com.br.AdMon.Util.Util;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceUsuario;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -26,20 +31,25 @@ public class AuthController {
 
         return mv;
     }
+
     @PostMapping("auth/login")
-    public ModelAndView LoginPOST(@Valid Usuarios usuarios, BindingResult br){
+    public ModelAndView LoginPOST(Usuarios usuarios, HttpSession session) throws NoSuchAlgorithmException, VerifyAuthException{
         ModelAndView mv = new ModelAndView();
 
-        if(br.hasErrors()){
 
-            mv.addObject("usuarios", new Usuarios());
+        // Verifica as credenciais
+        Usuarios loginUser = usuarioService.loginUsuario(usuarios.getEmail(), Util.md5(usuarios.getSenha()));
+
+        if(loginUser == null){
+            mv.addObject("msg", "As credenciais estão incorretas");
+            mv.addObject("usuarios", usuarios);
             mv.setViewName("auth/login");
-        } else {
 
-            // Inicia a sessão
-            
+        } else {
+            session.setAttribute("session", loginUser);
             mv.setViewName("redirect:/dashboard");
         }
+
 
         return mv;
     }
