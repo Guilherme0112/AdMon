@@ -37,7 +37,6 @@
                 <td th:text="${contas.conta}"></td>
                 <td th:text="${contas.anotacao}"></td>
                 <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
-                <td th:text="${contas.status}"></td>
                 <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
                 <td>
                     <a th:href="@{/contas/editar/{id}(id=${contas.id})}">Editar</a>

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.br.AdMon.dao.UsuarioDao;
 import com.br.AdMon.models.Usuarios;
+import com.br.AdMon.service.ServiceUsuario;
 
 import jakarta.validation.Valid;
 
@@ -16,7 +16,7 @@ import jakarta.validation.Valid;
 public class AuthController {
     
     @Autowired
-    private UsuarioDao usuarioRepository;
+    private ServiceUsuario usuarioService;
 
     @GetMapping("auth/login")
     public ModelAndView Login(){
@@ -52,7 +52,7 @@ public class AuthController {
         return mv;
     }
 
-    public ModelAndView RegistroPOST(@Valid Usuarios usuarios, BindingResult br){
+    public ModelAndView RegistroPOST(@Valid Usuarios usuario, BindingResult br) throws Exception{
         ModelAndView mv = new ModelAndView();
 
         if(br.hasErrors()){
@@ -61,8 +61,26 @@ public class AuthController {
             mv.setViewName("auth/register");
         } else {
 
-            usuarioRepository.save(usuarios);
+            usuarioService.salvarUsuario(usuario);
             mv.setViewName("redirect:/dashboard");
+        }
+
+        return mv;
+    }
+
+    @PostMapping("auth/register")
+    public ModelAndView RegisterPOST(@Valid Usuarios usuarios, BindingResult br) throws Exception{
+        ModelAndView mv = new ModelAndView();
+
+        if(br.hasErrors()){
+
+            mv.addObject("usuarios", new Usuarios());
+            mv.setViewName("auth/register");
+        } else {
+
+            // Cria o registro da conta
+            usuarioService.salvarUsuario(usuarios);
+            mv.setViewName("redirect:/auth/login");
         }
 
         return mv;

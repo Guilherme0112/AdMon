@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.br.AdMon.Enums.Status;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.models.Contas;
 
@@ -51,7 +50,6 @@ public class ContasController {
         } else {
 
             // Adiciona os dados no banco de dados
-            conta.setStatus(Status.PENDENTE);
             contarepositorio.save(conta);
             mv.setViewName("redirect:/contas/lista");
         }

@@ -4,12 +4,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 
-import com.br.AdMon.Enums.Status;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,10 +43,6 @@ public class Contas {
     @NotNull(message = "O vencimento da conta não pode ser nulo")
     private LocalDate vencimento;
 
-    @Column(name="status")
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     private Long userId;
 
     // Getters
@@ -70,9 +62,6 @@ public class Contas {
     }
     public LocalDate getVencimento(){
         return vencimento;
-    }
-    public Status getStatus(){
-        return status;
     }
     public Long getUserId(){
         return userId;
@@ -94,9 +83,6 @@ public class Contas {
     }
     public void setVencimento(LocalDate vencimento){
         this.vencimento = vencimento;
-    }
-    public void setStatus(Status status){
-        this.status = status;
     }
     public void setUserId(Long userId){
         this.userId = Long.valueOf(1);
