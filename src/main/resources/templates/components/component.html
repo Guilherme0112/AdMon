@@ -10,8 +10,17 @@
     <!-- Cabeçalho -->
     <header th:fragment="header">
         <img src="/img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
-        <a th:href="@{auth/login}">Login</a>
-        <a th:href="@{auth/register}">Criar Conta</a>
+
+        <!-- Se houver sessão -->
+        <div th:if="${session.session}">
+            <a th:href="@{auth/logout}">Sair</a>
+        </div>
+
+        <!-- Se não houver sessão -->
+        <div th:unless="${session.session}">
+            <a th:href="@{auth/login}">Login</a>
+            <a th:href="@{auth/register}">Criar Conta</a>
+        </div>
     </header>
 
     <div class="nav hide"  th:fragment="nav">
@@ -21,7 +30,6 @@
         <a th:href="@{/contas/lista}">Ver Contas</a>
         <a th:href="@{/ganhos/criar}">Adicionar Ganhos</a>
         <a th:href="@{/ganhos/lista}">Ver Ganhos</a>
-        <a href="">Sair</a>
     </div>
     <!-- Rodapé -->
     <footer th:fragment="footer">
