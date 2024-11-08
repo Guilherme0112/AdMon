@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.models.Ganhos;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller 
@@ -24,11 +26,17 @@ public class GanhosController {
     private GanhoDao ganhorepositorio;
 
     @GetMapping("/ganhos/lista")
-    public ModelAndView ListarGanhos(Ganhos ganho){
+    public ModelAndView ListarGanhos(Ganhos ganho, HttpSession http){
+
+        ModelAndView mv = new ModelAndView();
+
+        if(!Util.isAuth(http)){
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        }
 
         BigDecimal totalGanho = BigDecimal.ZERO;
 
-        ModelAndView mv = new ModelAndView();
 
         List<Ganhos> ganhos = ganhorepositorio.findAll();
 
@@ -47,9 +55,13 @@ public class GanhosController {
     }
 
     @GetMapping("/ganhos/criar")
-    public ModelAndView InserirGanhos(Ganhos ganho){
+    public ModelAndView InserirGanhos(Ganhos ganho, HttpSession http){
         ModelAndView mv = new ModelAndView();
 
+        if(!Util.isAuth(http)){
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        }
 
         mv.addObject("ganho", new Ganhos());
         mv.setViewName("ganhos/add-ganho");
@@ -72,8 +84,13 @@ public class GanhosController {
     }
 
     @GetMapping("/ganhos/editar/{id}")
-    public ModelAndView EditarGanho(@PathVariable("id") BigInteger id){
+    public ModelAndView EditarGanho(@PathVariable("id") BigInteger id, HttpSession http){
         ModelAndView mv = new ModelAndView();
+
+        if(Util.isAuth(http)){
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        }
 
         Ganhos ganho = ganhorepositorio.findById(id).orElse(null);
 
@@ -107,7 +124,11 @@ public class GanhosController {
     }
 
     @GetMapping("ganhos/excluir/{id}")
-    public String ExcluirGanho(@PathVariable("id") BigInteger id){
+    public String ExcluirGanho(@PathVariable("id") BigInteger id, HttpSession http){
+
+        if(!Util.isAuth(http)){
+            return "redirect:/auth/login";
+        }
 
         ganhorepositorio.deleteById(id);
         return "redirect:/ganhos/lista";

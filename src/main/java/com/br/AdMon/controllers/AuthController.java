@@ -24,8 +24,15 @@ public class AuthController {
     private ServiceUsuario usuarioService;
 
     @GetMapping("auth/login")
-    public ModelAndView Login(){
+    public ModelAndView Login(HttpSession http){
         ModelAndView mv = new ModelAndView();
+
+        if(Util.isAuth(http)){
+
+            mv.setViewName("redirect:/");
+            return mv;
+        }
+
         mv.setViewName("auth/login");
         mv.addObject("usuarios", new Usuarios());
 
@@ -50,13 +57,18 @@ public class AuthController {
             mv.setViewName("redirect:/dashboard");
         }
 
-
         return mv;
     }
 
     @GetMapping("auth/register")
-    public ModelAndView Registrar(){
+    public ModelAndView Registrar(HttpSession http){
         ModelAndView mv = new ModelAndView();
+
+        if(Util.isAuth(http)){
+
+            mv.setViewName("redirect:/");
+        } 
+
         mv.addObject("usuarios", new Usuarios());
 
         return mv;

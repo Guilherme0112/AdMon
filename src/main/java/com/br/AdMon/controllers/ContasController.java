@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.models.Contas;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -27,11 +29,20 @@ public class ContasController {
 
     // Adicionar Contas
     @GetMapping("/contas/criar")
-    public ModelAndView InserirConta(Contas conta){
+    public ModelAndView InserirConta(Contas conta, HttpSession http){
 
         ModelAndView mv = new ModelAndView();
+
+        if(!Util.isAuth(http)){
+
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        }
+
         mv.setViewName("contas/add-conta");
         mv.addObject("conta", new Contas());
+
+
         return mv;
     }
 
@@ -41,8 +52,6 @@ public class ContasController {
         ModelAndView mv = new ModelAndView();
 
         if(br.hasErrors()){
-
-            // System.out.println(br);
 
             // Retorna para exibir os erros
             mv.addObject("contas", conta);
@@ -59,12 +68,17 @@ public class ContasController {
 
     // Listar Contas
     @GetMapping("/contas/lista")
-    public ModelAndView ListarConta(Contas conta){
+    public ModelAndView ListarConta(Contas conta, HttpSession http){
+
+        ModelAndView mv = new ModelAndView();
+
+        if(!Util.isAuth(http)){
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        } 
 
         // Valor total das contas
         BigDecimal totalConta = BigDecimal.ZERO;
-
-        ModelAndView mv = new ModelAndView();
 
         // Buscando dados no banco de dados
         List<Contas> contas = contarepositorio.findAll();
@@ -79,13 +93,18 @@ public class ContasController {
         mv.addObject("contas", contas);
         mv.addObject("totalConta", totalConta);
         mv.setViewName("contas/list-conta");
-
+            
         return mv;
     }
 
     @GetMapping("/contas/editar/{id}")
-    public ModelAndView EditarConta(@PathVariable("id") BigInteger id){
+    public ModelAndView EditarConta(@PathVariable("id") BigInteger id, HttpSession http){
         ModelAndView mv = new ModelAndView();
+
+        if(!Util.isAuth(http)){
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        } 
 
         Contas conta = contarepositorio.findById(id).orElse(null);
 
@@ -103,6 +122,8 @@ public class ContasController {
             // Se o id não existir no banco de dados, faz o redirecionamento
             mv.setViewName("redirect:/contas/lista");
         }
+
+
         return mv;
     }
 
@@ -125,7 +146,12 @@ public class ContasController {
     }
 
     @GetMapping("/contas/excluir/{id}")
-    public String Excluir(@PathVariable("id") BigInteger id){
+    public String Excluir(@PathVariable("id") BigInteger id, HttpSession http){
+
+        if(!Util.isAuth(http)){
+            return "redirect:/auth/login";
+        }
+
         contarepositorio.deleteById(id);
         return "redirect:/contas/lista";
     }
