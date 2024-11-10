@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -43,7 +44,8 @@ public class Contas {
     @NotNull(message = "O vencimento da conta não pode ser nulo")
     private LocalDate vencimento;
 
-    private Long userId;
+    @Email(message = "Este e-mail é inválido")
+    private String userEmail;
 
     // Getters
 
@@ -63,8 +65,8 @@ public class Contas {
     public LocalDate getVencimento(){
         return vencimento;
     }
-    public Long getUserId(){
-        return userId;
+    public String getUserEmail(){
+        return userEmail;
     }
 
     // Setters
@@ -84,7 +86,7 @@ public class Contas {
     public void setVencimento(LocalDate vencimento){
         this.vencimento = vencimento;
     }
-    public void setUserId(Long userId){
-        this.userId = Long.valueOf(1);
+    public void setUserEmail(String userEmail){
+        this.userEmail = userEmail;
     }
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.models.Contas;
+import com.br.AdMon.models.Usuarios;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -47,9 +49,15 @@ public class ContasController {
     }
 
     @PostMapping("addConta")
-    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br){
+    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br, HttpSession http){
+        
+        ModelAndView mv = new ModelAndView();   
+        if(!Util.isAuth(http)){
 
-        ModelAndView mv = new ModelAndView();
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        }
+
 
         if(br.hasErrors()){
 
@@ -58,9 +66,17 @@ public class ContasController {
             mv.setViewName("contas/add-conta");
         } else {
 
-            // Adiciona os dados no banco de dados
-            contarepositorio.save(conta);
-            mv.setViewName("redirect:/contas/lista");
+            // Recupera os dados da sessão
+            Usuarios session = (Usuarios) http.getAttribute("session");
+
+            // Salva os dados com o e-mail da sessão
+            if(session != null){
+                conta.setUserEmail(session.getEmail());
+                contarepositorio.save(conta);
+                mv.setViewName("redirect:/contas/lista");
+                return mv;
+            }
+
         }
 
         return mv;
@@ -81,7 +97,8 @@ public class ContasController {
         BigDecimal totalConta = BigDecimal.ZERO;
 
         // Buscando dados no banco de dados
-        List<Contas> contas = contarepositorio.findAll();
+        Usuarios session = (Usuarios) http.getAttribute("session");
+        List<Contas> contas = contarepositorio.findByEmail(session.getEmail());
 
         if(contas.size() > 0){
             for (Contas contaI : contas) {

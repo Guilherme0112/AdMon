@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.models.Ganhos;
+import com.br.AdMon.models.Usuarios;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -37,8 +38,8 @@ public class GanhosController {
 
         BigDecimal totalGanho = BigDecimal.ZERO;
 
-
-        List<Ganhos> ganhos = ganhorepositorio.findAll();
+        Usuarios session = (Usuarios) http.getAttribute("session");
+        List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
 
 
         if(ganhos.size() > 0){
@@ -68,14 +69,17 @@ public class GanhosController {
         return mv;
     }
     @PostMapping("/ganhos/criar")
-    public ModelAndView InserirGanhosPost(@Valid Ganhos ganho, BindingResult br){
+    public ModelAndView InserirGanhosPost(@Valid Ganhos ganho, BindingResult br, HttpSession http){
         ModelAndView mv = new ModelAndView();
 
         if(br.hasErrors()){
+
             mv.addObject("ganho", ganho);
             mv.setViewName("ganhos/add-ganho");
         } else {
             
+            Usuarios session = (Usuarios) http.getAttribute("session");
+            ganho.setUserEmail(session.getEmail());
             ganhorepositorio.save(ganho);
             mv.setViewName("redirect:/ganhos/lista");            
         }

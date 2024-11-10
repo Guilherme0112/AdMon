@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -35,7 +36,8 @@ public class Ganhos {
     @Min(value = 1, message = "O valor deve ser maior que 0")
     private BigDecimal valor;
 
-    private Long userId;
+    @Email(message = "Este e-mail é inválido")
+    private String userEmail;
 
     // Getters
 
@@ -55,8 +57,8 @@ public class Ganhos {
         return valor;
     }
 
-    public Long getUserId(){
-        return userId;
+    public String getUserEmail(){
+        return userEmail;
     }
 
     // Setters
@@ -76,7 +78,7 @@ public class Ganhos {
     public void setValor(BigDecimal valor){
         this.valor = valor;
     }
-    public void setUserId(Long userId){
-        this.userId = Long.valueOf(1);
+    public void setUserEmail(String userEmail){
+        this.userEmail = userEmail;
     }
 }
