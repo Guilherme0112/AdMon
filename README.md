@@ -6,10 +6,16 @@
     </b>
 </p>
 
-<h1>Tecnologias:</h1>
+<h2>Tecnologias:</h2>
 <b>Front-End:</b>
 <p>HTML, CSS e JavaScript</p>
 <b>Back-End:</b>
 <p>Java e Spring Boot</p>
 <b>Banco de dados:</b>
 <p>MySQL</p>
+
+<h2>Instalação</h2>
+<p>Baixe o repositório <a href="https://github.com/Guilherme0112/AdMon/archive/refs/heads/main.zip">clicando aqui</a>.</p>
+<p>Tenha o <a href="https://www.java.com/pt-BR/">Java</a> instalado.</p>
+<p>Importe o arquivo do banco de dados em <code>src/main/java/com/br/AdMon/database/admon.sql</code></p>
+<p>Inicie seu projeto e acesse <code>localhost:8080</code></p>
