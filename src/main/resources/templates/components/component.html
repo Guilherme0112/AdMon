@@ -13,13 +13,13 @@
 
         <!-- Se houver sessão -->
         <div th:if="${session.session}">
-            <a th:href="@{auth/logout}">Sair</a>
+            <a th:href="@{/auth/logout}">Sair</a>
         </div>
 
         <!-- Se não houver sessão -->
         <div th:unless="${session.session}">
-            <a th:href="@{auth/login}">Login</a>
-            <a th:href="@{auth/register}">Criar Conta</a>
+            <a th:href="@{/auth/login}">Login</a>
+            <a th:href="@{/auth/register}">Criar Conta</a>
         </div>
     </header>
 
@@ -29,6 +29,7 @@
         <!-- Há sessão -->
         <div th:if="${session.session}">
             <a th:href="@{/dashboard}">Dashboard</a>
+            <a th:href="@{/calendario/{ano}(ano=${#dates.format(new java.util.Date(), 'yyyy')})}">Calendário</a>
             <a th:href="@{/contas/criar}">Adicionar Contas</a>
             <a th:href="@{/contas/lista}">Ver Contas</a>
             <a th:href="@{/ganhos/criar}">Adicionar Ganhos</a>
@@ -37,8 +38,8 @@
 
         <!-- Não há sessão -->
         <div th:unless="${session.session}">
-            <a th:href="@{auth/login}">Login</a>
-            <a th:href="@{auth/register}">Criar Conta</a>
+            <a th:href="@{/auth/login}">Login</a>
+            <a th:href="@{/auth/register}">Criar Conta</a>
         </div>
     </div>
     <!-- Rodapé -->

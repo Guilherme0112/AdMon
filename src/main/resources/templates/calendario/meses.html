@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/meses.css">
+    <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
+    <title>Calendário</title>
+</head>
+<body>
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:fragment="header">
+        <img src="/img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
+    </header>
+
+    <div th:replace="components/component :: nav"></div>
+    
+    <main>
+        <div style="width: 100%;">
+            <h1 th:text="${ano}"></h1>
+        </div>
+        <a th:href="@{/calendario/1/{ano}(ano=${ano})}" class="mes">
+            <h1>Janeiro</h1>
+        </a>
+        <a th:href="@{/calendario/2/{ano}(ano=${ano})}" class="mes">
+            <h1>Fevereiro</h1>
+        </a>
+        <a th:href="@{/calendario/3/{ano}(ano=${ano})}" class="mes">
+            <h1>Março</h1>
+        </a>
+        <a th:href="@{/calendario/4/{ano}(ano=${ano})}" class="mes">
+            <h1>Abril</h1>
+        </a>
+        <a th:href="@{/calendario/5/{ano}(ano=${ano})}" class="mes">
+            <h1>Maio</h1>
+        </a>
+        <a th:href="@{/calendario/6/{ano}(ano=${ano})}" class="mes">
+            <h1>Junho</h1>
+        </a>
+        <a th:href="@{/calendario/7/{ano}(ano=${ano})}" class="mes">
+            <h1>Julho</h1>
+        </a>
+        <a th:href="@{/calendario/8/{ano}(ano=${ano})}" class="mes">
+            <h1>Agosto</h1>
+        </a>
+        <a th:href="@{/calendario/9/{ano}(ano=${ano})}" class="mes">
+            <h1>Setembro</h1>
+        </a>
+        <a th:href="@{/calendario/10/{ano}(ano=${ano})}" class="mes">
+            <h1>Outubro</h1>
+        </a>
+        <a th:href="@{/calendario/11/{ano}(ano=${ano})}" class="mes">
+            <h1>Novembro</h1>
+        </a>
+        <a th:href="@{/calendario/12/{ano}(ano=${ano})}" class="mes">
+            <h1>Dezembro</h1>
+        </a>
+
+    </main>
+
+    <!-- Scripts -->
+    <script src="/js/scripts.js"></script>
+</body>
+</html>

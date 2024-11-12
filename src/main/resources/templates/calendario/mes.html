@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/css/meses.css">
+    <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
+    <title th:text="${mes}"></title>
+</head>
+<body>
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:fragment="header">
+        <img src="/img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
+    </header>
+
+    <div th:replace="components/component :: nav"></div>
+    
+    <main class="main">
+        <div style="width: 100%;">
+            <h1 th:text="${mes}"></h1>
+        </div>
+        <div th:if="${contas}">
+            <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
+                <table th:each="contas : ${contas}">
+                    <thead>
+                        <th>Conta</th>
+                        <th>Anotações</th>
+                        <th>Valor</th>
+                        <th>Vencimento</th>
+                    </thead>
+                    <tbody >
+        
+                        <td th:text="${contas.conta}"></td>
+                        <td th:text="${contas.anotacao}"></td>
+                        <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
+                        <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
+                        <td>
+                            <a th:href="@{/contas/editar/{id}(id=${contas.id})}">Editar</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/contas/excluir/{id}(id=${contas.id})}">Excluir</a>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div th:if="${contas.isEmpty()}" style="width: 100%; display: flex; justify-content: center;">
+            <p class="box-info">Você não tem contas para este mês</p>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="/js/scripts.js"></script>
+</body>
+</html>

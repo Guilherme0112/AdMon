@@ -1,0 +1,29 @@
+.main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    flex-wrap: wrap;
+
+    text-align: center;
+    color: white;
+}
+.mes{
+
+    width: 300px;
+    height: 180px;
+    background-color: #81f4c3;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    color: #0b8a26;
+    cursor: pointer;
+    transition: .3s;
+
+    text-decoration: none;
+}
+.mes:hover{
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.468);
+}
+
