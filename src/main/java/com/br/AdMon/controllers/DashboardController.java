@@ -1,6 +1,7 @@
 package com.br.AdMon.controllers;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -34,10 +35,14 @@ public class DashboardController {
         BigDecimal totalContas = BigDecimal.ZERO;
         BigDecimal totalGanhos = BigDecimal.ZERO;
 
-        // Busca os dados
+        // Ano e mês atual
+        LocalDate dataAtual = LocalDate.now();
+        Integer anoAtual = dataAtual.getYear();
+        Integer mesAtual = dataAtual.getMonthValue();
+
         Usuarios session = (Usuarios) http.getAttribute("session");
 
-        List<Contas> contas = contarepositorio.findByEmailAndMonthAndYear(session.getEmail(), 12, 2024);
+        List<Contas> contas = contarepositorio.findByEmailAndMonthAndYear(session.getEmail(), mesAtual, anoAtual);
         List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
 
         // Retorna a soma de todas as contas
@@ -60,9 +65,16 @@ public class DashboardController {
     }
 
     @GetMapping("/dashboard_rosca_contas")
-    public List<Contas> Dashboard_2() {
+    public List<Contas> Dashboard_2(HttpSession http) {
+
+         // Ano e mês atual
+         LocalDate dataAtual = LocalDate.now();
+         Integer anoAtual = dataAtual.getYear();
+         Integer mesAtual = dataAtual.getMonthValue();
     
-        List<Contas> contas = contarepositorio.findAll();
+         Usuarios session = (Usuarios) http.getAttribute("session");
+
+         List<Contas> contas = contarepositorio.findByEmailAndMonthAndYear(session.getEmail(), mesAtual, anoAtual);
 
         return contas;
     }
