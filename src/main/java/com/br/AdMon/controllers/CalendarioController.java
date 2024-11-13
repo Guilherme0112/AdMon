@@ -30,6 +30,15 @@ public class CalendarioController {
             return mv;
         }
 
+        Integer anoAtual = Year.now().getValue();
+
+        // Se o usuário colocar na url algum ano maior que o ano atual + 30, ele retornará a página com o ano atual
+        if(ano > anoAtual + 30 || ano < anoAtual){
+
+            mv.setViewName("redirect:/calendario/" + anoAtual);
+            return mv;
+        }
+
         mv.addObject("ano", ano);
         mv.setViewName("calendario/meses");
 

@@ -37,7 +37,7 @@ public class DashboardController {
         // Busca os dados
         Usuarios session = (Usuarios) http.getAttribute("session");
 
-        List<Contas> contas = contarepositorio.findByEmail(session.getEmail());
+        List<Contas> contas = contarepositorio.findByEmailAndMonthAndYear(session.getEmail(), 12, 2024);
         List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
 
         // Retorna a soma de todas as contas

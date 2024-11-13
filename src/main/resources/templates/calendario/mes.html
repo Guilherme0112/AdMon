@@ -21,7 +21,7 @@
         <div style="width: 100%;">
             <h1 th:text="${mes}"></h1>
         </div>
-        <div th:if="${contas}">
+        <div th:if="${contas}" style="width: 100%">
             <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
                 <table th:each="contas : ${contas}">
                     <thead>
