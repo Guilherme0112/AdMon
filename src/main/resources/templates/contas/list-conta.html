@@ -6,11 +6,10 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/list.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
-    <script src="/js/scripts.js"></script>
     <title>Lista de Contas</title>
 </head>
 <body>
-
+    
     <!-- Componente header importado do diretório /components/component.html -->
     <header th:replace="components/component :: header"></header>
 
@@ -24,6 +23,15 @@
                 </h1>              
             </div>
         </section>
+
+        <h1 style="color: white; text-align: start; padding-left: 10%; width: 100%;">Contas</h1>
+        <hr>
+        <div th:if="${contas.isEmpty()}" style="width: 100%; display: flex; justify-content: center;">
+            <span class="box-info">
+                Não existem contas a serem pagas.
+            </span>
+        </div>
+
         <table th:each="contas : ${contas}">
             <thead>
                 <th>Conta</th>
@@ -38,13 +46,52 @@
                 <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
                 <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
                 <td>
-                    <a th:href="@{/contas/editar/{id}(id=${contas.id})}">Editar</a>
+                    <button th:data-id="${contas.id}" id="editar">Editar</button>
                 </td>
                 <td>
-                    <a th:href="@{/contas/excluir/{id}(id=${contas.id})}">Excluir</a>
+                    <button th:data-id="${contas.id}" id="excluir">Excluir</button>
+                </td>
+                <td>
+                    <button th:data-id="${contas.id}" id="mcl">Marcar como pago</button>
+                </td>
+            </tbody>
+        </table>
+        <div style="display: flex; width: 100%; height: 50px;"></div>
+        <h1 style="color: white; text-align: start; padding-left: 10%; width: 100%;">Contas Pagas</h1>
+        <hr>
+        <div th:if="${contas_pagas.isEmpty()}" style="width: 100%; display: flex; justify-content: center;">
+            <span class="box-info">
+                Não há contas pagas.
+            </span>
+        </div>
+        <table th:each="contas_pagas : ${contas_pagas}">
+            <thead>
+                <th>Conta</th>
+                <th>Anotações</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+            </thead>
+            <tbody>
+
+                <td th:text="${contas_pagas.conta}"></td>
+                <td th:text="${contas_pagas.anotacao}"></td>
+                <td th:text="'R$ ' + ${#numbers.formatDecimal(contas_pagas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
+                <td th:text="${#temporals.format(contas_pagas.vencimento, 'dd/MM/yyyy')}"></td>
+                <td>
+                    <button th:data-id="${contas_pagas.id}" id="editar" title="Editar"></button>
+                </td>
+                <td>
+                    <button th:data-id="${contas_pagas.id}" id="excluir" title="Excluir"></button>
+                </td>
+                <td>
+                    <button th:data-id="${contas_pagas.id}" id="mcl" title="Marcar como lido"></button>
                 </td>
             </tbody>
         </table>
     </main>
+
+    <!-- Scripts -->
+    <script src="/js/scripts.js"></script>
+    <script src="/js/contas.js"></script>
 </body>
 </html>

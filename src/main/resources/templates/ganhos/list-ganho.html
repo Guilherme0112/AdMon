@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/list.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
-    <script src="/js/scripts.js"></script>
     <title>Lista de Ganhos</title>
 </head>
 <body>
@@ -24,25 +23,32 @@
                 </h1>              
             </div>
         </section>
-        <table th:each="ganhos : ${ganhos}">
-            <thead>
-                <th>Ganho</th>
-                <th>Anotações</th>
-                <th>Valor</th>
-            </thead>
-            <tbody>
+        <div th:if="${ganhos}">
 
-                <td th:text="${ganhos.ganho}"></td>
-                <td th:text="${ganhos.anotacao}"></td>
-                <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos.valor, 0, 'POINT', 2, 'COMMA')}"></td>
-                <td>
-                    <a th:href="@{/ganhos/editar/{id}(id=${ganhos.id})}">Editar</a>
-                </td>
-                <td>
-                    <a th:href="@{/ganhos/excluir/{id}(id=${ganhos.id})}">Excluir</a>
-                </td>
-            </tbody>
-        </table>
+            <table th:each="ganhos : ${ganhos}">
+                <thead>
+                    <th>Ganho</th>
+                    <th>Anotações</th>
+                    <th>Valor</th>
+                </thead>
+                <tbody>
+
+                    <td th:text="${ganhos.ganho}"></td>
+                    <td th:text="${ganhos.anotacao}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos.valor, 0, 'POINT', 2, 'COMMA')}"></td>
+                    <td>
+                        <button th:data-id="${ganhos.id}" id="editar"></button>
+                    </td>
+                    <td>
+                        <button th:data-id="${ganhos.id}" id="excluir"></button>
+                    </td>
+                </tbody>
+            </table>
+        </div>
     </main>
+
+    <!-- Scripts -->
+    <script src="/js/scripts.js"></script>
+    <script src="/js/ganhos.js"></script>
 </body>
 </html>

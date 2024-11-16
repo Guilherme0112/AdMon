@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -98,7 +98,7 @@ public class ContasController {
 
         // Buscando dados no banco de dados
         Usuarios session = (Usuarios) http.getAttribute("session");
-        List<Contas> contas = contarepositorio.findByEmail(session.getEmail());
+        List<Contas> contas = contarepositorio.findByEmailAndStatus(session.getEmail(), "false");
 
         if(contas.size() > 0){
             for (Contas contaI : contas) {
@@ -108,6 +108,7 @@ public class ContasController {
         
         // Retorna os valores
         mv.addObject("contas", contas);
+        mv.addObject("contas_pagas", contarepositorio.findByEmailAndStatus(session.getEmail(), "true"));
         mv.addObject("totalConta", totalConta);
         mv.setViewName("contas/list-conta");
             
@@ -145,7 +146,7 @@ public class ContasController {
     }
 
     @PostMapping("editConta")
-    public ModelAndView Editar(@Valid Contas conta, BindingResult br){
+    public ModelAndView Editar(@Valid Contas conta, BindingResult br, HttpSession http){
 
         ModelAndView mv = new ModelAndView();
 
@@ -154,7 +155,8 @@ public class ContasController {
             mv.addObject("contas", conta);
             mv.setViewName("contas/editar-conta");
         } else { 
-
+            Usuarios session = (Usuarios) http.getAttribute("session");
+            conta.setUserEmail(session.getEmail());
             contarepositorio.save(conta);
             mv.setViewName("redirect:/contas/lista");
         }
@@ -162,7 +164,17 @@ public class ContasController {
         return mv;
     }
 
-    @GetMapping("/contas/excluir/{id}")
+    @PostMapping("/contas/pago/{id}")
+    public String MarcarComoLido(@PathVariable("id") BigInteger id, HttpSession http){
+
+        Usuarios session = (Usuarios) http.getAttribute("session");
+
+
+        contarepositorio.updateStatusByEmail("true", session.getEmail());        
+        return "redirect:/contas/lista";
+    }
+
+    @DeleteMapping("/contas/excluir/{id}")
     public String Excluir(@PathVariable("id") BigInteger id, HttpSession http){
 
         if(!Util.isAuth(http)){

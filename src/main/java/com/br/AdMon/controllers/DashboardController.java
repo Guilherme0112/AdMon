@@ -32,7 +32,8 @@ public class DashboardController {
     public BigDecimal Dashboard_1(HttpSession http) {
 
         BigDecimal total = BigDecimal.ZERO;
-        BigDecimal totalContas = BigDecimal.ZERO;
+        // BigDecimal totalContas = BigDecimal.ZERO;
+        BigDecimal totalContasPagas = BigDecimal.ZERO;
         BigDecimal totalGanhos = BigDecimal.ZERO;
 
         // Ano e mês atual
@@ -42,13 +43,20 @@ public class DashboardController {
 
         Usuarios session = (Usuarios) http.getAttribute("session");
 
-        List<Contas> contas = contarepositorio.findByEmailAndMonthAndYear(session.getEmail(), mesAtual, anoAtual);
+        // List<Contas> contas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "false");
+        List<Contas> contas_pagas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "true");
         List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
 
         // Retorna a soma de todas as contas
-        if (contas.size() > 0) {
-            for (Contas contaI : contas) {
-                totalContas = totalContas.add(contaI.getValor());
+        // if (contas.size() > 0) {
+        //     for (Contas contaI : contas) {
+        //         totalContas = totalContas.add(contaI.getValor());
+        //     }
+        // }
+
+        if (contas_pagas.size() > 0) {
+            for (Contas contaI : contas_pagas) {
+                totalContasPagas = totalContasPagas.add(contaI.getValor());
             }
         }
 
@@ -59,7 +67,7 @@ public class DashboardController {
             }
         }
 
-        total = totalGanhos.subtract(totalContas);
+        total = totalGanhos.subtract(totalContasPagas);
 
         return total; // Retorna o valor total calculado
     }

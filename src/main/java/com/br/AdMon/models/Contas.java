@@ -47,6 +47,8 @@ public class Contas {
     @Email(message = "Este e-mail é inválido")
     private String userEmail;
 
+    private String pago = "false";
+
     // Getters
 
     public BigInteger getId(){
@@ -68,6 +70,9 @@ public class Contas {
     public String getUserEmail(){
         return userEmail;
     }
+    public String getPago(){
+        return pago;
+    }
 
     // Setters
 
@@ -88,5 +93,8 @@ public class Contas {
     }
     public void setUserEmail(String userEmail){
         this.userEmail = userEmail;
+    }
+    public void setPago(String pago){
+        this.pago = pago;
     }
 }

@@ -17,10 +17,12 @@
 
     <div th:replace="components/component :: nav"></div>
     
+    <div style="width: 100%;">
+        <h1 th:text="${mes}" style="color: white; text-align: center;  width: 100%;"></h1>
+    </div>
     <main class="main">
-        <div style="width: 100%;">
-            <h1 th:text="${mes}"></h1>
-        </div>
+        <h1 style="color: white; text-align: start; width: 100%; padding-left: 10%;">Contas</h1>
+        <hr>
         <div th:if="${contas}" style="width: 100%">
             <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
                 <table th:each="contas : ${contas}">
@@ -49,6 +51,11 @@
         <div th:if="${contas.isEmpty()}" style="width: 100%; display: flex; justify-content: center;">
             <p class="box-info">Você não tem contas para este mês</p>
         </div>
+        
+        <div style="display: flex; width: 100%; height: 50px;"></div>
+
+        <h1 style="color: white; text-align: start; width: 100%; padding-left: 10%;">Ganhos</h1>
+        <hr>
     </main>
 
     <!-- Scripts -->

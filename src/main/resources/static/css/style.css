@@ -112,3 +112,21 @@ hr{
     border: 1px solid #81f4c3;
     border-radius: 40%;
 }
+
+#editar, #excluir, #mcl{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    border: 0;
+    border-radius: 10px;
+    margin-top: -20px;
+}
+#editar{
+    background-color: blue;
+}
+#excluir{
+    background-color: red;
+}
+#mcl{
+    background-color: #0fa968;
+}
