@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
+import com.br.AdMon.dao.GanhoDao;
+import com.br.AdMon.models.Usuarios;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -20,6 +22,9 @@ public class CalendarioController {
 
     @Autowired
     private ContaDao contaRepository;
+
+    @Autowired
+    private GanhoDao ganhoRepository;
 
     @GetMapping("/calendario/{ano}")
     public ModelAndView Calendario(HttpSession http, @PathVariable("ano") Integer ano){
@@ -54,6 +59,7 @@ public class CalendarioController {
             return mv;
         }
 
+        Usuarios session = (Usuarios) http.getAttribute("session");
         String mesString = null;
 
         // Retorna o nome do mês
@@ -74,7 +80,9 @@ public class CalendarioController {
         }
 
         mv.addObject("mes", mesString);
-        mv.addObject("contas", contaRepository.findByMonthAndYear(mes, ano));
+        mv.addObject("contas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "false"));
+        mv.addObject("contas_pagas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "true"));
+        mv.addObject("ganhos", ganhoRepository.findAll());
         mv.setViewName("calendario/mes");
 
         return mv;

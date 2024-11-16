@@ -1,10 +1,8 @@
 package com.br.AdMon.controllers;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,45 +71,12 @@ public class ContasController {
             if(session != null){
                 conta.setUserEmail(session.getEmail());
                 contarepositorio.save(conta);
-                mv.setViewName("redirect:/contas/lista");
+                mv.setViewName("redirect:/dashboard");
                 return mv;
             }
 
         }
 
-        return mv;
-    }
-
-    // Listar Contas
-    @GetMapping("/contas/lista")
-    public ModelAndView ListarConta(Contas conta, HttpSession http){
-
-        ModelAndView mv = new ModelAndView();
-
-        if(!Util.isAuth(http)){
-            mv.setViewName("redirect:/auth/login");
-            return mv;
-        } 
-
-        // Valor total das contas
-        BigDecimal totalConta = BigDecimal.ZERO;
-
-        // Buscando dados no banco de dados
-        Usuarios session = (Usuarios) http.getAttribute("session");
-        List<Contas> contas = contarepositorio.findByEmailAndStatus(session.getEmail(), "false");
-
-        if(contas.size() > 0){
-            for (Contas contaI : contas) {
-                totalConta = totalConta.add(contaI.getValor());
-            }
-        }
-        
-        // Retorna os valores
-        mv.addObject("contas", contas);
-        mv.addObject("contas_pagas", contarepositorio.findByEmailAndStatus(session.getEmail(), "true"));
-        mv.addObject("totalConta", totalConta);
-        mv.setViewName("contas/list-conta");
-            
         return mv;
     }
 
@@ -138,7 +103,7 @@ public class ContasController {
         } else {
 
             // Se o id não existir no banco de dados, faz o redirecionamento
-            mv.setViewName("redirect:/contas/lista");
+            mv.setViewName("redirect:/dashboard");
         }
 
 
@@ -158,7 +123,7 @@ public class ContasController {
             Usuarios session = (Usuarios) http.getAttribute("session");
             conta.setUserEmail(session.getEmail());
             contarepositorio.save(conta);
-            mv.setViewName("redirect:/contas/lista");
+            mv.setViewName("redirect:/dashboard");
         }
 
         return mv;
@@ -171,7 +136,7 @@ public class ContasController {
 
 
         contarepositorio.updateStatusByEmail("true", session.getEmail());        
-        return "redirect:/contas/lista";
+        return "redirect:/dashboard";
     }
 
     @DeleteMapping("/contas/excluir/{id}")
@@ -182,6 +147,6 @@ public class ContasController {
         }
 
         contarepositorio.deleteById(id);
-        return "redirect:/contas/lista";
+        return "redirect:/dashboard";
     }
 }
