@@ -17,6 +17,7 @@ import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.models.Contas;
 import com.br.AdMon.models.Usuarios;
+import com.br.AdMon.service.ServiceContas;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -26,6 +27,9 @@ public class ContasController {
 
     @Autowired
     private ContaDao contarepositorio;
+
+    @Autowired
+    private ServiceContas serviceConta;
 
     // Adicionar Contas
     @GetMapping("/contas/criar")
@@ -130,12 +134,12 @@ public class ContasController {
     }
 
     @PostMapping("/contas/pago/{id}")
-    public String MarcarComoLido(@PathVariable("id") BigInteger id, HttpSession http){
+    public String MarcarComoLido(@PathVariable("id") Integer id, HttpSession http){
 
         Usuarios session = (Usuarios) http.getAttribute("session");
 
+        serviceConta.alternarStatus(session.getEmail(), id);
 
-        contarepositorio.updateStatusByEmail("true", session.getEmail());        
         return "redirect:/dashboard";
     }
 

@@ -35,8 +35,11 @@ public interface ContaDao extends JpaRepository<Contas, BigInteger>{
     @Query("SELECT c FROM Contas c WHERE MONTH(c.vencimento) = :mes AND YEAR(c.vencimento) = :ano")
     public List<Contas> findByMonthAndYear(Integer mes, Integer ano);
 
+    @Query("SELECT c FROM Contas c WHERE c.userEmail = :email AND c.Id = :id")
+    public List<Contas> findByEmailAndId(@Param("email") String email, @Param("id") Integer id);
+
     @Modifying
     @Transactional
-    @Query("UPDATE Contas c SET c.pago = :status WHERE c.userEmail = :email")
-    void updateStatusByEmail(@Param("status") String status, @Param("email") String email);
+    @Query("UPDATE Contas c SET c.pago = :status WHERE c.userEmail = :email AND c.Id = :id")
+    void updateStatusByEmail(@Param("status") String status, @Param("email") String email, @Param("id") Integer id);
 }

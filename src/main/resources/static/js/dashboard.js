@@ -7,66 +7,35 @@ document.getElementById('load_3').style.display = "block";
 fetch("/dashboard_grafico_1")
     .then(response => response.json())
     .then(resposta => {
-        // console.log(resposta)
+      
 
-        // Renderiza o gráfico com os dados do endpoint
-        google.charts.load("current", { packages: ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
+        // A cor da fonte fica vermelho caso o valor seja negativo
+        var total = document.getElementById("valor");
+        resposta > 0 ? total.style.color = "#0fa868" : total.style.color = "#db0000";
 
-            // Valores do gráfico
-            var data = google.visualization.arrayToDataTable([
-                ["", "Total (R$)", { role: "style" }],
-                ["", resposta, "#b87333"],
-            ]);
+        // Formata o valor para BRL
+        const numeroFormatado = resposta.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+          });
 
-            var view = new google.visualization.DataView(data);
-            view.setColumns([0, 1,
-                {
-                    calc: "stringify",
-                    sourceColumn: 1,
-                    type: "string",
-                    role: "annotation"
-                },
-                2]);
+        //  Ajusta o link para a data atual
+        const linkMonthNow = document.getElementById("dataNowMonth");
+        const dateNow = new Date();
+        linkMonthNow.href = "/calendario/" + (dateNow.getMonth() + 1) + "/" + dateNow.getFullYear();
 
-            // Configurações da div do gráfico
-            var options = {
-                title: "Ganhos subtraído pelas contas",
-                titleTextStyle: {
-                    color: "white",
-                    fontSize: 25,
-                },
-                width: 800,
-                height: 400,
-                bar: { groupWidth: "50%" },
-                legend: { position: "none" },
-                backgroundColor: "transparent",
-                hAxis: {
-                    textStyle: {
-                        color: "white"
-                    }
-                },
-                vAxis: {
-                    format: "R$#,##0.00",
-                    textStyle: {
-                        color: "white"
-                    }
-                }
-            };
-            var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-            chart.draw(view, options);
-            document.getElementById('load_1').style.display = "none";
-        }
+        // Desativa o load e exibe os dados após o carregamento
+        document.getElementById("valor").innerHTML = numeroFormatado;
+        document.getElementById('dado_1').style.display = "block";
+        document.getElementById('load_1').style.display = "none";
     })
 
     // Se der erro, retorna a mensagem no  console
     .catch(err => {
-        console.log(err)
+        console.log(err);
     })
 
 // Dado 2
-
 fetch("/dashboard_rosca_contas")
     .then(response => response.json())
     .then(resposta => {
@@ -79,7 +48,7 @@ fetch("/dashboard_rosca_contas")
         resposta.forEach(element => {
 
             index = [element.conta, element.valor]
-            dados.push(index)
+            dados.push(index);
 
         });
 
@@ -118,7 +87,6 @@ fetch("/dashboard_rosca_contas")
     })
 
     // Dado 3
-
     fetch("/dashboard_rosca_ganhos")
     .then(response => response.json())
     .then(resposta => {
@@ -130,8 +98,8 @@ fetch("/dashboard_rosca_contas")
         var index = [];
         resposta.forEach(element => {
 
-            index = [element.ganho, element.valor]
-            dados.push(index)
+            index = [element.ganho, element.valor];
+            dados.push(index);
         });
 
 

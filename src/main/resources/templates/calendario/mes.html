@@ -53,7 +53,7 @@
                             <button th:data-id="${contas.id}" id="excluir" title="Excluir"></button>
                         </td>
                         <td>
-                            <button th:data-id="${contas.id}" id="mcl" title="Marcar como lido"></button>
+                            <button th:data-id="${contas.id}" id="mcl" title="Marcar como pago"></button>
                         </td>
                     </tbody>
                 </table>
@@ -86,6 +86,9 @@
                             </td>
                             <td>
                                 <button th:data-id="${contas_pagas.id}" id="excluir" title="Excluir"></button>
+                            </td>
+                            <td>
+                                <button th:data-id="${contas_pagas.id}" id="mcl" title="Marcar como não pago"></button>
                             </td>
                         </tbody>
                     </table>
