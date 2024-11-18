@@ -38,7 +38,7 @@ allBtnExcluir.forEach(btnExcluir => {
 })
 
 
-const allBtnMcl = document.querySelectorAll("#mcl");
+const allBtnMcl = document.querySelectorAll("#mcp");
 
 allBtnMcl.forEach(btnMcl => {
     btnMcl.addEventListener("click", function(){

@@ -2,6 +2,7 @@ package com.br.AdMon.models;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,26 +40,33 @@ public class Ganhos {
     @Email(message = "Este e-mail é inválido")
     private String userEmail;
 
-    // Getters
+    private Boolean esteMes;
+
+    @Column(insertable = false, updatable = false)
+    private LocalDateTime criado;
+    
+  // Getters
 
     public BigInteger getId(){
         return id;
     }
-
     public String getGanho(){
         return ganho;
     }
-
     public String getAnotacao(){
         return anotacao;
     }
-
     public BigDecimal getValor(){
         return valor;
     }
-
     public String getUserEmail(){
         return userEmail;
+    }
+    public Boolean getEsteMes(){
+        return esteMes;
+    }
+    public LocalDateTime getCriado(){
+        return criado;
     }
 
     // Setters
@@ -66,19 +74,19 @@ public class Ganhos {
     public void setId(BigInteger id){
         this.id = id;
     }
-
     public void setGanho(String ganho){
         this.ganho = ganho;
     }
-
     public void setAnotacao(String anotacao){
         this.anotacao = anotacao;
     }
-
     public void setValor(BigDecimal valor){
         this.valor = valor;
     }
     public void setUserEmail(String userEmail){
         this.userEmail = userEmail;
+    }
+    public void setEsteMes(Boolean esteMes){
+        this.esteMes = esteMes;
     }
 }

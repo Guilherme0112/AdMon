@@ -2,6 +2,7 @@ package com.br.AdMon.controllers;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,13 +74,20 @@ public class GanhosController {
     public ModelAndView InserirGanhosPost(@Valid Ganhos ganho, BindingResult br, HttpSession http){
         ModelAndView mv = new ModelAndView();
 
+
+
         if(br.hasErrors()){
 
             mv.addObject("ganho", ganho);
             mv.setViewName("ganhos/add-ganho");
         } else {
             
+            if(Boolean.TRUE.equals(ganho.getEsteMes())){
+                ganho.setEsteMes(true);
+            }
+
             Usuarios session = (Usuarios) http.getAttribute("session");
+
             ganho.setUserEmail(session.getEmail());
             ganhorepositorio.save(ganho);
             mv.setViewName("redirect:/ganhos/lista");            
@@ -89,42 +97,51 @@ public class GanhosController {
     }
 
     @GetMapping("/ganhos/editar/{id}")
-    public ModelAndView EditarGanho(@PathVariable("id") BigInteger id, HttpSession http){
+    public ModelAndView EditarGanho(@PathVariable("id") Integer id, HttpSession http){
         ModelAndView mv = new ModelAndView();
 
-        if(Util.isAuth(http)){
+        if(!Util.isAuth(http)){
             mv.setViewName("redirect:/auth/login");
             return mv;
         }
 
-        Ganhos ganho = ganhorepositorio.findById(id).orElse(null);
+        Usuarios session = (Usuarios) http.getAttribute("session");
+        Ganhos ganhos = ganhorepositorio.findByEmailAndId(session.getEmail(), id);
 
-        if(ganho != null){
-           
+        if (ganhos != null) {
+
             mv.setViewName("ganhos/editar-ganho");
-            mv.addObject("ganhos", ganho);
+            mv.addObject("ganhos", ganhos);
         } else {
-
             mv.setViewName("redirect:/ganhos/lista");
         }
+        
 
 
         return mv;
     }
 
-    @PostMapping("editGanho")
-    public ModelAndView EditarGanhoPost(@Valid Ganhos ganho, BindingResult br){
+    @PostMapping("/ganhos/editar")
+    public ModelAndView EditarGanhoPost(@Valid Ganhos ganho, BindingResult br, HttpSession http){
         ModelAndView mv = new ModelAndView();
         
+        if(!Util.isAuth(http)){
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        }
+        Usuarios session = (Usuarios) http.getAttribute("session");
+
         if(br.hasErrors()){
 
             mv.addObject("ganho", ganho);
             mv.setViewName("ganhos/editar-ganho");
-        } else {
+            return mv;
+        } 
 
-            ganhorepositorio.save(ganho);
-            mv.setViewName("redirect:/ganhos/lista");
-        }
+        ganho.setUserEmail(session.getEmail());
+        ganhorepositorio.save(ganho);
+        mv.setViewName("redirect:/ganhos/lista");
+
         return mv;
     }
 

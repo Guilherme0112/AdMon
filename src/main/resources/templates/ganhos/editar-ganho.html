@@ -18,9 +18,9 @@
     <main>
 
         <!-- Formulário -->
-        <form action="/ganhos/criar" method="post" th:object="${ganhos}">
+        <form action="/ganhos/editar" method="post" th:object="${ganhos}">
 
-            <h1>Editar Conta</h1>
+            <h1>Editar Ganho</h1>
             <input type="hidden" th:field="*{id}">
 
             <!-- Nome do Ganho -->
@@ -37,6 +37,11 @@
 
             <textarea th:field="*{anotacao}" placeholder="Anotação do Ganho"></textarea>
             
+            <div style="width: 100%; display: flex; justify-content: start;">
+                <input type="checkbox" th:field="*{esteMes}" id="checkJustForMonthNow" style="width: 15px; height: 15px;">
+                <label for="checkJustForMonthNow" style="margin: 2px 0 0 5px;">Somente para este mês</label>
+            </div>
+
             <button>Enviar</button>
         </form>
     </main>
