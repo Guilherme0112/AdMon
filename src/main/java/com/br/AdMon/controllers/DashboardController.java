@@ -46,13 +46,8 @@ public class DashboardController {
         // List<Contas> contas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "false");
         List<Contas> contas_pagas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "true");
         List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
+        List<Ganhos> ganhos_este_mes = ganhorepositorio.findByGanhosExpirationThisMonth(session.getEmail(), anoAtual, mesAtual);
 
-        // Retorna a soma de todas as contas
-        // if (contas.size() > 0) {
-        //     for (Contas contaI : contas) {
-        //         totalContas = totalContas.add(contaI.getValor());
-        //     }
-        // }
 
         if (contas_pagas.size() > 0) {
             for (Contas contaI : contas_pagas) {
@@ -63,6 +58,13 @@ public class DashboardController {
         // Retorna a soma de todos os ganhos
         if (ganhos.size() > 0) {
             for (Ganhos ganhosI : ganhos) {
+                totalGanhos = totalGanhos.add(ganhosI.getValor());
+            }
+        }
+
+        // Retorna a soma de todos os ganhos para somente este mês
+        if (ganhos_este_mes.size() > 0) {
+            for (Ganhos ganhosI : ganhos_este_mes) {
                 totalGanhos = totalGanhos.add(ganhosI.getValor());
             }
         }

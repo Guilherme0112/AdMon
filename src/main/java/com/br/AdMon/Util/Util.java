@@ -7,6 +7,8 @@ import java.security.NoSuchAlgorithmException;
 import jakarta.servlet.http.HttpSession;
 
 public class Util {
+
+    // Criptografia de senhas
     public static String md5(String senha) throws NoSuchAlgorithmException {
 
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -14,6 +16,7 @@ public class Util {
         return hash.toString(16);
     }
 
+    // Verifica se o usuário está logado
     public static Boolean isAuth(HttpSession http){
         if(http.getAttribute("session") == null){
             return false;
@@ -22,4 +25,6 @@ public class Util {
         return true;
 
     }
+
+
 }

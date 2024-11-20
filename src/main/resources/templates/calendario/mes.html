@@ -129,6 +129,34 @@
                     <p class="box-info">Você não tem ganhos cadastrados.</p>
                 </div>
             </div>
+
+
+            <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
+                <h3 style="width: 100%; padding-left: 10%; text-align: start;">Ganhos somente deste mês</h3>
+                <table th:each="ganhos_este_mes : ${ganhos_este_mes}">
+                    <thead>
+                        <th>Ganho</th>
+                        <th>Anotações</th>
+                        <th>Valor</th>
+                    </thead>
+                    <tbody>
+    
+                        <td th:text="${ganhos_este_mes.ganho}"></td>
+                        <td th:text="${ganhos_este_mes.anotacao}"></td>
+                        <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos_este_mes.valor, 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td>
+                            <button th:data-id="${ganhos_este_mes.id}" id="editar" title="Editar"></button>
+                        </td>
+                        <td>
+                            <button th:data-id="${ganhos_este_mes.id}" id="excluir" title="Excluir"></button>
+                        </td>
+                    </tbody>
+                </table>
+
+                <div th:if="${ganhos_este_mes.isEmpty()}" style="width: 100%; display: flex; justify-content: center; margin: 20px;">
+                    <p class="box-info">Você não tem ganhos deste mês cadastrados.</p>
+                </div>
+            </div>
     </main>
 
     <!-- Scripts -->

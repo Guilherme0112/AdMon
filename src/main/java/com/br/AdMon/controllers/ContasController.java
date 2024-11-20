@@ -136,8 +136,8 @@ public class ContasController {
     @PostMapping("/contas/pago/{id}")
     public String MarcarComoLido(@PathVariable("id") Integer id, HttpSession http){
 
+        // Toda vez que o usuario clicar no botão para alterar como pago ou como não pago ele altera no banco de dados.
         Usuarios session = (Usuarios) http.getAttribute("session");
-
         serviceConta.alternarStatus(session.getEmail(), id);
 
         return "redirect:/dashboard";

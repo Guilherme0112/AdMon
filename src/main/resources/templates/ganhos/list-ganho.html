@@ -23,6 +23,9 @@
                 </h1>              
             </div>
         </section>
+
+        <h1 style="color: white; text-align: start; padding-left: 10%; width: 100%; margin: 20px 0">Ganhos</h1>
+
         <div th:if="${ganhos}" style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;">
 
             <table th:each="ganhos : ${ganhos}">
@@ -44,6 +47,35 @@
                     </td>
                 </tbody>
             </table>
+        </div>
+
+        <h1 style="color: white; text-align: start; padding-left: 10%; width: 100%; margin: 20px 0">Ganhos para somente este mês</h1>
+
+        <div th:if="${ganhos_este_mes}" style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;">
+
+            <table th:each="ganhos_este_mes : ${ganhos_este_mes}">
+                <thead>
+                    <th>Ganho</th>
+                    <th>Anotações</th>
+                    <th>Valor</th>
+                </thead>
+                <tbody>
+
+                    <td th:text="${ganhos_este_mes.ganho}"></td>
+                    <td th:text="${ganhos_este_mes.anotacao}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos_este_mes.valor, 0, 'POINT', 2, 'COMMA')}"></td>
+                    <td>
+                        <button th:data-id="${ganhos_este_mes.id}" id="editar"></button>
+                    </td>
+                    <td>
+                        <button th:data-id="${ganhos_este_mes.id}" id="excluir"></button>
+                    </td>
+                </tbody>
+            </table>
+        </div>
+
+        <div th:if="${ganhos_este_mes.isEmpty()}" style="width: 100%; display: flex; justify-content: center;">
+            <p class="box-info">Você não tem ganhos para somente este mês.</p>
         </div>
     </main>
 
