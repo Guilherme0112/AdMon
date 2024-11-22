@@ -66,6 +66,8 @@ footer{
     aspect-ratio: 1/1;
     z-index: 999;
     left: 10px;
+
+    filter: brightness(0) invert(1);
 }
 .nav{
     position: fixed;
@@ -132,4 +134,39 @@ hr{
 }
 .mcnp{
     background-color: yellow !important;
+}
+
+/* Estilo para index.html */
+
+.box-home-1{
+
+    width: 270px;
+    height: 390px;
+    border-radius: 10px;
+    background-color: #43e5a0;
+    margin: 10px;
+    padding: 20px 10px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+.img-box-home-1{
+    width: 80%;
+    background-color: transparent;
+    border-radius: 10px;
+
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0) invert(1);
+}
+.h1-home-1{
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+.p-box-home-1{
+    font-size: 15px;
+    color: white;
 }

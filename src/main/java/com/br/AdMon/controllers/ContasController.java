@@ -43,6 +43,8 @@ public class ContasController {
             return mv;
         }
 
+      
+
         mv.setViewName("contas/add-conta");
         mv.addObject("conta", new Contas());
 
@@ -67,6 +69,11 @@ public class ContasController {
             mv.addObject("contas", conta);
             mv.setViewName("contas/add-conta");
         } else {
+
+            // Marca como true se o checkbox tiver marcado
+            if(Boolean.TRUE.equals(conta.getParaSempre())){
+                conta.setParaSempre(true);
+            }
 
             // Recupera os dados da sessão
             Usuarios session = (Usuarios) http.getAttribute("session");
