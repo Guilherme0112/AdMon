@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
@@ -52,9 +53,9 @@ public class ContasController {
         return mv;
     }
 
-    @PostMapping("addConta")
-    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br, HttpSession http){
-        
+    @PostMapping("/addConta")
+    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br, HttpSession http, @RequestParam Integer meses){
+
         ModelAndView mv = new ModelAndView();   
         if(!Util.isAuth(http)){
 
@@ -62,6 +63,8 @@ public class ContasController {
             return mv;
         }
 
+        // Recupera os dados da sessão
+        Usuarios session = (Usuarios) http.getAttribute("session");
 
         if(br.hasErrors()){
 
@@ -70,13 +73,29 @@ public class ContasController {
             mv.setViewName("contas/add-conta");
         } else {
 
-            // Marca como true se o checkbox tiver marcado
-            if(Boolean.TRUE.equals(conta.getParaSempre())){
-                conta.setParaSempre(true);
-            }
+            try{
+                if (meses != null) {
+                    if (meses > 0) {
+                        for(int i = 0; i < meses; i++){
 
-            // Recupera os dados da sessão
-            Usuarios session = (Usuarios) http.getAttribute("session");
+                            // Criando um registro para cada mês
+                            Contas indexConta = new Contas();
+
+                            indexConta.setConta(conta.getConta());
+                            indexConta.setUserEmail(session.getEmail());
+                            indexConta.setVencimento(conta.getVencimento().plusMonths(i + 1));
+                            indexConta.setValor(conta.getValor());
+                            indexConta.setAnotacao(conta.getAnotacao());
+
+                            contarepositorio.save(indexConta);
+                            
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                mv.addObject("errorMeses", "Erro ao calcular tempo");
+                return mv;
+            }
 
             // Salva os dados com o e-mail da sessão
             if(session != null){

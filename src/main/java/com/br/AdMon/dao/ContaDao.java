@@ -23,8 +23,8 @@ public interface ContaDao extends JpaRepository<Contas, BigInteger>{
     @Query(value = "SELECT * FROM Contas c WHERE c.pago = 'false' AND c.vencimento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)", nativeQuery = true)
     List<Contas> findContasLast7Days();
 
-    @Query("SELECT e FROM Contas e WHERE e.userEmail = :email AND MONTH(e.vencimento) = :mes AND YEAR(e.vencimento) = :ano AND e.pago = :status AND e.paraSempre = :paraSempre")
-    public List<Contas> findByEmailAndMonthAndYearAndStatus(String email, Integer mes, Integer ano, String status, Boolean paraSempre);
+    @Query("SELECT e FROM Contas e WHERE e.userEmail = :email AND MONTH(e.vencimento) = :mes AND YEAR(e.vencimento) = :ano AND e.pago = :status")
+    public List<Contas> findByEmailAndMonthAndYearAndStatus(String email, Integer mes, Integer ano, String status);
     
     @Query("SELECT e FROM Contas e WHERE e.userEmail = :email AND MONTH(e.vencimento) = :mes AND YEAR(e.vencimento) = :ano")
     public List<Contas> findByEmailAndMonthAndYear(String email, Integer mes, Integer ano);

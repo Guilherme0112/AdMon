@@ -48,7 +48,6 @@ public class Contas {
     private String userEmail;
 
     private String pago = "false";
-    private Boolean paraSempre;
 
     // Getters
 
@@ -73,10 +72,6 @@ public class Contas {
     public String getPago(){
         return pago;
     }
-    public Boolean getParaSempre(){
-        return paraSempre;
-    }
-
 
     // Setters
 
@@ -100,8 +95,5 @@ public class Contas {
     }
     public void setPago(String pago){
         this.pago = pago;
-    }
-    public void setParaSempre(Boolean paraSempre){
-        this.paraSempre = paraSempre;
     }
 }

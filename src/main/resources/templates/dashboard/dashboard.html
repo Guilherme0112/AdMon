@@ -70,28 +70,32 @@
             <tr th:if="${#lists.isEmpty(contas)}">
                 <p class="box-info" style="margin: 20px 0;">Não há contas a vencer nos próximos 7 dias.</p>
             </tr>
+            <div th:if="${!#lists.isEmpty(contas)}" style="width: 100%; display: flex; justify-content: center;">
+                <table>
+                    <thead>
+                        <th>Conta</th>
+                        <th>Anotações</th>
+                        <th>Valor</th>
+                        <th>Vencimento</th>
+                    </thead>
+                <tbody th:each="contas : ${contas}">
 
-            <table th:each="contas : ${contas}">
-            <thead>
-                <th>Conta</th>
-                <th>Anotações</th>
-                <th>Valor</th>
-                <th>Vencimento</th>
-            </thead>
-            <tbody>
-
-                <td th:text="${contas.conta}"></td>
-                <td th:text="${contas.anotacao}"></td>
-                <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'POINT', 2, 'COMMA')}"></td>
-                <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
-                <td>
-                    <a th:href="@{/contas/editar/{id}(id=${contas.id})}">Editar</a>
-                </td>
-                <td>
-                    <a th:href="@{/contas/excluir/{id}(id=${contas.id})}">Excluir</a>
-                </td>
-            </tbody>
-        </table>
+                    <td th:text="${contas.conta}"></td>
+                    <td th:text="${contas.anotacao}"></td>
+                    <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'POINT', 2, 'COMMA')}"></td>
+                    <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
+                    <td>
+                        <button th:data-id="${contas.id}" id="editar" title="Editar"></button>
+                    </td>
+                    <td>
+                        <button th:data-id="${contas.id}" id="excluir" title="Excluir"></button>
+                    </td>
+                    <td>
+                        <button th:data-id="${contas.id}" id="mcp" title="Marcar como pago"></button>
+                    </td>
+                </tbody>
+            </table>
+        </div>
         </section>
     </main>
 
@@ -99,6 +103,7 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/scripts.js"></script>
+    <script src="/js/contas.js"></script>
 </body>
 
 </html>

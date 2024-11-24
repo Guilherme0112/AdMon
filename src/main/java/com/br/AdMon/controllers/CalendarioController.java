@@ -80,8 +80,8 @@ public class CalendarioController {
         }
 
         mv.addObject("mes", mesString);
-        mv.addObject("contas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "false", false));
-        mv.addObject("contas_pagas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "true", false));
+        mv.addObject("contas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "false"));
+        mv.addObject("contas_pagas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "true"));
         mv.addObject("ganhos", ganhoRepository.findByEmail(session.getEmail()));
         mv.addObject("ganhos_este_mes", ganhoRepository.findByGanhosExpirationThisMonth(session.getEmail(), ano, mes));
         mv.setViewName("calendario/mes");

@@ -36,14 +36,14 @@
 
             <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
 
-                <table th:each="contas : ${contas}">
+                <table th:if="${!contas.isEmpty()}">
                     <thead>
                         <th>Conta</th>
                         <th>Anotações</th>
                         <th>Valor</th>
                         <th>Vencimento</th>
                     </thead>
-                    <tbody>
+                    <tbody th:each="contas : ${contas}">
                         <td th:text="${contas.conta}"></td>
                         <td th:text="${contas.anotacao}"></td>
                         <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
@@ -73,14 +73,16 @@
             <div th:if="${contas_pagas}" style="width: 100%">
                 <h3 style="width: 100%; padding-left: 10%; text-align: start;">Contas Pagas</h3>
                 <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
-                    <table th:each="contas_pagas : ${contas_pagas}">
+                    <table th:if="${!contas_pagas.isEmpty()}">
                         <thead>
                             <th>Conta</th>
                             <th>Anotações</th>
                             <th>Valor</th>
                             <th>Vencimento</th>
+                            <th></th>
+                            <th></th>
                         </thead>
-                        <tbody>
+                        <tbody th:each="contas_pagas : ${contas_pagas}">
                             <td th:text="${contas_pagas.conta}"></td>
                             <td th:text="${contas_pagas.anotacao}"></td>
                             <td th:text="'R$ ' + ${#numbers.formatDecimal(contas_pagas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
@@ -114,13 +116,13 @@
                 <hr>
                 <h3 style="width: 100%; padding-left: 10%; text-align: start;">Ganhos</h3>
 
-                <table th:each="ganhos : ${ganhos}">
+                <table>
                     <thead>
                         <th>Ganho</th>
                         <th>Anotações</th>
                         <th>Valor</th>
                     </thead>
-                    <tbody>
+                    <tbody th:each="ganhos : ${ganhos}">
     
                         <td th:text="${ganhos.ganho}"></td>
                         <td th:text="${ganhos.anotacao}"></td>
@@ -143,13 +145,13 @@
 
             <div style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
                 <h3 style="width: 100%; padding-left: 10%; text-align: start;">Ganhos somente deste mês</h3>
-                <table th:each="ganhos_este_mes : ${ganhos_este_mes}">
+                <table th:if="${!ganhos_este_mes.isEmpty()}">
                     <thead>
                         <th>Ganho</th>
                         <th>Anotações</th>
                         <th>Valor</th>
                     </thead>
-                    <tbody>
+                    <tbody th:each="ganhos_este_mes : ${ganhos_este_mes}">
     
                         <td th:text="${ganhos_este_mes.ganho}"></td>
                         <td th:text="${ganhos_este_mes.anotacao}"></td>
@@ -167,6 +169,7 @@
                     <p class="box-info">Você não tem ganhos deste mês cadastrados.</p>
                 </div>
             </div>
+        </div>
     </main>
 
     <!-- Scripts -->

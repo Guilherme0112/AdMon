@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/add-conta.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
-    <script src="/js/scripts.js"></script>
     <title>Editar Conta</title>
 </head>
 <body>
@@ -43,13 +42,23 @@
                 <p class="errors" th:errors="*{vencimento}"></p>
             </div>
 
+            <!-- Checkbox para todos os meses -->
             <div style="width: 100%; display: flex; justify-content: start;">
                 <input type="checkbox" th:field="*{paraSempre}" id="checkJustForMonthNow" style="width: 15px; height: 15px;">
-                <label for="checkJustForMonthNow" style="margin: 2px 0 0 5px;">Válido para todos os meses</label>
+                <label for="checkJustForMonthNow" style="margin: 2px 0 0 5px;">Escolher quantidade de meses</label>
+            </div>
+
+            <div style="display: none;" id="div-check">
+                <label for="amountMonths">Quantidade de meses:</label>
+                <input type="number" name="meses" id="amountMonths">
             </div>
 
             <button>Enviar</button>
         </form>
     </main>
+
+    <!-- Scripts -->
+    <script src="/js/scripts.js"></script>
+    <script src="/js/form-contas.js"></script>
 </body>
 </html>

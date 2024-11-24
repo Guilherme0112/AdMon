@@ -44,7 +44,7 @@ public class DashboardController {
         Usuarios session = (Usuarios) http.getAttribute("session");
 
         // List<Contas> contas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "false");
-        List<Contas> contas_pagas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "true", false);
+        List<Contas> contas_pagas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "true");
         List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
         List<Ganhos> ganhos_este_mes = ganhorepositorio.findByGanhosExpirationThisMonth(session.getEmail(), anoAtual, mesAtual);
 
