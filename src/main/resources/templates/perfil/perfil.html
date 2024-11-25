@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/perfil.css">
+    <link rel="stylesheet" href="/css/add-conta.css">
+    <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/css/media-query/index.css">
+    <script src="/js/scripts.js"></script>
+    <title>AdMon</title>
+</head>
+<body>
+
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:replace="components/component :: header"></header>
+
+    <div th:replace="components/component :: nav"></div>
+
+    <main>
+        <section style="width: 100%; display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <div class="box-config" style="background-color: transparent;"></div>
+            <div class="box-config">
+                <form action="/perfil/editar" method="post">
+                    <h1>Alterar a senha</h1>
+                    <input type="password" name="senhaAntiga" placeholder="Digite sua antiga senha">
+                    <input type="password" name="senhaNova" placeholder="Digite sua nova senha">
+                    <input type="password" placeholder="Repita a nova senha">
+                    <button>Enviar</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

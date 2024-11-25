@@ -93,6 +93,7 @@ public class ContasController {
                     }
                 }
             } catch (Exception e) {
+                mv.setViewName("contas/add-conta");
                 mv.addObject("errorMeses", "Erro ao calcular tempo");
                 return mv;
             }

@@ -40,4 +40,20 @@ public class ServiceUsuario {
         Usuarios usuario = usuarioRepository.findLogin(email, senha);
         return usuario;
     }
+
+    public void alterarSenha(String email, String senhaAntiga, String novaSenha) throws Exception{
+        try{
+
+            if(novaSenha.length() < 8){
+                throw new Exception("A senha deve ter 8 ou mais caracteres");
+            }
+
+            usuarioRepository.updatePassword(email, Util.md5(novaSenha));
+
+        } catch (Exception err){
+
+            throw new Exception("Erro ao alterar a senha: " + err);
+        }
+
+    }
 }

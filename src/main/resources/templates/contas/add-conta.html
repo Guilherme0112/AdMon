@@ -55,6 +55,9 @@
             <div style="display: none;" id="div-check">
                 <label for="amountMonths">Quantidade de meses:</label>
                 <input type="number" name="meses" id="amountMonths">
+                <div th:if="${errorMeses}">
+                    <p th:text="${errorMeses}"></p>
+                </div>
             </div>
 
             <button>Enviar</button>
