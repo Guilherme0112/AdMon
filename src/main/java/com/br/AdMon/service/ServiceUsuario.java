@@ -18,18 +18,18 @@ public class ServiceUsuario {
     @Autowired
     private UsuarioDao usuarioRepository;
 
-    public void salvarUsuario(Usuarios user) throws Exception{
+    public void salvarUsuario(Usuarios user) throws Exception {
         try {
 
             // Verifica se o E-mail já está em uso
-            if(usuarioRepository.findByEmail(user.getEmail()) != null){
+            if (usuarioRepository.findByEmail(user.getEmail()) != null) {
                 throw new EmailExistsException("Este e-mail já está em uso");
             }
 
             // Criptografa a senha
             user.setSenha(Util.md5(user.getSenha()));
         } catch (NoSuchAlgorithmException e) {
-            
+
             throw new CriptoException("Erro ao criptografar a senha");
         }
 
@@ -41,19 +41,22 @@ public class ServiceUsuario {
         return usuario;
     }
 
-    public void alterarSenha(String email, String senhaAntiga, String novaSenha) throws Exception{
-        try{
-
-            if(novaSenha.length() < 8){
+    public void alterarSenha(String email, String senhaAntiga, String novaSenha) throws Exception {
+        try {
+            if (novaSenha.length() < 8) {
                 throw new Exception("A senha deve ter 8 ou mais caracteres");
             }
 
+            Usuarios usuario = usuarioRepository.findByEmail(email);
+            System.out.println("Senha do banco: " + usuario.getSenha());
+            System.out.println("Senha do form: " + senhaAntiga);
+            if (usuario == null || !usuario.getSenha().equals(Util.md5(senhaAntiga))) {
+                throw new Exception("A senha antiga está incorreta");
+            }
+
             usuarioRepository.updatePassword(email, Util.md5(novaSenha));
-
-        } catch (Exception err){
-
-            throw new Exception("Erro ao alterar a senha: " + err);
+        } catch (Exception err) {
+            throw new Exception("Erro ao alterar a senha: " + err.getMessage(), err);
         }
-
     }
 }

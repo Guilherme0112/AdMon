@@ -27,6 +27,9 @@
                     <input type="password" name="senhaAntiga" placeholder="Digite sua antiga senha">
                     <input type="password" name="senhaNova" placeholder="Digite sua nova senha">
                     <input type="password" placeholder="Repita a nova senha">
+                    <div th:if="${msgError}">
+                        <p th:text="${msgError}" class="errors"></p>
+                    </div>
                     <button>Enviar</button>
                 </form>
             </div>

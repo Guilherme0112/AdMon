@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
@@ -34,7 +34,7 @@ public class PerfilController {
     }
 
     @PostMapping("/perfil/editar")
-    public ModelAndView PerfilSenhaPost(@RequestBody String senhaAntiga, @RequestBody String senhaNova, HttpSession http) throws  Exception{
+    public ModelAndView PerfilSenhaPost(@RequestParam String senhaAntiga, @RequestParam String senhaNova, HttpSession http) throws  Exception{
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -43,14 +43,19 @@ public class PerfilController {
             return mv;
         }
 
-        Usuarios session = (Usuarios) http.getAttribute("session");
-        Usuarios usuario = usuarioService.loginUsuario(session.getEmail(), Util.md5(senhaAntiga));
+        try{
+            Usuarios session = (Usuarios) http.getAttribute("session");
+            Usuarios usuario = usuarioService.loginUsuario(session.getEmail(), Util.md5(senhaAntiga));
 
-        if(usuario != null){
-            usuarioService.alterarSenha(session.getEmail(), senhaAntiga, senhaNova);
+            if(usuario != null){
+                usuarioService.alterarSenha(session.getEmail(), senhaAntiga, senhaNova);
+            }
+
+            mv.setViewName("redirect:/dashboard");
+        } catch (Exception err){
+            mv.addObject("msgError", err.getMessage());
+            mv.setViewName("perfil/perfil");
         }
-
-        mv.setViewName("perfil/perfil");
 
         return mv;
     }
