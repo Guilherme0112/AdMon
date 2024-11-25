@@ -48,15 +48,14 @@ public class ServiceUsuario {
             }
 
             Usuarios usuario = usuarioRepository.findByEmail(email);
-            System.out.println("Senha do banco: " + usuario.getSenha());
-            System.out.println("Senha do form: " + senhaAntiga);
+
             if (usuario == null || !usuario.getSenha().equals(Util.md5(senhaAntiga))) {
                 throw new Exception("A senha antiga está incorreta");
             }
 
             usuarioRepository.updatePassword(email, Util.md5(novaSenha));
         } catch (Exception err) {
-            throw new Exception("Erro ao alterar a senha: " + err.getMessage(), err);
+            throw new Exception(err.getMessage(), err);
         }
     }
 }

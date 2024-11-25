@@ -11,3 +11,8 @@
     align-items: center;
     flex-wrap: wrap;
 }
+.title-text-perfil{
+    color: white;
+    font-size: 50px;
+    margin-top: 30px;
+}

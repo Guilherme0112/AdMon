@@ -47,11 +47,15 @@ public class PerfilController {
             Usuarios session = (Usuarios) http.getAttribute("session");
             Usuarios usuario = usuarioService.loginUsuario(session.getEmail(), Util.md5(senhaAntiga));
 
-            if(usuario != null){
-                usuarioService.alterarSenha(session.getEmail(), senhaAntiga, senhaNova);
+            if(usuario == null){
+
+                mv.addObject("msgError", "Erro ao atualizar senha. Tente novamente mais tarde");
+                mv.setViewName("perfil/perfil");
             }
 
+            usuarioService.alterarSenha(session.getEmail(), senhaAntiga, senhaNova);
             mv.setViewName("redirect:/dashboard");
+            
         } catch (Exception err){
             mv.addObject("msgError", err.getMessage());
             mv.setViewName("perfil/perfil");
