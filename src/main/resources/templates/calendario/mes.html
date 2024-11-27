@@ -49,7 +49,7 @@
                         <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
                         <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
                         <td>
-                            <button th:data-id="${contas.id}" id="editar" title="Editar"></button>
+                            <a th:href="@{/contas/editar/{id} (id=${contas.id})}" id="editar" title="Editar"></a>
                         </td>
                         <td>
                             <button th:data-id="${contas.id}" id="excluir" title="Excluir"></button>
@@ -88,7 +88,7 @@
                             <td th:text="'R$ ' + ${#numbers.formatDecimal(contas_pagas.valor, 0, 'COMMA', 2, 'COMMA')}"></td>
                             <td th:text="${#temporals.format(contas_pagas.vencimento, 'dd/MM/yyyy')}"></td>
                             <td>
-                                <button th:data-id="${contas_pagas.id}" id="editar" title="Editar"></button>
+                                <a th:href="@{/contas/editar/{id} (id=${contas_pagas.id})}" id="editar" title="Editar"></a>
                             </td>
                             <td>
                                 <button th:data-id="${contas_pagas.id}" id="excluir" title="Excluir"></button>
@@ -116,7 +116,7 @@
                 <hr>
                 <h3 style="width: 100%; padding-left: 10%; text-align: start;">Ganhos</h3>
 
-                <table>
+                <table th:if="${!ganhos.isEmpty()}">
                     <thead>
                         <th>Ganho</th>
                         <th>Anotações</th>
@@ -128,7 +128,7 @@
                         <td th:text="${ganhos.anotacao}"></td>
                         <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos.valor, 0, 'POINT', 2, 'COMMA')}"></td>
                         <td>
-                            <button th:data-id="${ganhos.id}" id="editar" title="Editar"></button>
+                            <a th:href="@{/ganhos/editar/{id} (id=${ganhos.id})}" id="editar" title="Editar"></a>
                         </td>
                         <td>
                             <button th:data-id="${ganhos.id}" id="excluir" title="Excluir"></button>
@@ -157,7 +157,7 @@
                         <td th:text="${ganhos_este_mes.anotacao}"></td>
                         <td th:text="'R$ ' + ${#numbers.formatDecimal(ganhos_este_mes.valor, 0, 'POINT', 2, 'COMMA')}"></td>
                         <td>
-                            <button th:data-id="${ganhos_este_mes.id}" id="editar" title="editar"></button>
+                            <a th:href="@{/ganhos/editar/{id} (id=${ganhos_este_mes.id})}" id="editar" title="Editar"></a>
                         </td>
                         <td>
                             <button th:data-id="${ganhos_este_mes.id}" id="excluir" title="Excluir"></button>

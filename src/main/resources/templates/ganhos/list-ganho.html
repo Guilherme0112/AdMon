@@ -26,7 +26,7 @@
 
         <h1 style="color: white; text-align: start; padding-left: 10%; width: 100%; margin: 20px 0">Ganhos</h1>
 
-        <div th:if="${ganhos}" style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;">
+        <div th:if="${!ganhos.isEmpty()}" style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;">
 
             <table>
                 <thead>
@@ -49,11 +49,13 @@
             </table>
         </div>
 
+        <p th:if="${ganhos.isEmpty()}" class="box-info">Você não tem ganhos cadastrados.</p>
+    
         <h1 style="color: white; text-align: start; padding-left: 10%; width: 100%; margin: 20px 0">Ganhos para somente este mês</h1>
 
-        <div th:if="${ganhos_este_mes}" style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;">
+        <div style="width: 100%; display: flex; justify-content: center; flex-wrap: wrap;">
 
-            <table>
+            <table th:if="${!ganhos_este_mes.isEmpty()}">
                 <thead>
                     <th>Ganho</th>
                     <th>Anotações</th>

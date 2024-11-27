@@ -1,8 +1,3 @@
-// Animação de load, iniciado assim que a página é renderizada
-document.getElementById('load_1').style.display = "block";
-document.getElementById('load_2').style.display = "block";
-document.getElementById('load_3').style.display = "block";
-
 // Dado 1
 fetch("/dashboard_grafico_1")
     .then(response => response.json())
@@ -11,7 +6,7 @@ fetch("/dashboard_grafico_1")
 
         // A cor da fonte fica vermelho caso o valor seja negativo
         var total = document.getElementById("valor");
-        resposta > 0 ? total.style.color = "#0fa868" : total.style.color = "#db0000";
+        resposta > -1 ? total.style.color = "#0fa868" : total.style.color = "#db0000";
 
         // Formata o valor para BRL
         const numeroFormatado = resposta.toLocaleString('pt-BR', {
@@ -41,7 +36,6 @@ fetch("/dashboard_rosca_contas")
     .then(resposta => {
 
         // console.log(resposta)
-
         // Cria o modelo de array 
         var dados = [["Categoria", "Valor"]]; 
         var index = [];

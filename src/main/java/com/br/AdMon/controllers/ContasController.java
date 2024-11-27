@@ -54,7 +54,7 @@ public class ContasController {
     }
 
     @PostMapping("/addConta")
-    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br, HttpSession http, @RequestParam Integer meses){
+    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br, HttpSession http, @RequestParam(defaultValue = "0") int meses){
 
         ModelAndView mv = new ModelAndView();   
         if(!Util.isAuth(http)){
@@ -74,22 +74,20 @@ public class ContasController {
         } else {
 
             try{
-                if (meses != null) {
-                    if (meses > 0) {
-                        for(int i = 0; i < meses; i++){
+                if (meses > 0) {
+                    for(int i = 0; i < meses; i++){
 
-                            // Criando um registro para cada mês
-                            Contas indexConta = new Contas();
+                        // Criando um registro para cada mês
+                        Contas indexConta = new Contas();
 
-                            indexConta.setConta(conta.getConta());
-                            indexConta.setUserEmail(session.getEmail());
-                            indexConta.setVencimento(conta.getVencimento().plusMonths(i + 1));
-                            indexConta.setValor(conta.getValor());
-                            indexConta.setAnotacao(conta.getAnotacao());
+                        indexConta.setConta(conta.getConta());
+                        indexConta.setUserEmail(session.getEmail());
+                        indexConta.setVencimento(conta.getVencimento().plusMonths(i + 1));
+                        indexConta.setValor(conta.getValor());
+                        indexConta.setAnotacao(conta.getAnotacao());
 
-                            contarepositorio.save(indexConta);
-                            
-                        }
+                        contarepositorio.save(indexConta);
+                        
                     }
                 }
             } catch (Exception e) {

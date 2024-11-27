@@ -3,7 +3,8 @@ package com.br.AdMon.controllers;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -89,9 +90,17 @@ public class DashboardController {
         return contas;
     }
     @GetMapping("/dashboard_rosca_ganhos")
-    public List<Ganhos> Dashboard_3() {
+    public List<Ganhos> Dashboard_3(HttpSession http) {
     
-        List<Ganhos> ganhos = ganhorepositorio.findAll();
+        Usuarios session = (Usuarios) http.getAttribute("session");
+  
+
+        List<Ganhos> ganhos = Stream.concat(
+            ganhorepositorio.findByEmail(session.getEmail()).stream(), 
+            ganhorepositorio.findByMonthAndYearCurrent().stream()
+        )
+        .distinct()
+        .collect(Collectors.toList());
 
         return ganhos;
     }

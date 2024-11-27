@@ -1,17 +1,3 @@
-const allBtnEdit = document.querySelectorAll('#editar');
-
-allBtnEdit.forEach(btnEdit => {
-    btnEdit.addEventListener("click", function(){
-        window.location = "/contas/editar/" + btnEdit.getAttribute("data-id");
-    })
-});
-
-allBtnEdit.forEach(btnEdit => {
-    btnEdit.addEventListener("click", function(){
-        window.location = "/contas/editar/" + btnEdit.getAttribute("data-id");
-    })
-});
-
 const allBtnExcluir = document.querySelectorAll("#excluir");
 
 allBtnExcluir.forEach(btnExcluir => {
