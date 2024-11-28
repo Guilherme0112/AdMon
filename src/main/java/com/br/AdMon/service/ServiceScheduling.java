@@ -2,6 +2,7 @@ package com.br.AdMon.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.stream.Collectors;
 // import java.util.stream.Stream;
@@ -30,7 +31,7 @@ public class ServiceScheduling {
     @Autowired
     private ContaDao contaRepository;
 
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(cron = "0 0 0 1 * *")
     public void RegistroMensalDosDados(){
 
         // Lógica para calcular se o usuário fechou o mês no positivo ou negativo
@@ -41,10 +42,12 @@ public class ServiceScheduling {
         LocalDate data = LocalDate.now();
         int mes = data.getMonthValue();
         int ano = data.getYear();
+        LocalDate ultimoDiaDoMes = data.with(TemporalAdjusters.lastDayOfMonth());
 
         // Inicializando variaveis
         BigDecimal totalGanhos = BigDecimal.ZERO;
         BigDecimal totalContas = BigDecimal.ZERO;
+        BigDecimal totalSaldo = BigDecimal.ZERO;
 
         // Busca os e-mails
         List<Usuarios> usuarios = usuarioRepository.findAll();
@@ -65,6 +68,7 @@ public class ServiceScheduling {
 
                 totalGanhos = totalGanhos.add(ganho.getValor());
             }
+            
 
             // Soma das contas
             List<Contas> contas = contaRepository.findByEmailAndMonthAndYear(usuario.getEmail(), mes, ano);
@@ -73,12 +77,41 @@ public class ServiceScheduling {
             for(Contas conta : contas){
                 totalContas = totalContas.add(conta.getValor());
             }
-            
-            System.out.println(totalGanhos);
-            System.out.println(totalContas);
 
+            totalSaldo = totalGanhos.subtract(totalContas);
+            
+            if(totalSaldo.signum() > 0){
+                Ganhos addGanho = new Ganhos();
+
+                addGanho.setAnotacao("Saldo do mês anterior");
+                addGanho.setEsteMes(true);
+                addGanho.setUserEmail(usuario.getEmail());
+                addGanho.setValor(totalSaldo);
+                addGanho.setGanho("Saldo do mês anterior");
+
+                ganhoRepository.save(addGanho);
+                System.out.println("Ganho salvo");
+
+            } else if (totalSaldo.signum() < 0){
+
+                Contas addConta = new Contas();
+
+                addConta.setAnotacao("Saldo do mês anterior");
+                addConta.setPago("false");
+                addConta.setUserEmail(usuario.getEmail());
+                addConta.setValor(totalSaldo.abs());
+                addConta.setConta("Saldo do mês anterior");
+                addConta.setVencimento(ultimoDiaDoMes);
+
+                contaRepository.save(addConta);
+
+                System.out.println("Conta salva");
+            }
+
+    
             totalContas = BigDecimal.ZERO;
             totalGanhos = BigDecimal.ZERO;
+            totalSaldo = BigDecimal.ZERO;
         }
 
     }
