@@ -33,7 +33,7 @@ public interface ContaDao extends JpaRepository<Contas, BigInteger>{
     public List<Contas> findByEmailAndStatus(String email, String status);
 
     @Query("SELECT c FROM Contas c WHERE MONTH(c.vencimento) = :mes AND YEAR(c.vencimento) = :ano")
-    public List<Contas> findByMonthAndYear(Integer mes, Integer ano);
+    List<Contas> findByMonthAndYear(Integer mes, Integer ano);
 
     @Query("SELECT c FROM Contas c WHERE c.userEmail = :email AND c.Id = :id")
     public List<Contas> findByEmailAndId(@Param("email") String email, @Param("id") Integer id);

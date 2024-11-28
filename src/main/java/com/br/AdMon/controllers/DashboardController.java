@@ -97,7 +97,7 @@ public class DashboardController {
 
         List<Ganhos> ganhos = Stream.concat(
             ganhorepositorio.findByEmail(session.getEmail()).stream(), 
-            ganhorepositorio.findByMonthAndYearCurrent().stream()
+            ganhorepositorio.findByMonthAndYearCurrent(session.getEmail()).stream()
         )
         .distinct()
         .collect(Collectors.toList());
