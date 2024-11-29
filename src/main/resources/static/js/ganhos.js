@@ -6,9 +6,9 @@ allBtnEdit.forEach(btnEdit => {
     })
 });
 
-const allBtnExcluir = document.querySelectorAll("#excluir");
+const allsBtnExcluir = document.querySelectorAll("#excluir");
 
-allBtnExcluir.forEach(btnExcluir => {
+allsBtnExcluir.forEach(btnExcluir => {
     btnExcluir.addEventListener("click", function(){
         
         const btnId = btnExcluir.getAttribute("data-id");
