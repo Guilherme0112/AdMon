@@ -4,10 +4,13 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.br.AdMon.models.Ganhos;
+
+import jakarta.transaction.Transactional;
 
 public interface GanhoDao extends JpaRepository<Ganhos, BigInteger>{
     @Query(value = "SELECT * FROM ganhos WHERE criado >= DATE_SUB(CURDATE(), INTERVAL 28 DAY)", nativeQuery = true)
@@ -25,4 +28,8 @@ public interface GanhoDao extends JpaRepository<Ganhos, BigInteger>{
     @Query("SELECT g FROM Ganhos g WHERE g.userEmail = :email AND g.esteMes = true AND YEAR(g.criado) = :ano AND MONTH(g.criado) = :mes")
     List<Ganhos> findByGanhosExpirationThisMonth(@Param("email") String email, @Param("ano") Integer ano, @Param("mes") Integer mes);
 
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Ganhos g WHERE g.userEmail = :email")
+    void deleteByEmail(@Param("email") String email);
 }

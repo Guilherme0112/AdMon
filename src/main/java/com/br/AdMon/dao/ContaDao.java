@@ -42,4 +42,9 @@ public interface ContaDao extends JpaRepository<Contas, BigInteger>{
     @Transactional
     @Query("UPDATE Contas c SET c.pago = :status WHERE c.userEmail = :email AND c.Id = :id")
     void updateStatusByEmail(@Param("status") String status, @Param("email") String email, @Param("id") Integer id);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Contas c WHERE c.userEmail = :email")
+    void deleteByEmail(@Param("email") String email);
 }

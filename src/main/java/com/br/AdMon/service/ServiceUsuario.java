@@ -9,6 +9,9 @@ import com.br.AdMon.Exceptions.CriptoException;
 import com.br.AdMon.Exceptions.EmailExistsException;
 import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
+import com.br.AdMon.controllers.AuthController;
+import com.br.AdMon.dao.ContaDao;
+import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.dao.UsuarioDao;
 import com.br.AdMon.models.Usuarios;
 
@@ -17,6 +20,13 @@ public class ServiceUsuario {
 
     @Autowired
     private UsuarioDao usuarioRepository;
+
+    @Autowired
+    private GanhoDao ganhoRepository;
+
+    @Autowired
+    private ContaDao contaRepository;
+
 
     public void salvarUsuario(Usuarios user) throws Exception {
         try {
@@ -56,6 +66,26 @@ public class ServiceUsuario {
             usuarioRepository.updatePassword(email, Util.md5(novaSenha));
         } catch (Exception err) {
             throw new Exception(err.getMessage(), err);
+        }
+    }
+
+    public void DeletarUsuario(String email) throws Exception{
+
+        try{
+            // Deletar dados do usuário
+            // Contas
+            contaRepository.deleteByEmail(email);
+
+            // Ganhos
+            ganhoRepository.deleteByEmail(email);
+
+            // Usuario
+            usuarioRepository.deleteByEmail(email);
+
+
+        } catch (Exception e){
+
+            throw new Exception("Erro: ", e);
         }
     }
 }

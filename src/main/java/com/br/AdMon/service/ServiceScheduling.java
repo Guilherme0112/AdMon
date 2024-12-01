@@ -52,10 +52,8 @@ public class ServiceScheduling {
         // Busca os e-mails
         List<Usuarios> usuarios = usuarioRepository.findAll();
 
-        // Soma de todos os ganhos e salvando na variavel que foi inicialiada
         // Inicia buscando dados do usuário
         for(Usuarios usuario : usuarios){
-            System.out.println(usuario.getNome());
             List<Ganhos> ganhos = Stream.concat(
                 ganhoRepository.findByEmail(usuario.getEmail()).stream(),
                 ganhoRepository.findByMonthAndYearCurrent(usuario.getEmail()).stream()

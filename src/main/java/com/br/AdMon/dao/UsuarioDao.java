@@ -23,4 +23,9 @@ public interface UsuarioDao extends JpaRepository<Usuarios, BigInteger>{
     @Transactional
     @Query("UPDATE Usuarios u SET u.senha = :senha WHERE u.email = :email")
     void updatePassword(@Param("email") String email, @Param("senha") String senha);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Usuarios u WHERE u.email = :email")
+    void deleteByEmail(@Param("email") String email);
 }

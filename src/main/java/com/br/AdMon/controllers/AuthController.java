@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.models.Usuarios;
+import com.br.AdMon.service.ServiceAuth;
 import com.br.AdMon.service.ServiceUsuario;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,9 @@ public class AuthController {
     
     @Autowired
     private ServiceUsuario usuarioService;
+
+    @Autowired
+    private ServiceAuth authService;
 
     @GetMapping("auth/login")
     public ModelAndView Login(HttpSession http){
@@ -109,8 +113,14 @@ public class AuthController {
     }
 
     @GetMapping("auth/logout")
-    public String Logout(HttpSession session){
-        session.invalidate();
+    public String Logout(HttpSession session) throws Exception{
+
+        try{
+            authService.Logout(session);
+        } catch (Exception e){
+            throw new Exception("Erro: ", e);
+        }
+        
         return "redirect:/auth/login";
     }
 
