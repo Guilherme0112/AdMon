@@ -33,4 +33,28 @@ public class ServiceContas {
             }
         }
     }
+
+    // Adiciona a quantidade de meses
+    public void quantidadeDeContas(Integer meses, Contas conta, String email) throws Exception{
+        try{
+            if (meses > 0 && meses < 24) {
+                for(int i = 1; i <= meses; i++){
+
+                    // Criando um registro para cada mês
+                    Contas indexConta = new Contas();
+
+                    indexConta.setConta(conta.getConta());
+                    indexConta.setUserEmail(email);
+                    indexConta.setVencimento(conta.getVencimento().plusMonths(i));
+                    indexConta.setValor(conta.getValor());
+                    indexConta.setAnotacao(conta.getAnotacao());
+
+                    contaRepository.save(indexConta);
+                    
+                }
+            }
+        } catch (Exception e){
+           throw new Exception("Erro: ", e); 
+        }
+    }
 }

@@ -74,23 +74,11 @@ public class ContasController {
         } else {
 
             try{
-                if (meses > 0) {
-                    for(int i = 0; i < meses; i++){
+                // Chama o método que cria as contas nos respectivos meses
+                serviceConta.quantidadeDeContas(meses, conta, session.getEmail());
 
-                        // Criando um registro para cada mês
-                        Contas indexConta = new Contas();
-
-                        indexConta.setConta(conta.getConta());
-                        indexConta.setUserEmail(session.getEmail());
-                        indexConta.setVencimento(conta.getVencimento().plusMonths(i + 1));
-                        indexConta.setValor(conta.getValor());
-                        indexConta.setAnotacao(conta.getAnotacao());
-
-                        contarepositorio.save(indexConta);
-                        
-                    }
-                }
             } catch (Exception e) {
+                
                 mv.setViewName("contas/add-conta");
                 mv.addObject("errorMeses", "Erro ao calcular tempo");
                 return mv;
