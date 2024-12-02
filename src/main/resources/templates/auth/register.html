@@ -48,6 +48,10 @@
                 <p class="errors" id="senha-error"></p>
             </div>
 
+            <div th:if="${erro_exception}" class="box-errors">
+                <p class="errors" style="text-align: start;" th:text="${erro_exception}"></p>
+            </div>
+
             <button id="submit">Registrar</button>
         </form>
     </main>

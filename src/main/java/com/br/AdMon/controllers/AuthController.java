@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.br.AdMon.Exceptions.EmailExistsException;
 import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.models.Usuarios;
@@ -78,37 +79,28 @@ public class AuthController {
         return mv;
     }
 
-    public ModelAndView RegistroPOST(@Valid Usuarios usuario, BindingResult br) throws Exception{
-        ModelAndView mv = new ModelAndView();
-
-        if(br.hasErrors()){
-
-            mv.addObject("usuarios", new Usuarios());
-            mv.setViewName("auth/register");
-        } else {
-
-            usuarioService.salvarUsuario(usuario);
-            mv.setViewName("redirect:/dashboard");
-        }
-
-        return mv;
-    }
-
     @PostMapping("auth/register")
-    public ModelAndView RegisterPOST(@Valid Usuarios usuarios, BindingResult br) throws Exception{
+    public ModelAndView RegisterPOST(@Valid Usuarios usuarios, BindingResult br) throws Exception, EmailExistsException{
+
         ModelAndView mv = new ModelAndView();
 
-        if(br.hasErrors()){
+        try{
+            if(br.hasErrors()){
+
+                mv.addObject("usuarios", new Usuarios());
+                mv.setViewName("auth/register");
+            } else {
+
+                // Cria o registro da conta
+                usuarioService.salvarUsuario(usuarios);
+                mv.setViewName("redirect:/auth/login");
+            }
+        } catch (EmailExistsException e){
 
             mv.addObject("usuarios", new Usuarios());
+            mv.addObject("erro_exception", e.getMessage());
             mv.setViewName("auth/register");
-        } else {
-
-            // Cria o registro da conta
-            usuarioService.salvarUsuario(usuarios);
-            mv.setViewName("redirect:/auth/login");
         }
-
         return mv;
     }
 
