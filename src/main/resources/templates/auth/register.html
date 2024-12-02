@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/register.css">
     <link rel="stylesheet" href="/css/add-conta.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
-    <script src="/js/scripts.js"></script>
     <title>Registrar</title>
 </head>
 <body>
@@ -21,7 +20,7 @@
     <main>
 
         <!-- Formulário -->
-        <form action="" method="post" th:object="${usuarios}">
+        <form action="" method="post" th:object="${usuarios}" id="form">
 
             <h1>Registrar</h1>
 
@@ -38,19 +37,23 @@
             </div>
 
             <!-- Senha do usuário -->
-            <input type="password" th:field="*{senha}" placeholder="Senha">
+            <input type="password" th:field="*{senha}" placeholder="Senha" id="senha">
             <div class="box-errors" th:if="${#fields.hasErrors('senha')}">
                 <p class="errors" th:errors="*{senha}"></p>
             </div>
 
             <!-- Confirmar senha do usuário -->
-            <input type="password" placeholder="Repita a senha">
+            <input type="password" placeholder="Repita a senha" id="rsenha">
             <div class="box-errors">
-                <p class="errors"></p>
+                <p class="errors" id="senha-error"></p>
             </div>
 
-            <button>Criar</button>
+            <button id="submit">Registrar</button>
         </form>
     </main>
+
+    <!-- Scripts -->
+    <script src="/js/scripts.js"></script>
+    <script src="/js/register.js"></script>
 </body>
 </html>

@@ -177,3 +177,40 @@ hr{
     font-size: 15px;
     color: white;
 }
+
+/* Modal */
+
+.modal{
+    display: none;
+
+    max-width: 600px;
+    background-color: white;
+    padding: 0 10px;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 999;
+}
+.modal p{
+    margin: 10px 0;
+}
+.overlay{
+    display: none;
+
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+#close{
+    position: relative;
+
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+    left: 97%;
+}

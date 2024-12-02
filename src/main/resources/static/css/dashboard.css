@@ -36,8 +36,8 @@ body{
     margin: 20px;
 }
 
-
 /* Informações */
+
 .info{
     width: 100%;
     padding: 10px;
@@ -72,4 +72,17 @@ body{
 }
 #dataNowMonth:hover{
     text-decoration: underline;
+}
+
+.no-data{
+    color: white;
+    margin: 20px 0;
+    width: 300px;
+    text-align: center;
+    font-size: 25px;
+    border-bottom: 2px solid white;
+    border-top: 2px solid white;
+
+    padding: 20px 0;
+    margin: 20px auto;
 }

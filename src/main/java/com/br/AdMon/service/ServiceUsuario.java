@@ -9,7 +9,6 @@ import com.br.AdMon.Exceptions.CriptoException;
 import com.br.AdMon.Exceptions.EmailExistsException;
 import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
-import com.br.AdMon.controllers.AuthController;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.dao.UsuarioDao;

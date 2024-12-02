@@ -38,13 +38,22 @@
             </div>
         </section>
         <hr>
-        <section>
-            <div class="box-info">
+        <section style="width: 100%; display: flex; justify-content: space-around;">
+            <div style="width: 400px;"></div>
+            <div class="box-del">
                 <h1>Deletar Conta</h1>
                 <button id="del">Deletar Conta</button>
             </div>
         </section>
     </main>
+
+    <!-- Modal -->
+     <div class="modal" id="confirm-del">
+        <span id="close">x</span>
+        <p>Deseja realmente apagar esta conta? Esta ação é irreverssível e você perderá dados importantes. Caso queira voltar a utilizar esta conta você terá que recadastrar.</p>
+        <button id="confirm">Confirmar</button>
+     </div>
+     <div class="overlay" id="overlay"></div>
 
     <!-- Scripts -->
     <script src="/js/scripts.js"></script>

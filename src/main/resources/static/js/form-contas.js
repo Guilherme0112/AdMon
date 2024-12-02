@@ -16,7 +16,7 @@ if (document.getElementById("checkJustForMonthNow")) {
 // Validação da senha em perfil/perfil.html
 
 if (document.querySelector("#formSenha")) {
-
+    const form = document.querySelector("#formSenha");
     const btnSubmit = document.querySelector("#submit");
 
     btnSubmit.addEventListener("click", function(event){

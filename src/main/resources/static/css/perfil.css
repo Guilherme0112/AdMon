@@ -16,3 +16,19 @@
     font-size: 50px;
     margin-top: 30px;
 }
+.box-del{
+    background-color: white;
+    width: 400px;
+    height: 150px;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+}
+#del{
+    background-color: #db0000;
+}
