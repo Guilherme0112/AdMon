@@ -29,6 +29,7 @@ public class HomeController {
 
     @GetMapping("/dashboard")
     public ModelAndView Dashboard(HttpSession http){
+        
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -38,9 +39,6 @@ public class HomeController {
         }
         
         Usuarios session = (Usuarios) http.getAttribute("session");
-
-        LocalDate startDate = LocalDate.now();
-        LocalDate endDate = startDate.plusDays(7);
 
         mv.setViewName("dashboard/dashboard");
         mv.addObject("contas", contaRepository.findContasLast7Days(session.getEmail()));

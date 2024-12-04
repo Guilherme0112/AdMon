@@ -54,6 +54,7 @@ public class ServiceScheduling {
 
         // Inicia buscando dados do usuário
         for(Usuarios usuario : usuarios){
+
             List<Ganhos> ganhos = Stream.concat(
                 ganhoRepository.findByEmail(usuario.getEmail()).stream(),
                 ganhoRepository.findByMonthAndYearCurrent(usuario.getEmail()).stream()
@@ -73,12 +74,14 @@ public class ServiceScheduling {
 
             //Somando
             for(Contas conta : contas){
+
                 totalContas = totalContas.add(conta.getValor());
             }
 
             totalSaldo = totalGanhos.subtract(totalContas);
             
             if(totalSaldo.signum() > 0){
+                
                 Ganhos addGanho = new Ganhos();
 
                 addGanho.setAnotacao("Saldo do mês anterior");

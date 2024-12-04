@@ -44,11 +44,8 @@ public class ContasController {
             return mv;
         }
 
-      
-
         mv.setViewName("contas/add-conta");
         mv.addObject("conta", new Contas());
-
 
         return mv;
     }
@@ -99,6 +96,7 @@ public class ContasController {
 
     @GetMapping("/contas/editar/{id}")
     public ModelAndView EditarConta(@PathVariable("id") BigInteger id, HttpSession http){
+
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -136,7 +134,9 @@ public class ContasController {
 
             mv.addObject("contas", conta);
             mv.setViewName("contas/editar-conta");
+            
         } else { 
+
             Usuarios session = (Usuarios) http.getAttribute("session");
             conta.setUserEmail(session.getEmail());
             contarepositorio.save(conta);

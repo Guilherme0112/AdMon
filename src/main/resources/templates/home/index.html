@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="img/logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="css/media-query/index.css">
-    <script src="js/scripts.js"></script>
+    <link rel="stylesheet" href="css/home.css">
     <title>AdMon</title>
 </head>
 <body>
@@ -65,11 +65,40 @@
         <hr>
 
         <!-- Terceira parte da página -->
-        <section>
-            <h1 style="font-size: 40px; color: white; height: 3em; line-height: 1em; text-align: center;">Perguntas frequentes</h1>
+        <section style="width: 100%; border-radius: 10px; display: flex; flex-wrap: wrap; justify-content: center; padding: 10px; margin: 20px;">
+            <img src="../img/notebook-home.png" class="img-notebook">
+            <div style="display: flex; flex-wrap: wrap; width: 350px">
+                <h1 style="color: white; font-size: 4vw; padding: 30px 0 0 20px;">
+                    Gerencia seus ganhos e suas contas                 
+                    <p style="color: white; font-size: 2vw;">através de um dahsboard dinámico</p>
+                <h1>
+            </div>
+        </section>
 
-            <div>
+        <hr>
 
+        <!-- Quarta parte da página -->
+        <section style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
+            <h1 style="font-size: 40px; color: white; height: 2em; line-height: 1em; text-align: center;">Perguntas frequentes</h1>
+
+            <div class="pergunta-box" id="pergunta-box">
+                <h2>Como posso traçar metas usando o AdMon?</h1>
+                <p id="resp">Nosso site oferece ferramentas profissionais para que você possa se planejar de maneira intuitiva e fácil. Você pode organizar tudo em um só lugar com o cadastro de ganhos e de contas, onde todo mês você tem os dados em um dashboard fácil de ler e entender. Dívidas ou saldos são repassados para o próximo mês caso você não consiga pagar.</p>
+            </div>
+
+            <div class="pergunta-box" id="pergunta-box">
+                <h2>Quando custa para usar o AdMon?</h2>
+                <p id="resp">Atualmente você não precisa pagar nada para usar o nosso site, ele é totalmente gratuito para que você possa se planejar sem precisar gastar nada.</p>
+            </div>
+
+            <div class="pergunta-box" id="pergunta-box">
+                <h2>É seguro usar o AdMon?</h2>
+                <p id="resp">Sim, nosso site criptografa os dados sensíveis do usuário. Também temos verificação por e-mail e por senha, garantindo que somente você possa alterar dados sensíveis da sua conta.</p>
+            </div>
+
+            <div class="pergunta-box" id="pergunta-box">
+                <h2>Como posso ajudar com sugestões para o site?</h2>
+                <p id="resp">Você pode enviar um e-mail para teste@email.com e sugerir melhorias! Estamos sempre tentando oferecer as melhores ferramentas para você.</p>
             </div>
 
         </section>
@@ -77,5 +106,8 @@
 
     <!-- Componente footer importado do diretório /components/component.html -->
     <footer th:replace="components/component :: footer"></footer>
+
+    <!-- Scripts -->
+    <script src="js/scripts.js"></script>
 </body>
 </html>

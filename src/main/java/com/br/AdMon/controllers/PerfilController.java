@@ -29,6 +29,7 @@ public class PerfilController {
 
     @GetMapping("/perfil/editar")
     public ModelAndView PerfilSenha(HttpSession http){
+
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -43,6 +44,7 @@ public class PerfilController {
 
     @PostMapping("/perfil/editar")
     public ModelAndView PerfilSenhaPost(@RequestParam String senhaAntiga, @RequestParam String senhaNova, HttpSession http) throws  Exception{
+
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -52,6 +54,7 @@ public class PerfilController {
         }
 
         try{
+
             Usuarios session = (Usuarios) http.getAttribute("session");
             Usuarios usuario = usuarioService.loginUsuario(session.getEmail(), Util.md5(senhaAntiga));
 
@@ -65,6 +68,7 @@ public class PerfilController {
             mv.setViewName("redirect:/dashboard");
             
         } catch (Exception err){
+
             mv.addObject("msgError", err.getMessage());
             mv.setViewName("perfil/perfil");
         }
@@ -83,12 +87,15 @@ public class PerfilController {
         Boolean del = body.get("del");
 
         if(Boolean.TRUE.equals(del)){
+
             try {
+
                 Usuarios session = (Usuarios) http.getAttribute("session");
                 usuarioService.DeletarUsuario(session.getEmail());
                 authService.Logout(http);
 
             } catch (Exception e) {
+                
                 throw new Exception("Erro: ", e);
             }
                 

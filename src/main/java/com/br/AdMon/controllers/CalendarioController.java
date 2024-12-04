@@ -28,6 +28,7 @@ public class CalendarioController {
 
     @GetMapping("/calendario/{ano}")
     public ModelAndView Calendario(HttpSession http, @PathVariable("ano") Integer ano){
+
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -52,6 +53,7 @@ public class CalendarioController {
 
     @GetMapping("/calendario/{mes}/{ano}")
     public ModelAndView Mes(HttpSession http, @PathVariable("mes") Integer mes, @PathVariable("ano") Integer ano){
+
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -60,7 +62,7 @@ public class CalendarioController {
         }
 
         Usuarios session = (Usuarios) http.getAttribute("session");
-        String mesString = null;
+        String mesString = null; //Inicializando a variavel para receber o mês
 
         // Retorna o nome do mês
         switch (mes) {
@@ -79,6 +81,7 @@ public class CalendarioController {
             default -> throw new IllegalArgumentException("Mês inválido");
         }
 
+        // Retorna os valores do respectivo mês
         mv.addObject("mes", mesString);
         mv.addObject("contas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "false"));
         mv.addObject("contas_pagas", contaRepository.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mes, ano, "true"));

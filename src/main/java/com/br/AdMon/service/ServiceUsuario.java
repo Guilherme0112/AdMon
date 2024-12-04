@@ -28,6 +28,7 @@ public class ServiceUsuario {
 
 
     public void salvarUsuario(Usuarios user) throws Exception {
+
         try {
 
             // Verifica se o E-mail já está em uso
@@ -46,12 +47,15 @@ public class ServiceUsuario {
     }
 
     public Usuarios loginUsuario(String email, String senha) throws VerifyAuthException {
+
         Usuarios usuario = usuarioRepository.findLogin(email, senha);
         return usuario;
     }
 
     public void alterarSenha(String email, String senhaAntiga, String novaSenha) throws Exception {
+
         try {
+            
             if (novaSenha.length() < 8) {
                 throw new Exception("A senha deve ter 8 ou mais caracteres");
             }
@@ -63,7 +67,9 @@ public class ServiceUsuario {
             }
 
             usuarioRepository.updatePassword(email, Util.md5(novaSenha));
+
         } catch (Exception err) {
+
             throw new Exception(err.getMessage(), err);
         }
     }

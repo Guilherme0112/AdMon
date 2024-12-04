@@ -26,6 +26,7 @@ public class DashboardController {
 
     @Autowired
     private ContaDao contarepositorio;
+
     @Autowired
     private GanhoDao ganhorepositorio;
 
@@ -48,7 +49,6 @@ public class DashboardController {
         List<Contas> contas_pagas = contarepositorio.findByEmailAndMonthAndYearAndStatus(session.getEmail(), mesAtual, anoAtual, "true");
         List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
         List<Ganhos> ganhos_este_mes = ganhorepositorio.findByGanhosExpirationThisMonth(session.getEmail(), anoAtual, mesAtual);
-
 
         if (contas_pagas.size() > 0) {
             for (Contas contaI : contas_pagas) {
@@ -93,7 +93,6 @@ public class DashboardController {
     public List<Ganhos> Dashboard_3(HttpSession http) {
     
         Usuarios session = (Usuarios) http.getAttribute("session");
-  
 
         List<Ganhos> ganhos = Stream.concat(
             ganhorepositorio.findByEmail(session.getEmail()).stream(), 

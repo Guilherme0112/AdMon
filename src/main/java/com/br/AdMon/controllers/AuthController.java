@@ -30,6 +30,7 @@ public class AuthController {
 
     @GetMapping("auth/login")
     public ModelAndView Login(HttpSession http){
+
         ModelAndView mv = new ModelAndView();
 
         if(Util.isAuth(http)){
@@ -45,28 +46,38 @@ public class AuthController {
     }
 
     @PostMapping("auth/login")
-    public ModelAndView LoginPOST(Usuarios usuarios, HttpSession session) throws NoSuchAlgorithmException, VerifyAuthException{
+    public ModelAndView LoginPOST(Usuarios usuarios, HttpSession http) throws NoSuchAlgorithmException, VerifyAuthException{
+
         ModelAndView mv = new ModelAndView();
 
+        if(Util.isAuth(http)){
+
+            mv.setViewName("redirect:/");
+            return mv;
+        }
 
         // Verifica as credenciais
         Usuarios loginUser = usuarioService.loginUsuario(usuarios.getEmail(), Util.md5(usuarios.getSenha()));
 
         if(loginUser == null){
+
             mv.addObject("msg", "As credenciais estão incorretas");
             mv.addObject("usuarios", usuarios);
             mv.setViewName("auth/login");
+            return mv;
 
-        } else {
-            session.setAttribute("session", loginUser);
-            mv.setViewName("redirect:/dashboard");
-        }
+        } 
+
+        // Cria a sessão caso não entre no if
+        http.setAttribute("session", loginUser);
+        mv.setViewName("redirect:/dashboard");
 
         return mv;
     }
 
     @GetMapping("auth/register")
     public ModelAndView Registrar(HttpSession http){
+
         ModelAndView mv = new ModelAndView();
 
         if(Util.isAuth(http)){
@@ -80,27 +91,37 @@ public class AuthController {
     }
 
     @PostMapping("auth/register")
-    public ModelAndView RegisterPOST(@Valid Usuarios usuarios, BindingResult br) throws Exception, EmailExistsException{
+    public ModelAndView RegisterPOST(@Valid Usuarios usuarios, BindingResult br, HttpSession http) throws Exception, EmailExistsException{
 
         ModelAndView mv = new ModelAndView();
 
+        if(Util.isAuth(http)){
+
+            mv.setViewName("redirect:/");
+            return mv;
+        } 
+
         try{
+
             if(br.hasErrors()){
 
+                // Retorna para a view com os erros
                 mv.addObject("usuarios", new Usuarios());
                 mv.setViewName("auth/register");
-            } else {
+                return mv;
+            } 
 
-                // Cria o registro da conta
-                usuarioService.salvarUsuario(usuarios);
-                mv.setViewName("redirect:/auth/login");
-            }
+            // Cria o registro da conta
+            usuarioService.salvarUsuario(usuarios);
+            mv.setViewName("redirect:/auth/login");
+            
         } catch (EmailExistsException e){
 
             mv.addObject("usuarios", new Usuarios());
             mv.addObject("erro_exception", e.getMessage());
             mv.setViewName("auth/register");
         }
+
         return mv;
     }
 
@@ -108,8 +129,10 @@ public class AuthController {
     public String Logout(HttpSession session) throws Exception{
 
         try{
+
             authService.Logout(session);
         } catch (Exception e){
+
             throw new Exception("Erro: ", e);
         }
         

@@ -1,0 +1,30 @@
+
+.pergunta-box{
+
+    background-color: #43e5a0;
+    border-radius: 10px;
+    padding: 10px;
+    width: 80%;
+    height: auto;
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: .3s;
+    margin: 10px 0;
+}
+.pergunta-box h2{
+    color: white;
+    margin: 10px 0;
+    /* text-shadow: 1px 1px 3px black; */
+}
+.pergunta-box p{
+    color: white;
+    display: none;
+    font-size: 15px;
+}
+
+.img-notebook{
+    width: 50%;
+    border-radius: 10px;
+    object-fit: cover;
+}

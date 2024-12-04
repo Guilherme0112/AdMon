@@ -75,6 +75,7 @@ public class GanhosController {
 
     @GetMapping("/ganhos/criar")
     public ModelAndView InserirGanhos(Ganhos ganho, HttpSession http){
+
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -88,9 +89,8 @@ public class GanhosController {
     }
     @PostMapping("/ganhos/criar")
     public ModelAndView InserirGanhosPost(@Valid Ganhos ganho, BindingResult br, HttpSession http){
+
         ModelAndView mv = new ModelAndView();
-
-
 
         if(br.hasErrors()){
 
@@ -114,6 +114,7 @@ public class GanhosController {
 
     @GetMapping("/ganhos/editar/{id}")
     public ModelAndView EditarGanho(@PathVariable("id") Integer id, HttpSession http){
+
         ModelAndView mv = new ModelAndView();
 
         if(!Util.isAuth(http)){
@@ -139,6 +140,7 @@ public class GanhosController {
 
     @PostMapping("/ganhos/editar")
     public ModelAndView EditarGanhoPost(@Valid Ganhos ganho, BindingResult br, HttpSession http){
+        
         ModelAndView mv = new ModelAndView();
         
         if(!Util.isAuth(http)){

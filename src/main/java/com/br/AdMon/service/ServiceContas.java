@@ -27,8 +27,10 @@ public class ServiceContas {
             String status = conta.getPago();
 
             if ("false".equals(status)) {
+
                 contaRepository.updateStatusByEmail("true", email, id);
             } else {
+                
                 contaRepository.updateStatusByEmail("false", email, id);
             }
         }
@@ -37,7 +39,9 @@ public class ServiceContas {
     // Adiciona a quantidade de meses
     public void quantidadeDeContas(Integer meses, Contas conta, String email) throws Exception{
         try{
+
             if (meses > 0 && meses < 24) {
+
                 for(int i = 1; i <= meses; i++){
 
                     // Criando um registro para cada mês
@@ -54,6 +58,7 @@ public class ServiceContas {
                 }
             }
         } catch (Exception e){
+
            throw new Exception("Erro: ", e); 
         }
     }

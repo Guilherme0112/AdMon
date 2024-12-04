@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpSession;
 public class ServiceAuth {
 
     public void Logout(HttpSession http){
+        
         http.invalidate();
     }
 }
