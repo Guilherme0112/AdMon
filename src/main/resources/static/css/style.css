@@ -172,6 +172,7 @@ hr{
 
     object-fit: cover;
     object-position: center;
+    margin: 10px 0;
 }
 .h1-home-1{
     color: white;
@@ -189,7 +190,7 @@ hr{
     display: none;
 
     max-width: 600px;
-    background-color: white;
+    background-color: #b8fadd;
     padding: 0 10px;
 
     position: fixed;
@@ -201,6 +202,7 @@ hr{
 }
 .modal p{
     margin: 10px 0;
+    color: #06613b;
 }
 .overlay{
     display: none;
@@ -217,5 +219,5 @@ hr{
     font-size: 20px;
     cursor: pointer;
     padding: 10px;
-    left: 97%;
+    left: 96%;
 }
