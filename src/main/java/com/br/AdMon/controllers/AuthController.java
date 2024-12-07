@@ -14,6 +14,7 @@ import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceAuth;
+import com.br.AdMon.service.ServiceEmail;
 import com.br.AdMon.service.ServiceUsuario;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,9 @@ import jakarta.validation.Valid;
 @Controller
 public class AuthController {
     
+    @Autowired
+    private ServiceEmail emailService;
+
     @Autowired
     private ServiceUsuario usuarioService;
 
@@ -113,6 +117,11 @@ public class AuthController {
 
             // Cria o registro da conta
             usuarioService.salvarUsuario(usuarios);
+            
+            emailService.sendEmail(usuarios.getEmail(),
+                        "Sua conta no AdMon",
+                        "Sua conta foi criada com sucesso!");
+
             mv.setViewName("redirect:/auth/login");
             
         } catch (EmailExistsException e){
