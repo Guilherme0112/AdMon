@@ -17,7 +17,11 @@ body{
     align-items: start;
     flex-wrap: wrap;
 }
-
+.grafico-m-r{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 #dado_1, #dado_2, #dado_3 {
     width: 100%;
     display: flex;

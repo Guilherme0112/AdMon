@@ -92,6 +92,7 @@ fetch("/dashboard_rosca_ganhos")
     .then(response => response.json())
     .then(resposta => {
 
+        // Se não houver dados
         if (resposta && resposta.length == 0) {
         
             document.getElementById("donutchart_2").classList = "no-data";
@@ -145,3 +146,46 @@ fetch("/dashboard_rosca_ganhos")
 
     })
 
+    // Gráfico de montanha russa
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Mês', 'Saldo'],
+        ['Setembro',  1000],
+        ['Outubro',  1170],
+        ['Novembro',  -660],
+        ['Dezembro',  1030]
+      ]);
+
+      var options = {
+        title: 'Últimos 4 meses',
+        backgroundColor: "transparent",
+        titleTextStyle: {
+            fontSize: 25,
+            color: "white",
+        },
+        legend: {
+            textStyle: {
+                color: 'white'
+            }
+        },
+        hAxis: {
+            title: '',  
+            textStyle: {
+                color: 'white'
+            }
+        },
+        vAxis: {
+            minValue: 0, 
+            textStyle:{
+                color: "white"
+            }
+        }
+      };
+
+      var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
