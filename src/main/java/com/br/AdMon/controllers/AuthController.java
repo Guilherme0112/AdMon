@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Exceptions.EmailExistsException;
 import com.br.AdMon.Exceptions.VerifyAuthException;
+import com.br.AdMon.Util.JWTUtil;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceAuth;
@@ -62,6 +63,8 @@ public class AuthController {
 
         // Verifica as credenciais
         Usuarios loginUser = usuarioService.loginUsuario(usuarios.getEmail(), Util.md5(usuarios.getSenha()));
+
+        System.out.println(loginUser.getEmail() + loginUser.getSenha());
 
         if(loginUser == null){
 
@@ -115,16 +118,16 @@ public class AuthController {
                 return mv;
             } 
 
-            // Cria o registro da conta
-            usuarioService.salvarUsuario(usuarios);
+            // Cria o token
+            String token = JWTUtil.generateToken(usuarios.getEmail(), usuarios.getNome(), Util.md5(usuarios.getSenha()));
             
             emailService.sendEmail(usuarios.getEmail(),
-                        "Sua conta no AdMon",
-                        "Sua conta foi criada com sucesso!");
+                        "Confirme sua conta",
+                        "<a href='localhost:8080/verify-email/" + token + "'>Confirmar E-mail</a>");
 
-            mv.setViewName("redirect:/auth/login");
+            mv.setViewName("redirect:/sended-email");
             
-        } catch (EmailExistsException e){
+        } catch (Exception e){
 
             mv.addObject("usuarios", new Usuarios());
             mv.addObject("erro_exception", e.getMessage());
