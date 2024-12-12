@@ -1,8 +1,29 @@
-// Dado 1
-fetch("/dashboard_grafico_1")
-    .then(response => response.json())
-    .then(resposta => {
+// Função que busca os dados
+async function fetchData(url) {
+    try {
 
+        const response = await fetch(url);
+
+        // Caso houer erros
+        if (!response.ok) {
+            throw new Error("Erro: " + response.status + " | " + response.statusText);
+        }
+
+        // Converte para JSON
+        const data = await response.json();
+
+        return data;
+
+    } catch (e) {
+
+        console.error("Erro ao buscar dados: " + e);
+
+    }
+}
+
+// Exibe o total, os ganhos subtraído pelas contas
+fetchData("/dashboard_grafico_1")
+    .then(resposta => {
 
         // A cor da fonte fica vermelho caso o valor seja negativo
         var total = document.getElementById("valor");
@@ -23,16 +44,12 @@ fetch("/dashboard_grafico_1")
         document.getElementById("valor").innerHTML = numeroFormatado;
         document.getElementById('dado_1').style.display = "block";
         document.getElementById('load_1').style.display = "none";
+
     })
 
-    // Se der erro, retorna a mensagem no  console
-    .catch(err => {
-        console.log(err);
-    })
 
 // Dado 2
-fetch("/dashboard_rosca_contas")
-    .then(response => response.json())
+fetchData("/dashboard_rosca_contas")
     .then(resposta => {
 
         if (resposta && resposta.length == 0) {
@@ -44,64 +61,66 @@ fetch("/dashboard_rosca_contas")
             return;
         }
 
-            // Cria o modelo de array 
-            var dados = [["Categoria", "Valor"]];
-            var index = [];
-            resposta.forEach(element => {
+        // Cria o modelo de array 
+        var dados = [["Categoria", "Valor"]];
+        var index = [];
+        resposta.forEach(element => {
 
-                index = [element.conta, element.valor]
-                dados.push(index);
+            index = [element.conta, element.valor]
+            dados.push(index);
 
-            });
+        });
 
-            google.charts.load("current", { packages: ["corechart"] });
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
 
 
-                // Converter a array para o modelo aceito
-                var data = google.visualization.arrayToDataTable(dados);
+            // Converter a array para o modelo aceito
+            var data = google.visualization.arrayToDataTable(dados);
 
-                // Cofigurações
-                var options = {
-                    title: 'Gráfico das Contas',
-                    width: 1000,
-                    height: 400,
-                    pieHole: 0.4,
-                    backgroundColor: "transparent",
-                    titleTextStyle: {
-                        color: "white",
-                        fontSize: 25,
-                    },
-                    legend: {
-                        textStyle: {
-                            color: 'white'
-                        }
+            // Cofigurações
+            var options = {
+                title: 'Gráfico das Contas',
+                width: 1000,
+                height: 400,
+                pieHole: 0.4,
+                backgroundColor: "transparent",
+                titleTextStyle: {
+                    color: "white",
+                    fontSize: 25,
+                },
+                legend: {
+                    textStyle: {
+                        color: 'white'
                     }
-                };
+                }
+            };
 
-                var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-                chart.draw(data, options);
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
 
-            }
-            document.getElementById('load_2').style.display = "none";
-    });
+        }
+
+        document.getElementById('load_2').style.display = "none";
+    })
+
+
 
 // Dado 3
-fetch("/dashboard_rosca_ganhos")
-    .then(response => response.json())
+fetchData("/dashboard_rosca_ganhos")
     .then(resposta => {
 
         // Se não houver dados
         if (resposta && resposta.length == 0) {
-        
+
             document.getElementById("donutchart_2").classList = "no-data";
             document.getElementById('donutchart_2').innerHTML = "Sem dados por agora";
             document.getElementById('load_3').style.display = "none";
 
             return;
         }
-    
+
         // Cria o modelo de array 
         var dados = [["Categoria", "Valor"]];
         var index = [];
@@ -143,49 +162,57 @@ fetch("/dashboard_rosca_ganhos")
 
             document.getElementById('load_3').style.display = "none";
         }
-
     })
 
-    // Gráfico de montanha russa
 
-    google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ['Mês', 'Saldo'],
-        ['Setembro',  1000],
-        ['Outubro',  1170],
-        ['Novembro',  -660],
-        ['Dezembro',  1030]
-      ]);
 
-      var options = {
-        title: 'Últimos 4 meses',
-        backgroundColor: "transparent",
-        titleTextStyle: {
-            fontSize: 25,
-            color: "white",
-        },
-        legend: {
-            textStyle: {
-                color: 'white'
+// Gráfico de montanha russa
+fetchData("/grafico_montanha_russa")
+    .then(dado => {
+        if (dado) {
+
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([
+                    ['Mês', 'Saldo'],
+                    ['Setembro', dado[0]],
+                    ['Outubro', dado[1]],
+                    ['Novembro', dado[2]],
+                    ['Dezembro', dado[3]]
+                ]);
+
+                var options = {
+                    title: 'Últimos 4 meses',
+                    backgroundColor: "transparent",
+                    titleTextStyle: {
+                        fontSize: 25,
+                        color: "white",
+                    },
+                    legend: {
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+                    hAxis: {
+                        title: '',
+                        textStyle: {
+                            color: 'white'
+                        }
+                    },
+                    vAxis: {
+                        minValue: 0,
+                        textStyle: {
+                            color: "white"
+                        }
+                    }
+                };
+
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
             }
-        },
-        hAxis: {
-            title: '',  
-            textStyle: {
-                color: 'white'
-            }
-        },
-        vAxis: {
-            minValue: 0, 
-            textStyle:{
-                color: "white"
-            }
+
         }
-      };
-
-      var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-      chart.draw(data, options);
-    }
+    })

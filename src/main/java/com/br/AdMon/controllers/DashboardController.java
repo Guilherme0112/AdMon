@@ -75,8 +75,20 @@ public class DashboardController {
         return total; // Retorna o valor total calculado
     }
 
+    @GetMapping("/grafico_montanha_russa")
+    public int[] Dashboard_2(){
+
+        // Vai retornar o total de cada mês em uma array
+        // Cada valor representa um mês, vamos retornar os valores
+        // dos últimos 4 mêses
+
+        int[] dados = {1, 2, 3 ,4};
+
+        return dados;
+    }
+
     @GetMapping("/dashboard_rosca_contas")
-    public List<Contas> Dashboard_2(HttpSession http) {
+    public List<Contas> Dashboard_3(HttpSession http) {
 
          // Ano e mês atual
          LocalDate dataAtual = LocalDate.now();
@@ -90,7 +102,7 @@ public class DashboardController {
         return contas;
     }
     @GetMapping("/dashboard_rosca_ganhos")
-    public List<Ganhos> Dashboard_3(HttpSession http) {
+    public List<Ganhos> Dashboard_4(HttpSession http) {
     
         Usuarios session = (Usuarios) http.getAttribute("session");
 
