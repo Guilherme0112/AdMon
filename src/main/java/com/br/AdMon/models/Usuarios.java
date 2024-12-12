@@ -25,6 +25,8 @@ public class Usuarios {
     @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
     private String senha;
 
+    private Boolean ativo = false;
+
     // Getters
     public BigInteger getId(){
         return id;
@@ -37,6 +39,9 @@ public class Usuarios {
     }
     public String getSenha(){
         return senha;
+    }
+    public Boolean getAtivo(){
+        return ativo;
     }
 
     // Setters
@@ -51,5 +56,8 @@ public class Usuarios {
     }
     public void setSenha(String senha){
         this.senha = senha;
+    }
+    public void setAtivo(Boolean ativo){
+        this.ativo = ativo;
     }
 }

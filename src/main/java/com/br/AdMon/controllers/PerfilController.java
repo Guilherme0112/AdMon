@@ -57,7 +57,7 @@ public class PerfilController {
         try{
 
             Usuarios session = (Usuarios) http.getAttribute("session");
-            Usuarios usuario = usuarioService.loginUsuario(session.getEmail(), Util.md5(senhaAntiga));
+            Usuarios usuario = usuarioService.loginUsuario(session.getEmail(), senhaAntiga);
 
             if(usuario == null){
 

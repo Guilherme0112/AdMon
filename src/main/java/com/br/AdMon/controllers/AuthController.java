@@ -62,9 +62,7 @@ public class AuthController {
         }
 
         // Verifica as credenciais
-        Usuarios loginUser = usuarioService.loginUsuario(usuarios.getEmail(), Util.md5(usuarios.getSenha()));
-
-        System.out.println(loginUser.getEmail() + loginUser.getSenha());
+        Usuarios loginUser = usuarioService.loginUsuario(usuarios.getEmail(), usuarios.getSenha());
 
         if(loginUser == null){
 
@@ -119,8 +117,10 @@ public class AuthController {
             } 
 
             // Cria o token
-            String token = JWTUtil.generateToken(usuarios.getEmail(), usuarios.getNome(), Util.md5(usuarios.getSenha()));
+            String token = JWTUtil.generateToken(usuarios.getEmail());
             
+            usuarioService.salvarUsuario(usuarios);
+
             emailService.sendEmail(usuarios.getEmail(),
                         "Confirme sua conta",
                         "<a href='localhost:8080/verify-email/" + token + "'>Confirmar E-mail</a>");

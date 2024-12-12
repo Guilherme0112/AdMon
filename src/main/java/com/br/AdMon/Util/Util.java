@@ -1,21 +1,21 @@
 package com.br.AdMon.Util;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import jakarta.servlet.http.HttpSession;
 
 public class Util {
+    
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     // Criptografia de senhas
-    public static String md5(String senha) throws NoSuchAlgorithmException {
-
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        BigInteger hash = new BigInteger(1, md.digest(senha.getBytes()));
-        return String.format("%032x", hash);
+    public static String criptografar(String senha){
+        return encoder.encode(senha);
     }
-    
+
+    public static boolean verificaSenha(String senha, String hash){
+        return encoder.matches(senha, hash);
+    }
 
     // Verifica se o usuário está logado
     public static Boolean isAuth(HttpSession http){
@@ -28,6 +28,7 @@ public class Util {
         return true;
 
     }
+
 
 
 }

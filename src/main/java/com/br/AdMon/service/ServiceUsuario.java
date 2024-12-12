@@ -1,11 +1,9 @@
 package com.br.AdMon.service;
 
-import java.security.NoSuchAlgorithmException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.br.AdMon.Exceptions.CriptoException;
 import com.br.AdMon.Exceptions.EmailExistsException;
 import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
@@ -37,18 +35,31 @@ public class ServiceUsuario {
             }
 
             // Criptografa a senha
-            user.setSenha(Util.md5(user.getSenha()));
-        } catch (NoSuchAlgorithmException e) {
+            user.setSenha(Util.criptografar(user.getSenha()));
 
-            throw new CriptoException("Erro ao criptografar a senha");
+            usuarioRepository.save(user);
+
+        } catch (EmailExistsException e) {
+
+            System.out.println("Erro: " + e.getMessage());
+
+        } catch (Exception e){
+
+            System.out.println("Erro: " + e.getMessage());
         }
-
-        usuarioRepository.save(user);
     }
 
     public Usuarios loginUsuario(String email, String senha) throws VerifyAuthException {
 
-        Usuarios usuario = usuarioRepository.findLogin(email, senha);
+        Usuarios usuario = usuarioRepository.findLogin(email);
+        if(usuario == null){
+            return null;
+        }
+
+        if(!Util.verificaSenha(senha, usuario.getSenha())){
+            return null;
+        }
+        
         return usuario;
     }
 
@@ -62,11 +73,11 @@ public class ServiceUsuario {
 
             Usuarios usuario = usuarioRepository.findByEmail(email);
 
-            if (usuario == null || !usuario.getSenha().equals(Util.md5(senhaAntiga))) {
+            if (usuario == null || Util.verificaSenha(novaSenha, senhaAntiga)) {
                 throw new Exception("A senha antiga está incorreta");
             }
 
-            usuarioRepository.updatePassword(email, Util.md5(novaSenha));
+            usuarioRepository.updatePassword(email, Util.criptografar(novaSenha));
 
         } catch (Exception err) {
 

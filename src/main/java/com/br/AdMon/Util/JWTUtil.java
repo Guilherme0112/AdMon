@@ -10,14 +10,12 @@ import io.jsonwebtoken.security.Keys;
 public class JWTUtil {
 
     private static final String SECRET_KEY = "OU0764BS43d34ksj4D42B52DSs123456";
-    private static final int EXPIRATION_TIME = 10 * 60 * 1000;
+    private static final int EXPIRATION_TIME = 10 * 60 * 1000; // 10 minutos para expirar o token
     private static final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
 
-    public static String generateToken(String email, String nome, String senha){
+    public static String generateToken(String email){
             return Jwts.builder()
-                    .setClaims(Map.of("email", email,
-                                "nome", nome,
-                                "senha", senha))
+                    .setClaims(Map.of("email", email))
                     .setSubject(email)
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.JWTUtil;
+import com.br.AdMon.dao.UsuarioDao;
 import com.br.AdMon.models.Usuarios;
-import com.br.AdMon.service.ServiceUsuario;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpSession;
@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpSession;
 public class EmailController {
 
     @Autowired
-    private ServiceUsuario usuarioService;
+    private UsuarioDao usuarioRepository; 
 
     @GetMapping("/verify-email/{token}")
     public ModelAndView VerifyEmail(@PathVariable("token") String token, HttpSession http) throws JwtException, Exception{
@@ -41,18 +41,18 @@ public class EmailController {
             // Obtém os dados do token
             Map<String, Object> data = JWTUtil.extractData(token);
 
+            // Pega o e-mail do token
             String email = (String) data.get("email");
-            String nome = (String) data.get("nome");
-            String senha = (String) data.get("senha");
 
-            // Cria modelo de usuário para salvar no banco de dados
-            Usuarios usuario = new Usuarios();
-            usuario.setEmail(email);
-            usuario.setNome(nome);
-            usuario.setSenha(senha);
+            Usuarios emailInative = usuarioRepository.findByEmailInactive(email);
 
-            // Salva o usuário no banco de dados
-            usuarioService.salvarUsuario(usuario);
+            // Se não existir o e-mail, ele retorna o erro
+            if(emailInative == null){
+                throw new Exception("Erro ao registrar a conta. Tente novamente mais tarde.");
+            }
+
+            // Atualiza a conta como ativa 
+            usuarioRepository.updateAtivo(email, true);
 
             mv.setViewName("redirect:/auth/login");
 
@@ -65,7 +65,7 @@ public class EmailController {
         } catch (Exception e){
 
             System.out.println("Erro: " + e);      
-            mv.addObject("erro_excpetion", "Ocorreu um erro. Tente novamente mais tarde.");      
+            mv.addObject("erro_exception", "Ocorreu um erro. Tente novamente mais tarde.");      
             mv.setViewName("mails/confirm-email");
         }
 
