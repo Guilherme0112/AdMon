@@ -26,7 +26,7 @@ public class ServiceEmail {
 
         } catch (Exception e){
 
-            throw new Exception("Erro ao enviar email: ", e);
+            throw new Exception("Erro ao enviar email ", e);
         }
     }
 }

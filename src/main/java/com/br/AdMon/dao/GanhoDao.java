@@ -19,14 +19,20 @@ public interface GanhoDao extends JpaRepository<Ganhos, BigInteger>{
     @Query("SELECT e FROM Ganhos e WHERE e.userEmail = :email AND e.esteMes = false")
     List<Ganhos> findByEmail(@Param("email") String email);
 
+
+
     @Query("SELECT g FROM Ganhos g WHERE MONTH(g.criado) = MONTH(CURDATE) AND YEAR(g.criado) = YEAR(CURDATE) AND g.esteMes = true AND g.userEmail = :email")
     List<Ganhos> findByMonthAndYearCurrent(@Param("email") String email);
 
     @Query("SELECT g FROM Ganhos g WHERE g.id = :id AND g.userEmail = :email")
-    public Ganhos findByEmailAndId(@Param("email") String email, @Param("id") Integer id);
+    public Ganhos findByEmailAndId(@Param("email") String email, 
+                                   @Param("id") Integer id);
 
     @Query("SELECT g FROM Ganhos g WHERE g.userEmail = :email AND g.esteMes = true AND YEAR(g.criado) = :ano AND MONTH(g.criado) = :mes")
-    List<Ganhos> findByGanhosExpirationThisMonth(@Param("email") String email, @Param("ano") Integer ano, @Param("mes") Integer mes);
+    List<Ganhos> findByGanhosExpirationThisMonth(@Param("email") String email, 
+                                                 @Param("ano") Integer ano,
+                                                 @Param("mes") Integer mes);
+
 
     @Modifying
     @Transactional

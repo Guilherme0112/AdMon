@@ -30,7 +30,7 @@ public class ServiceUsuario {
         try {
 
             // Verifica se o E-mail já está em uso
-            if (usuarioRepository.findByEmail(user.getEmail()) != null) {
+            if (usuarioRepository.findByUniqueEmail(user.getEmail()) != null) {
                 throw new EmailExistsException("Este e-mail já está em uso");
             }
 

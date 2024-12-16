@@ -1,3 +1,5 @@
+import last4Months from "./functions/lastFourMonths.js";
+
 // Função que busca os dados
 async function fetchData(url) {
     try {
@@ -169,8 +171,11 @@ fetchData("/dashboard_rosca_ganhos")
 
 // Gráfico de montanha russa
 fetchData("/grafico_montanha_russa")
-    .then(dado => {
-        if (dado) {
+    .then(dados => {
+        if (dados) {
+
+            const meses = last4Months();
+            var dadosConvertidos = dados.map(dado => parseInt(dado));
 
             google.charts.load('current', { 'packages': ['corechart'] });
             google.charts.setOnLoadCallback(drawChart);
@@ -178,15 +183,17 @@ fetchData("/grafico_montanha_russa")
             function drawChart() {
                 var data = google.visualization.arrayToDataTable([
                     ['Mês', 'Saldo'],
-                    ['Setembro', dado[0]],
-                    ['Outubro', dado[1]],
-                    ['Novembro', dado[2]],
-                    ['Dezembro', dado[3]]
+                    [meses[3], dadosConvertidos[3]],
+                    [meses[2], dadosConvertidos[2]],
+                    [meses[1], dadosConvertidos[1]],
+                    [meses[0], dadosConvertidos[0]]
                 ]);
 
                 var options = {
                     title: 'Últimos 4 meses',
                     backgroundColor: "transparent",
+                    width: window.innerWidth - 20,
+                    height: 400,
                     titleTextStyle: {
                         fontSize: 25,
                         color: "white",
@@ -212,7 +219,10 @@ fetchData("/grafico_montanha_russa")
 
                 var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
                 chart.draw(data, options);
+
             }
+            document.getElementById('load_4').style.display = "none";
 
         }
     })
+

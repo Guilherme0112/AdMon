@@ -11,12 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Exceptions.EmailExistsException;
 import com.br.AdMon.Exceptions.VerifyAuthException;
-import com.br.AdMon.Util.JWTUtil;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceAuth;
 import com.br.AdMon.service.ServiceEmail;
 import com.br.AdMon.service.ServiceUsuario;
+import com.br.AdMon.service.ServiceToken;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -24,6 +24,9 @@ import jakarta.validation.Valid;
 @Controller
 public class AuthController {
     
+    @Autowired
+    private ServiceToken tokenService;
+
     @Autowired
     private ServiceEmail emailService;
 
@@ -117,13 +120,18 @@ public class AuthController {
             } 
 
             // Cria o token
-            String token = JWTUtil.generateToken(usuarios.getEmail());
+            String token = Util.generateToken();
+
+            // Salva o token
+            tokenService.salvarToken(token, usuarios.getEmail());
             
+            // Salva o usuário, mas com o status de inativo
             usuarioService.salvarUsuario(usuarios);
 
+            // Envia o e-mail
             emailService.sendEmail(usuarios.getEmail(),
                         "Confirme sua conta",
-                        "<a href='localhost:8080/verify-email/" + token + "'>Confirmar E-mail</a>");
+                        "<html><a href='localhost:8080/verify-email/" + token + "'>Confirmar E-mail</a></html>");
 
             mv.setViewName("redirect:/sended-email");
             
@@ -143,6 +151,7 @@ public class AuthController {
         try{
 
             authService.Logout(session);
+            
         } catch (Exception e){
 
             throw new Exception("Erro: ", e);
