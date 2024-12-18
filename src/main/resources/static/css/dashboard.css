@@ -21,6 +21,9 @@ body{
     width: 100%;
     display: flex;
     justify-content: center;
+
+    border-radius: 10px;
+    margin: 0 40px;
 }
 #dado_1, #dado_2, #dado_3 {
     width: 100%;
@@ -28,6 +31,7 @@ body{
     justify-content: center;
     flex-wrap: wrap;
     position: relative;
+    border-radius: 10px;
 }
 
 /* Div de load quando inica */

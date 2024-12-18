@@ -85,16 +85,16 @@ fetchData("/dashboard_rosca_contas")
             var options = {
                 title: 'Gráfico das Contas',
                 width: 1000,
-                height: 400,
+                height: 450,
                 pieHole: 0.4,
-                backgroundColor: "transparent",
+                backgroundColor: "#81f4c3",
                 titleTextStyle: {
-                    color: "white",
-                    fontSize: 25,
+                    color: "#0fa868",
+                    fontSize: 30,
                 },
                 legend: {
                     textStyle: {
-                        color: 'white'
+                        color: '#06613b'
                     }
                 }
             };
@@ -105,7 +105,9 @@ fetchData("/dashboard_rosca_contas")
         }
 
         document.getElementById('load_2').style.display = "none";
-    })
+        document.getElementById('dado_2_box').style.borderRadius = "10px";
+        document.getElementById('dado_2_box').style.overflow = "hidden";
+    });
 
 
 
@@ -144,17 +146,17 @@ fetchData("/dashboard_rosca_ganhos")
             // Cofigurações
             var options = {
                 title: 'Gráfico dos Ganhos',
-                width: 800,
-                height: 400,
+                width: 1000,
+                height: 450,
                 pieHole: 0.4,
-                backgroundColor: "transparent",
+                backgroundColor: "#81f4c3",
                 titleTextStyle: {
-                    color: "white",
-                    fontSize: 25,
+                    color: "#0fa868",
+                    fontSize: 30,
                 },
                 legend: {
                     textStyle: {
-                        color: 'white'
+                        color: '#06613b'
                     }
                 }
             };
@@ -163,6 +165,9 @@ fetchData("/dashboard_rosca_ganhos")
             chart.draw(data, options);
 
             document.getElementById('load_3').style.display = "none";
+            document.getElementById('dado_3_box').style.borderRadius = "10px";
+            document.getElementById('dado_3_box').style.overflow = "hidden";
+
         }
     })
 
@@ -192,27 +197,27 @@ fetchData("/grafico_montanha_russa")
                 var options = {
                     title: 'Últimos 4 meses',
                     backgroundColor: "transparent",
-                    width: window.innerWidth - 20,
-                    height: 400,
+                    width: window.innerWidth - 40,
+                    height: 450,
                     titleTextStyle: {
-                        fontSize: 25,
-                        color: "white",
+                        fontSize: 30,
+                        color: "#0fa868",
                     },
                     legend: {
                         textStyle: {
-                            color: 'white'
+                            color: '#06613b'
                         }
                     },
                     hAxis: {
                         title: '',
                         textStyle: {
-                            color: 'white'
+                            color: '#06613b'
                         }
                     },
                     vAxis: {
                         minValue: 0,
                         textStyle: {
-                            color: "white"
+                            color: "#06613b"
                         }
                     }
                 };
@@ -221,6 +226,7 @@ fetchData("/grafico_montanha_russa")
                 chart.draw(data, options);
 
             }
+            document.getElementById("grafico-m-r").style.backgroundColor = "#81f4c3";
             document.getElementById('load_4').style.display = "none";
 
         }
