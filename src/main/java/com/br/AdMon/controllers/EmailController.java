@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.br.AdMon.dao.TokensDao;
+import com.br.AdMon.dao.TokenEmailVerificationDao;
 import com.br.AdMon.dao.UsuarioDao;
-import com.br.AdMon.models.Tokens;
-import com.br.AdMon.service.ServiceToken;
+import com.br.AdMon.models.TokensEmailVerification;
+import com.br.AdMon.service.mails.ServiceTokenEmailVerification;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,11 +22,13 @@ public class EmailController {
     private UsuarioDao usuarioRepository; 
 
     @Autowired
-    private ServiceToken tokenService;
+    private ServiceTokenEmailVerification tokenService;
 
     @Autowired
-    private TokensDao tokenRepository;
+    private TokenEmailVerificationDao tokenRepository;
 
+    // Verifica se o e-mail existe
+    // Processo feito quando se cria uma conta
     @GetMapping("/verify-email/{token}")
     public ModelAndView VerifyEmail(@PathVariable("token") String token, HttpSession http) throws Exception{
 
@@ -35,13 +37,18 @@ public class EmailController {
         try {
 
             // Verifica se o token existe no banco de dados
-            List<Tokens> tokenBD = tokenRepository.findByToken(token);
+            List<TokensEmailVerification> tokenBD = tokenRepository.findByToken(token);
             if(tokenBD.size() == 0){
                 throw new Exception("Token inválido");
             }
             
             // Obtém o e-mail do usuário inativo
-            Tokens tokenObject = (Tokens) tokenBD.get(0);
+            TokensEmailVerification tokenObject = (TokensEmailVerification) tokenBD.get(0);
+
+            // Verifica se a conta está inativa
+            if(usuarioRepository.findByEmailInactive(tokenObject.getUserEmail()) == null){
+                throw new Exception("Este e-mail não está registrado ou já está ativo");
+            }
 
             // Atualiza a conta como ativa 
             usuarioRepository.updateAtivo(tokenObject.getUserEmail(), true);
@@ -58,19 +65,19 @@ public class EmailController {
         } catch (Exception e){
 
             System.out.println("Erro: " + e);      
-            mv.addObject("erro_exception", "Ocorreu um erro. Tente novamente mais tarde.");      
+            mv.addObject("erro_exception", e.getMessage());      
             mv.setViewName("mails/confirm-email");
         }
 
         return mv;
     }
 
-    @GetMapping("/sended-email")
-    public ModelAndView EmailEnviado(){
+    // Substituí a senha
+    // Processo feito na horade REDEFINIR a senha
+    @GetMapping("/forgot-password/{token}")
+    public ModelAndView ForgotPassword(@PathVariable("token") String tokenPassword) throws Exception{
 
         ModelAndView mv = new ModelAndView();
-
-        mv.setViewName("mails/sended-email");
 
         return mv;
     }

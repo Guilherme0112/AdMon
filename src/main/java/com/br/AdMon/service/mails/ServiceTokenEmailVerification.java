@@ -1,4 +1,4 @@
-package com.br.AdMon.service;
+package com.br.AdMon.service.mails;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -6,15 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.br.AdMon.models.Tokens;
+import com.br.AdMon.models.TokensEmailVerification;
 
-import com.br.AdMon.dao.TokensDao;
+import com.br.AdMon.dao.TokenEmailVerificationDao;
 
 @Service
-public class ServiceToken {
+public class ServiceTokenEmailVerification {
 
     @Autowired
-    private TokensDao tokensRepository;
+    private TokenEmailVerificationDao tokensRepository;
 
     public void salvarToken(String token, String email) throws Exception{
 
@@ -26,7 +26,7 @@ public class ServiceToken {
         LocalDateTime agora = LocalDateTime.now();
 
         // Salva o token junto com o e-mail do usuario
-        Tokens tokenObject = new Tokens();
+        TokensEmailVerification tokenObject = new TokensEmailVerification();
         tokenObject.setToken(token);
         tokenObject.setUserEmail(email);
         tokenObject.setExpireIn(agora.plusMinutes(15));
@@ -51,10 +51,10 @@ public class ServiceToken {
         LocalDateTime agora = LocalDateTime.now();
 
         // Busca todos os tokens
-        List<Tokens> tokens = tokensRepository.findAll();
+        List<TokensEmailVerification> tokens = tokensRepository.findAll();
 
         // Verifica todos os tokens se ainda são válidos, os que não forem serão deletados
-        for(Tokens tokenI : tokens){
+        for(TokensEmailVerification tokenI : tokens){
             if(tokenI.getExpireIn().isAfter(agora)){
                 tokensRepository.delete(tokenI);
             } else {

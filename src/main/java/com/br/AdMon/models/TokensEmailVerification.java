@@ -10,8 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tokens")
-public class Tokens {
+@Table(name = "email_verification_tokens")
+public class TokensEmailVerification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -8,17 +8,17 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.br.AdMon.models.Tokens;
+import com.br.AdMon.models.TokensEmailVerification;
 
 import jakarta.transaction.Transactional;
 
-public interface TokensDao extends JpaRepository<Tokens, BigInteger>{
+public interface TokenEmailVerificationDao extends JpaRepository<TokensEmailVerification, BigInteger>{
 
-    @Query("SELECT t FROM Tokens t WHERE t.token = :token")
-    List<Tokens> findByToken(@Param("token") String token);
+    @Query("SELECT t FROM TokensEmailVerification t WHERE t.token = :token")
+    List<TokensEmailVerification> findByToken(@Param("token") String token);
 
     @Modifying
     @Transactional
-    @Query("DELETE FROM Tokens t WHERE t.token = :token AND t.userEmail = :email")
+    @Query("DELETE FROM TokensEmailVerification t WHERE t.token = :token AND t.userEmail = :email")
     void deleteByToken(@Param("token") String token, @Param("email") String email);
 }

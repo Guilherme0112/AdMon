@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/login.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <title>Verificar Email</title>
+
 </head>
 <body>
     <!-- Componente header importado do diretório /components/component.html -->
@@ -20,7 +21,11 @@
     
     <main>
 
-        </form>
+        <div th:if="${erro_exception} != null" style="width: 90%;">
+            <h1 style="color: white; margin: 10px;">Parece que...</h1>
+            <p th:text="${erro_exception}" class="box-info" style="width: 90%;"></p>
+        </div>
+
     </main>
 
     <!-- Scripts -->

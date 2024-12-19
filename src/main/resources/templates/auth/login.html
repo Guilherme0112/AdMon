@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/add-conta.css">
     <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <title>Login</title>
 </head>
@@ -36,6 +37,10 @@
             <input type="password" th:field="*{senha}" >
             <div class="box-errors" th:if="${#fields.hasErrors('senha')}">
                 <p class="errors" th:errors="*{senha}"></p>
+            </div>
+
+            <div style="width: 100%;">
+                <a href="" style="color: #0b8a26;" id="dataNowMonth">Esqueceu a senha?</a>
             </div>
 
             <div th:if="${msg}">

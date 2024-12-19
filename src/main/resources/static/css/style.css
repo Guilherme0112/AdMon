@@ -1,3 +1,4 @@
+/* Configurações */
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Oswald:wght@200..700&display=swap');
 *{
     margin: 0;
@@ -6,6 +7,18 @@
     outline: 0;
     font-family: "Exo 2", sans-serif;
 }
+
+/* Cor de fundo do autocomplete */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #b9fade inset;
+}
+
+/* Cor do texto do autocomplete */
+input:-webkit-autofill {
+    -webkit-text-fill-color: #0b8a26 !important;
+}
+
+
 html{
     max-width: 1500px;
     height: 100vh;

@@ -34,6 +34,11 @@ public class ServiceUsuario {
                 throw new EmailExistsException("Este e-mail já está em uso");
             }
 
+            // Verifica se a conta está inativa
+            if(usuarioRepository.findByEmailInactive(user.getEmail()) != null){
+                throw new EmailExistsException("Este e-mail já existe, mas está inativo");
+            }
+
             // Criptografa a senha
             user.setSenha(Util.criptografar(user.getSenha()));
 

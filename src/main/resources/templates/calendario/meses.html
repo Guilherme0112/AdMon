@@ -10,9 +10,7 @@
 </head>
 <body>
     <!-- Componente header importado do diretório /components/component.html -->
-    <header th:fragment="header">
-        <img src="/img/nav-hbg.jpg" id="nav" class="btn-nav-hbg">
-    </header>
+    <header th:replace="components/component :: header"></header>
 
     <div th:replace="components/component :: nav"></div>
     

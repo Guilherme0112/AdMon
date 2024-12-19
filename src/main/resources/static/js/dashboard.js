@@ -196,8 +196,8 @@ fetchData("/grafico_montanha_russa")
 
                 var options = {
                     title: 'Últimos 4 meses',
-                    backgroundColor: "transparent",
-                    width: window.innerWidth - 40,
+                    backgroundColor: "#81f4c3",
+                    width: 1000,
                     height: 450,
                     titleTextStyle: {
                         fontSize: 30,
@@ -226,8 +226,9 @@ fetchData("/grafico_montanha_russa")
                 chart.draw(data, options);
 
             }
-            document.getElementById("grafico-m-r").style.backgroundColor = "#81f4c3";
             document.getElementById('load_4').style.display = "none";
+            document.getElementById('chart_div').style.borderRadius = "10px";
+            document.getElementById('chart_div').style.overflow = "hidden";
 
         }
     })

@@ -1,4 +1,4 @@
-package com.br.AdMon.service;
+package com.br.AdMon.service.mails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

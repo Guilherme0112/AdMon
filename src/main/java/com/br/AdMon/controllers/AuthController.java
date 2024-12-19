@@ -14,9 +14,9 @@ import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceAuth;
-import com.br.AdMon.service.ServiceEmail;
 import com.br.AdMon.service.ServiceUsuario;
-import com.br.AdMon.service.ServiceToken;
+import com.br.AdMon.service.mails.ServiceEmail;
+import com.br.AdMon.service.mails.ServiceTokenEmailVerification;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 public class AuthController {
     
     @Autowired
-    private ServiceToken tokenService;
+    private ServiceTokenEmailVerification tokenService;
 
     @Autowired
     private ServiceEmail emailService;
@@ -133,7 +133,7 @@ public class AuthController {
                         "Confirme sua conta",
                         "<html><a href='localhost:8080/verify-email/" + token + "'>Confirmar E-mail</a></html>");
 
-            mv.setViewName("redirect:/sended-email");
+            mv.setViewName("mails/sended-email");
             
         } catch (Exception e){
 

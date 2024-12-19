@@ -1,9 +1,7 @@
 package com.br.AdMon.controllers;
 
-import java.math.BigDecimal;
+
 import java.math.BigInteger;
-import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,51 +25,6 @@ public class GanhosController {
 
     @Autowired
     private GanhoDao ganhorepositorio;
-
-    @GetMapping("/ganhos/lista")
-    public ModelAndView ListarGanhos(Ganhos ganho, HttpSession http){
-
-        ModelAndView mv = new ModelAndView();
-
-        if(!Util.isAuth(http)){
-            mv.setViewName("redirect:/auth/login");
-            return mv;
-        }
-
-        BigDecimal totalGanho = BigDecimal.ZERO;
-        BigDecimal totalGanhoEsteMes = BigDecimal.ZERO;
-
-        // Mês e ano atual
-        LocalDate data = LocalDate.now();
-        Integer mes = data.getMonthValue();
-        Integer ano = data.getYear();
-
-        Usuarios session = (Usuarios) http.getAttribute("session");
-        List<Ganhos> ganhos = ganhorepositorio.findByEmail(session.getEmail());
-        List<Ganhos> ganhos_este_mes = ganhorepositorio.findByGanhosExpirationThisMonth(session.getEmail(), ano, mes);
-
-        if(ganhos.size() > 0){
-            for(Ganhos ganhosI : ganhos){
-                totalGanho = totalGanho.add(ganhosI.getValor());
-            }
-        }
-
-        if(ganhos_este_mes.size() > 0){
-            for(Ganhos ganhosI : ganhos_este_mes){
-                totalGanhoEsteMes = totalGanhoEsteMes.add(ganhosI.getValor());
-            }
-        }
-
-        // Valor total dos ganhos e dos ganhos somente deste mês
-        totalGanho = totalGanho.add(totalGanhoEsteMes);
-
-        mv.addObject("totalGanho", totalGanho);
-        mv.addObject("ganhos", ganhos);
-        mv.addObject("ganhos_este_mes", ganhos_este_mes);
-        mv.setViewName("ganhos/list-ganho");
-
-        return mv;
-    }
 
     @GetMapping("/ganhos/criar")
     public ModelAndView InserirGanhos(Ganhos ganho, HttpSession http){
