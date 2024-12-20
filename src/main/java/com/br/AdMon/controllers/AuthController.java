@@ -119,14 +119,13 @@ public class AuthController {
                 return mv;
             } 
 
-            // Cria o token
-            String token = Util.generateToken();
-
-            // Salva o token
-            tokenService.salvarToken(token, usuarios.getEmail());
-            
             // Salva o usuário, mas com o status de inativo
             usuarioService.salvarUsuario(usuarios);
+
+            // Cria o token
+            // Salva o token
+            String token = Util.generateToken();
+            tokenService.salvarToken(token, usuarios.getEmail());
 
             // Envia o e-mail
             emailService.sendEmail(usuarios.getEmail(),

@@ -212,12 +212,15 @@ fetchData("/grafico_montanha_russa")
                         title: '',
                         textStyle: {
                             color: '#06613b'
-                        }
+                        },
                     },
                     vAxis: {
                         minValue: 0,
                         textStyle: {
                             color: "#06613b"
+                        },
+                        gridlines: { // Também pode ser usado no eixo Y
+                            color: "#06613b", // Cor das linhas de grade verticais
                         }
                     }
                 };
