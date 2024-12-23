@@ -17,5 +17,6 @@
 <h2>Instalação</h2>
 <p>Baixe o repositório <a href="https://github.com/Guilherme0112/AdMon/archive/refs/heads/main.zip">clicando aqui</a>.</p>
 <p>Tenha o <a href="https://www.java.com/pt-BR/">Java</a> instalado.</p>
+<p>Tenha o <a href="https://www.oracle.com/br/java/technologies/downloads/">JDK</a> instalado.</p>
 <p>Importe o arquivo do banco de dados em <code>src/main/java/com/br/AdMon/database/admon.sql</code></p>
 <p>Inicie seu projeto e acesse <code>localhost:8080</code></p>

@@ -34,7 +34,7 @@
             </div>
 
             <!-- Senha do usuário -->
-            <input type="password" th:field="*{senha}" >
+            <input type="password" th:field="*{senha}" placeholder="Senha">
             <div class="box-errors" th:if="${#fields.hasErrors('senha')}">
                 <p class="errors" th:errors="*{senha}"></p>
             </div>
