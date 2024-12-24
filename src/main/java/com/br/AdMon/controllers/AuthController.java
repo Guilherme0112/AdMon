@@ -130,7 +130,7 @@ public class AuthController {
             // Envia o e-mail
             emailService.sendEmail(usuarios.getEmail(),
                         "Confirme sua conta",
-                        "<html><a href='localhost:8080/verify-email/" + token + "'>Confirmar E-mail</a></html>");
+                        "<html><a href='127.0.0.1:8080/verify-email/" + token + "'>Confirmar E-mail</a></html>");
 
             mv.setViewName("mails/sended-email");
             
