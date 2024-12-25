@@ -1,4 +1,4 @@
-package com.br.AdMon.controllers;
+package com.br.AdMon.controllers.others;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import com.br.AdMon.service.mails.ServiceTokenEmailVerification;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class EmailController {
+public class VerifyEmailController {
 
     @Autowired
     private UsuarioDao usuarioRepository; 
@@ -68,16 +68,6 @@ public class EmailController {
             mv.addObject("erro_exception", e.getMessage());      
             mv.setViewName("mails/confirm-email");
         }
-
-        return mv;
-    }
-
-    // Substituí a senha
-    // Processo feito na horade REDEFINIR a senha
-    @GetMapping("/forgot-password/{token}")
-    public ModelAndView ForgotPassword(@PathVariable("token") String tokenPassword) throws Exception{
-
-        ModelAndView mv = new ModelAndView();
 
         return mv;
     }

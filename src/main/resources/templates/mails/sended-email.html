@@ -6,6 +6,18 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <title>E-mail Enviado</title>
+    <style>
+        body{
+            display: block;
+        }
+        h1{
+            margin: 100px 0 30px 0;
+        }
+        a{
+            color: #06613b;
+            margin: 0 5px;
+        }
+    </style>
 </head>
 <body>
     <!-- Componente header importado do diretório /components/component.html -->
@@ -17,10 +29,8 @@
     <div th:replace="components/component :: nav"></div>
     
     <main style="display: flex; justify-content: center; flex-wrap: wrap;">
-        <h1 style="width: 100%; text-align: center; color: white;">Enviamos um e-mail para você!</h1>
-        <h3 style="width: 100%; text-align: center; color: white;">Confirme seu e-mail abrindo seu e-mail ou a caixa de spam, se não receber o e-mail <a th:href="@{/auth/register}">clique aqui</a> para tentar novamente.</h3>
-
-        <a th:href="@{/}">Voltar ao Início</a>
+        <h1 style="width: 80%; text-align: center; color: white;">Enviamos um e-mail para você!</h1>
+        <p class="box-info" style="height: auto; text-align: center;">Confirme seu cadastro abrindo seu e-mail ou a caixa de spam, se não receber o e-mail <a th:href="@{/auth/register}">clique aqui</a> para tentar novamente.</p>
     </main>
 
     <!-- Scripts -->
