@@ -16,6 +16,7 @@ public class ServiceTokenEmailForgotPassword {
 
     public Boolean verifyToken(String token) throws Exception {
 
+        // Valida o token
         if (tokensForgotPasswordRepository.findByToken(token) == null) {
             throw new Exception("Token inválido");
         }
@@ -23,7 +24,7 @@ public class ServiceTokenEmailForgotPassword {
         // Recupera dados que o token tem
         TokensForgotPassword tokenObject = tokensForgotPasswordRepository.findByToken(token);
 
-        // Verifica se o token é válido
+        // Verifica se o token expirou
         if (tokenObject.getExpireIn().isBefore(LocalDateTime.now())) {
             tokensForgotPasswordRepository.delete(tokenObject);
             throw new Exception("Token expirado");
