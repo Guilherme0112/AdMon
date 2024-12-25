@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.br.AdMon.Exceptions.EmailExistsException;
-import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
+import com.br.AdMon.exceptions.EmailExistsException;
+import com.br.AdMon.exceptions.VerifyAuthException;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceAuth;
 import com.br.AdMon.service.ServiceUsuario;

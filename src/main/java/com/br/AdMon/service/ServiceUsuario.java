@@ -4,12 +4,13 @@ package com.br.AdMon.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.br.AdMon.Exceptions.EmailExistsException;
-import com.br.AdMon.Exceptions.VerifyAuthException;
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.dao.UsuarioDao;
+import com.br.AdMon.exceptions.ChangePasswordException;
+import com.br.AdMon.exceptions.EmailExistsException;
+import com.br.AdMon.exceptions.VerifyAuthException;
 import com.br.AdMon.models.Usuarios;
 
 @Service
@@ -56,7 +57,7 @@ public class ServiceUsuario {
 
     public Usuarios loginUsuario(String email, String senha) throws VerifyAuthException {
 
-        Usuarios usuario = usuarioRepository.findLogin(email);
+        Usuarios usuario = usuarioRepository.findByEmail(email);
         if(usuario == null){
             return null;
         }
@@ -68,25 +69,26 @@ public class ServiceUsuario {
         return usuario;
     }
 
-    public void alterarSenha(String email, String senhaAntiga, String novaSenha) throws Exception {
+    public void alterarSenha(String email, String novaSenha) throws ChangePasswordException {
 
         try {
             
             if (novaSenha.length() < 8) {
-                throw new Exception("A senha deve ter 8 ou mais caracteres");
+                throw new ChangePasswordException("A senha deve ter 8 ou mais caracteres");
             }
 
             Usuarios usuario = usuarioRepository.findByEmail(email);
 
-            if (usuario == null || Util.verificaSenha(novaSenha, senhaAntiga)) {
-                throw new Exception("A senha antiga está incorreta");
+            if (usuario == null) {
+                throw new ChangePasswordException("Sua conta está inativa ou não está registada");
             }
 
             usuarioRepository.updatePassword(email, Util.criptografar(novaSenha));
 
-        } catch (Exception err) {
+        } catch (ChangePasswordException err) {
 
-            throw new Exception(err.getMessage(), err);
+            throw new ChangePasswordException(err.getMessage());
+
         }
     }
 

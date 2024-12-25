@@ -22,9 +22,6 @@ public interface UsuarioDao extends JpaRepository<Usuarios, BigInteger>{
     @Query("SELECT u FROM Usuarios u WHERE u.email = :email AND u.ativo = false")
     public Usuarios findByEmailInactive(String email);
 
-    @Query("SELECT l FROM Usuarios l WHERE l.email = :email AND l.ativo = true")
-    public Usuarios findLogin(String email);
-
     @Modifying
     @Transactional
     @Query("UPDATE Usuarios u SET u.senha = :senha WHERE u.email = :email")

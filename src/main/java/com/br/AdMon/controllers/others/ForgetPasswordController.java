@@ -7,14 +7,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.TokenForgotPasswordDao;
 import com.br.AdMon.dao.UsuarioDao;
+import com.br.AdMon.exceptions.ChangePasswordException;
 import com.br.AdMon.models.TokensForgotPassword;
+import com.br.AdMon.service.ServiceUsuario;
 import com.br.AdMon.service.mails.ServiceEmail;
 import com.br.AdMon.service.mails.ServiceTokenEmailForgotPassword;
 
@@ -32,6 +33,9 @@ public class ForgetPasswordController {
 
     @Autowired 
     private UsuarioDao usuarioRepository;
+
+    @Autowired 
+    private ServiceUsuario usuarioService;
 
     @GetMapping("/forgot-password")
     public ModelAndView ForgotPassword(){
@@ -93,7 +97,7 @@ public class ForgetPasswordController {
     }
 
     @PostMapping("/change-password")
-    public ModelAndView TrocarSenhaPOST(@RequestParam("token") String token, @RequestParam("senha") String senha) throws Exception{
+    public ModelAndView TrocarSenhaPOST(@RequestParam String token, @RequestParam String senha) throws Exception, ChangePasswordException{
 
         ModelAndView mv = new ModelAndView();
 
@@ -110,18 +114,29 @@ public class ForgetPasswordController {
 
             // Verifica se o usuário está registrado ou ativo
             if(usuarioRepository.findByEmail(email) == null){ 
-                throw new Exception("Sua conta está inativa ou não está registrada");
+                tokensForgotPasswordRepository.delete(tokenObject);
+                throw new ChangePasswordException("Sua conta está inativa ou não está registrada");
             }
 
             // Atualiza a senha do usuário
-            usuarioRepository.updatePassword(email, Util.criptografar(senha));
+            usuarioService.alterarSenha(email, senha);
 
             // Redireciona para a tela de login
             mv.setViewName("redirect:/auth/login");
             
-        } catch (Exception e) {
+        } catch (ChangePasswordException e){
+
+            // "erro_vali" trás o erro da validação
+            // "token" manda o token do pedido para trocar a senha
+            // "change_password" manda um true para renderizar o formulário
+            mv.addObject("erro_vali", e.getMessage());
+            mv.addObject("token", token);
+            mv.addObject("change_password", true);
             mv.setViewName("others/change-password");
+
+        } catch (Exception e) {
             mv.addObject("erro_exception", e.getMessage());
+            mv.setViewName("others/change-password");
         }
 
         return mv;

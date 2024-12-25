@@ -1,8 +1,7 @@
 package com.br.AdMon.exceptions;
 
-public class VerifyAuthException extends Exception{
-
-    public VerifyAuthException(String message){
+public class ChangePasswordException extends Exception{
+    public ChangePasswordException(String message){
         super(message);
     }
 

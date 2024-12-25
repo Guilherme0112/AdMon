@@ -65,7 +65,11 @@ public class PerfilController {
                 mv.setViewName("perfil/perfil");
             }
 
-            usuarioService.alterarSenha(session.getEmail(), senhaAntiga, senhaNova);
+            if(!Util.verificaSenha(senhaNova, senhaAntiga)){
+                throw new Exception("A senha está incorreta");
+            }
+            
+            usuarioService.alterarSenha(session.getEmail(), senhaNova);
             mv.setViewName("redirect:/dashboard");
             
         } catch (Exception err){

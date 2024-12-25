@@ -22,7 +22,7 @@ public class Usuarios {
     @Email(message = "Este e-mail é inválido")
     private String email;
     
-    @Size(min = 8, message = "A senha deve ter no mínimo 8 caracteres")
+    @Size(min = 8, max = 16, message = "A senha deve ter entre 8 e 16 caracteres")
     private String senha;
 
     private Boolean ativo = false;

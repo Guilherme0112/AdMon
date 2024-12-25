@@ -1,4 +1,4 @@
-package com.br.AdMon.Exceptions;
+package com.br.AdMon.exceptions;
 
 public class EmailExistsException extends Exception{
     public EmailExistsException(String message){
