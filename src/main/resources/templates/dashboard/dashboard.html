@@ -16,11 +16,11 @@
     <header th:replace="components/component :: header"></header>
 
     <div th:replace="components/component :: nav"></div>
-    
+
     <main>
         <h1 style="color: white; text-align: start; padding-left: 10%; width: 100%;">Para este mês</h1>
 
-<!-- Total deste mês -->
+        <!-- Total deste mês -->
 
         <div class="load" id="load_1"></div>
         <section class="graficos-total">
@@ -32,43 +32,44 @@
 
             <div style="width: 100%; display: flex; justify-content: center;">
                 <span class="box-info">
-                    Este valor é referente a soma dos ganhos subtraído pelas contas pagas do mês atual. As contas que não forem marcadas como pagas não serão contadas aqui.
+                    Este valor é referente a soma dos ganhos subtraído pelas contas pagas do mês atual. As contas que
+                    não forem marcadas como pagas não serão contadas aqui.
                 </span>
             </div>
 
             <hr style="border: transparent;">
 
-<!-- Gráfico de montanha russa -->
+            <!-- Gráfico de montanha russa -->
 
             <div class="grafico-m-r" id="grafico-m-r">
                 <div class="load" id="load_4"></div>
                 <div id="chart_div"></div>
             </div>
 
-<!-- Gráfico rosca 1 -->
-    <hr style="border: transparent;">
+            <!-- Gráfico rosca 1 -->
+            <hr style="border: transparent;">
 
-            <div class="load" id="load_2"></div>
             <div id="dado_2">
                 <div id="dado_2_box">
+                    <div class="load" id="load_2"></div>
                     <div id="donutchart"></div>
                 </div>
             </div>
 
 
             <hr style="border: transparent;">
-<!-- Gráfico rosca 2 -->
+            <!-- Gráfico rosca 2 -->
 
-            <div class="load" id="load_3"></div>
-            <div id="dado_3">
-                <div id="dado_3_box">
+            <div id="dado_3_box">
+                <div id="dado_3">
+                    <div class="load" id="load_3"></div>
                     <div id="donutchart_2"></div>
                 </div>
             </div>
         </section>
         <hr style="border: transparent;">
 
-<!-- Contas que vencem nos próximos 7 dias -->
+        <!-- Contas que vencem nos próximos 7 dias -->
 
         <section class="info">
             <h1>Contas que vencem nos próximos 7 dias</h1>
@@ -84,24 +85,24 @@
                         <th>Valor</th>
                         <th>Vencimento</th>
                     </thead>
-                <tbody th:each="contas : ${contas}">
+                    <tbody th:each="contas : ${contas}">
 
-                    <td th:text="${contas.conta}"></td>
-                    <td th:text="${contas.anotacao}"></td>
-                    <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'POINT', 2, 'COMMA')}"></td>
-                    <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
-                    <td>
-                        <button th:data-id="${contas.id}" id="editar" title="Editar"></button>
-                    </td>
-                    <td>
-                        <button th:data-id="${contas.id}" id="excluir" title="Excluir"></button>
-                    </td>
-                    <td>
-                        <button th:data-id="${contas.id}" id="mcp" title="Marcar como pago"></button>
-                    </td>
-                </tbody>
-            </table>
-        </div>
+                        <td th:text="${contas.conta}"></td>
+                        <td th:text="${contas.anotacao}"></td>
+                        <td th:text="'R$ ' + ${#numbers.formatDecimal(contas.valor, 0, 'POINT', 2, 'COMMA')}"></td>
+                        <td th:text="${#temporals.format(contas.vencimento, 'dd/MM/yyyy')}"></td>
+                        <td>
+                            <button th:data-id="${contas.id}" id="editar" title="Editar"></button>
+                        </td>
+                        <td>
+                            <button th:data-id="${contas.id}" id="excluir" title="Excluir"></button>
+                        </td>
+                        <td>
+                            <button th:data-id="${contas.id}" id="mcp" title="Marcar como pago"></button>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
 

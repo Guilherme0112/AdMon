@@ -17,7 +17,7 @@
     <main>
 
         <!-- Formulário -->
-        <form action="/addConta" method="post" th:object="${contas}">
+        <form th:action="@{/contas/criar}" method="post" th:object="${contas}">
 
             <h1>Adicionar Conta</h1>
 
@@ -51,12 +51,17 @@
                 <label for="checkJustForMonthNow" style="margin: 2px 0 0 5px;">Escolher quantidade de meses</label>
             </div>
 
+            <!-- Caso habilitado ele exibe o input com a quantidade de meses -->
             <div style="display: none;" id="div-check">
                 <label for="amountMonths">Quantidade de meses:</label>
                 <input type="number" name="meses" id="amountMonths">
                 <div th:if="${errorMeses}">
                     <p th:text="${errorMeses}"></p>
                 </div>
+            </div>
+
+            <div th:if="${erro_vali}">
+                <p class="errors" th:text="${erro_vali}"></p>
             </div>
 
             <button>Enviar</button>

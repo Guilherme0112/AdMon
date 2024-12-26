@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/perfil.css">
     <link rel="stylesheet" href="/css/add-conta.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="shortcut icon" href="/img/logo.jpg" type="image/x-icon">
     <link rel="stylesheet" href="/css/media-query/index.css">
     <title>AdMon</title>
@@ -21,7 +22,7 @@
         <section style="width: 100%; display: flex; justify-content: space-around; flex-wrap: wrap;">
 
             <!-- Primeira parte -->
-            <div class="box-config" style="background-color: transparent; align-items: start;">
+            <div class="box-config" style="background-color: transparent; align-items: center;">
                  <h1 class="title-text-perfil">Olá, <span th:text="${session.session.getNome()}"></span>!</h1>
             </div>
 
@@ -30,16 +31,22 @@
                     <h1>Alterar a senha</h1>
                     <input type="password" name="senhaAntiga" placeholder="Digite sua antiga senha">
                     <input type="password" id="senhaNova" name="senhaNova" placeholder="Digite sua nova senha">
-                    <input type="password" id="repeteSenha" placeholder="Repita a nova senha">                    
+                    <input type="password" id="repeteSenha" placeholder="Repita a nova senha">   
+                    <a th:href="@{/forgot-password}" style="color: #0b8a26; text-align: start; width: 100%;" id="dataNowMonth">Esqueceu a senha?</a>                 
                     <p th:text="${msgError}" class="errors"></p>
                     <p class="errors" id="err" style="    width: 100%; text-align: center;"></p>
                     <button id="submit">Alterar Senha</button>
                 </form>
             </div>
         </section>
-        <hr>
-        <section style="width: 100%; display: flex; justify-content: space-around;">
-            <div style="width: 400px;"></div>
+        <section style="width: 100%; height: auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
+            <div class="box-del">
+                <form action="" method="post">
+                    <h1>Trocar de nome</h1>
+                    <input type="text" name="nome" placeholder="Novo nome">
+                    <button>Trocar de nome</button>
+                </form>
+            </div>
             <div class="box-del">
                 <h1>Deletar Conta</h1>
                 <button id="del">Deletar Conta</button>

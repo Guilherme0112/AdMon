@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
+import com.br.AdMon.exceptions.SaveContaException;
 import com.br.AdMon.models.Contas;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceContas;
@@ -50,45 +51,43 @@ public class ContasController {
         return mv;
     }
 
-    @PostMapping("/addConta")
-    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br, HttpSession http, @RequestParam(defaultValue = "0") int meses){
+    @PostMapping("/contas/criar")
+    public ModelAndView InserirContaPost(@Valid Contas conta, BindingResult br, HttpSession http, @RequestParam(defaultValue = "0") int meses) throws SaveContaException, Exception{
 
         ModelAndView mv = new ModelAndView();   
+
         if(!Util.isAuth(http)){
 
             mv.setViewName("redirect:/auth/login");
             return mv;
         }
 
-        // Recupera os dados da sessão
-        Usuarios session = (Usuarios) http.getAttribute("session");
-
+        // Retorna os erros
         if(br.hasErrors()){
-
-            // Retorna para exibir os erros
+            
             mv.addObject("contas", conta);
             mv.setViewName("contas/add-conta");
-        } else {
+            return mv;
+        } 
+        
+        try{
+            // Recupera os dados da sessão
+            Usuarios session = (Usuarios) http.getAttribute("session");
 
-            try{
-                // Chama o método que cria as contas nos respectivos meses
-                serviceConta.quantidadeDeContas(meses, conta, session.getEmail());
+            // Chama o método que cria as contas nos respectivos meses
+            serviceConta.quantidadeDeContas(meses, conta, session.getEmail());
 
-            } catch (Exception e) {
-                
-                mv.setViewName("contas/add-conta");
-                mv.addObject("errorMeses", "Erro ao calcular tempo");
-                return mv;
-            }
+            mv.setViewName("redirect:/dashboard");
 
-            // Salva os dados com o e-mail da sessão
-            if(session != null){
-                conta.setUserEmail(session.getEmail());
-                contarepositorio.save(conta);
-                mv.setViewName("redirect:/dashboard");
-                return mv;
-            }
+        } catch (SaveContaException e) {
+            
+            mv.setViewName("contas/add-conta");
+            mv.addObject("erro_vali", e.getMessage());
 
+        } catch (Exception e) {
+            
+            mv.setViewName("contas/add-conta");
+            mv.addObject("errorMeses", "Erro ao calcular tempo. Tente novamente mais tarde");
         }
 
         return mv;
