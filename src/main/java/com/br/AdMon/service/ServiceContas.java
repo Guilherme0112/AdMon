@@ -45,19 +45,37 @@ public class ServiceContas {
                 throw new SaveContaException("Você pode adicionar no mínimo 1 e no máximo 6 meses");
             }
 
-            for(int i = 0; i < meses; i++){
 
-                // Criando um registro para cada mês
+            // Criando um registro para o mes atual
+            if(meses == 0){
                 Contas indexConta = new Contas();
 
                 indexConta.setConta(conta.getConta());
                 indexConta.setUserEmail(email);
-                indexConta.setVencimento(conta.getVencimento().plusMonths(i));
+                indexConta.setVencimento(conta.getVencimento());
                 indexConta.setValor(conta.getValor());
                 indexConta.setAnotacao(conta.getAnotacao());
 
                 contaRepository.save(indexConta);
-                
+            }
+
+            // Caso o valor de meses for maior que 0
+            // Ele cria um registro para cada mês
+            if(meses > 0){
+                for(int i = 0; i < meses; i++){
+
+                    // Criando um registro para cada mês
+                    Contas indexConta = new Contas();
+
+                    indexConta.setConta(conta.getConta());
+                    indexConta.setUserEmail(email);
+                    indexConta.setVencimento(conta.getVencimento().plusMonths(i));
+                    indexConta.setValor(conta.getValor());
+                    indexConta.setAnotacao(conta.getAnotacao());
+
+                    contaRepository.save(indexConta);
+                    
+                }
             }
             
         } catch (SaveContaException e){
