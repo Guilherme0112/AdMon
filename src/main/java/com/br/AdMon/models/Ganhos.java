@@ -2,7 +2,7 @@ package com.br.AdMon.models;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,8 +42,8 @@ public class Ganhos {
 
     private Boolean esteMes;
 
-    @Column(insertable = false, updatable = false)
-    private LocalDateTime criado;
+    @Column(updatable = false)
+    private LocalDate criado = LocalDate.now();
     
   // Getters
 
@@ -65,7 +65,7 @@ public class Ganhos {
     public Boolean getEsteMes(){
         return esteMes;
     }
-    public LocalDateTime getCriado(){
+    public LocalDate getCriado(){
         return criado;
     }
 

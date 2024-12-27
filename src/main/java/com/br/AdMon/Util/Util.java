@@ -57,10 +57,6 @@ public class Util {
 
         total = totalGanhos.subtract(totalContas);
 
-        if(total.compareTo(totalGanhos) == 0){
-            total = BigDecimal.ZERO;
-        }
-
         return total;
     }
 

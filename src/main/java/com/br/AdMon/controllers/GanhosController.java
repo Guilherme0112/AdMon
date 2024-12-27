@@ -59,7 +59,7 @@ public class GanhosController {
 
             ganho.setUserEmail(session.getEmail());
             ganhorepositorio.save(ganho);
-            mv.setViewName("redirect:/ganhos/lista");            
+            mv.setViewName("redirect:/dashboard");            
         }
 
         return mv;
@@ -83,7 +83,7 @@ public class GanhosController {
             mv.setViewName("ganhos/editar-ganho");
             mv.addObject("ganhos", ganhos);
         } else {
-            mv.setViewName("redirect:/ganhos/lista");
+            mv.setViewName("redirect:/dashboard");
         }
         
 
@@ -111,7 +111,7 @@ public class GanhosController {
 
         ganho.setUserEmail(session.getEmail());
         ganhorepositorio.save(ganho);
-        mv.setViewName("redirect:/ganhos/lista");
+        mv.setViewName("redirect:/dashboard");
 
         return mv;
     }
@@ -124,6 +124,6 @@ public class GanhosController {
         }
 
         ganhorepositorio.deleteById(id);
-        return "redirect:/ganhos/lista";
+        return "redirect:/dashboard";
     }
 }
