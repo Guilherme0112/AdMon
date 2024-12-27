@@ -19,35 +19,36 @@
     <div th:replace="components/component :: nav"></div>
 
     <main>
-        <section style="width: 100%; display: flex; justify-content: space-around; flex-wrap: wrap;">
+        <section  class="box-info">
+            <div class="box">
+                <form action="/nome/editar" method="post">
+                    <h1>Trocar de nome</h1>
+                    <input type="text" name="nome" placeholder="Novo nome">
+                    <input type="password" name="senha" placeholder="Senha">
 
-            <!-- Primeira parte -->
-            <div class="box-config" style="background-color: transparent; align-items: center;">
-                 <h1 class="title-text-perfil">Olá, <span th:text="${session.session.getNome()}"></span>!</h1>
+                    <p th:if="${msgNameError}" th:text="${msgNameError}" class="errors" style="width: 100%; text-align: start;"></p>
+
+                     <button>Trocar de nome</button>
+                </form>
             </div>
-
-            <div class="box-config">
-                <form action="/perfil/editar" method="post" id="formSenha">
+            <div class="box">
+                <form action="/senha/editar" method="post" id="formSenha">
                     <h1>Alterar a senha</h1>
+
                     <input type="password" name="senhaAntiga" placeholder="Digite sua antiga senha">
                     <input type="password" id="senhaNova" name="senhaNova" placeholder="Digite sua nova senha">
                     <input type="password" id="repeteSenha" placeholder="Repita a nova senha">   
                     <a th:href="@{/forgot-password}" style="color: #0b8a26; text-align: start; width: 100%;" id="dataNowMonth">Esqueceu a senha?</a>                 
-                    <p th:text="${msgError}" class="errors"></p>
-                    <p class="errors" id="err" style="    width: 100%; text-align: center;"></p>
+                    
+                    <!-- Mensagens de erros/sucesso -->
+                    <p th:if="${msgError}" th:text="${msgError}" class="errors" style="width: 100%; text-align: start;"></p>
+                    <p th:if="${msgSucess}" th:text="${msgSucess}" class="errors" style=" width: 100% ;color: #0b8a26; text-align: start;"></p>
+                    <p class="errors" id="err" style="width: 100%; text-align: start;"></p>
+
                     <button id="submit">Alterar Senha</button>
                 </form>
             </div>
-        </section>
-        <section style="width: 100%; height: auto; display: flex; justify-content: space-around; flex-wrap: wrap;">
-            <div class="box-del">
-                <form action="" method="post">
-                    <h1>Trocar de nome</h1>
-                    <input type="text" name="nome" placeholder="Novo nome">
-                    <button>Trocar de nome</button>
-                </form>
-            </div>
-            <div class="box-del">
+            <div class="box">
                 <h1>Deletar Conta</h1>
                 <button id="del">Deletar Conta</button>
             </div>

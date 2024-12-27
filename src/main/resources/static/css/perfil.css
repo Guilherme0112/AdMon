@@ -1,32 +1,21 @@
-.box-config{
-    width: 400px;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
+.box{
+    width: 100%;
+}
+.box input{
+    width: 100%;
+}
+form{
 
+    width: 100% !important;
+}
+.box-info{
+    max-width: 700px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
-}
-.title-text-perfil{
-    color: white;
-    font-size: 50px;
-    margin-top: 30px;
-}
-.box-del{
-    background-color: #b8fadd;
-    width: 400px;
-    height: 150px;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap; 
+    background-color: #b8fadd;
 }
 #del{
-    background-color: #db0000;
+    margin: 10px 0 0 0;
+    background-color: #b82121;
 }

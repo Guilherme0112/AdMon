@@ -33,6 +33,11 @@ public interface UsuarioDao extends JpaRepository<Usuarios, BigInteger>{
     @Query("UPDATE Usuarios u SET u.ativo = :ativo WHERE u.email = :email AND u.ativo = false")
     void updateAtivo(@Param("email") String email, 
                     @Param("ativo") Boolean ativo);
+    @Modifying
+    @Transactional
+    @Query("UPDATE Usuarios u SET u.nome = :nome WHERE u.email = :email AND u.ativo = true")
+    void updateName(@Param("email") String email, 
+                    @Param("nome") String nome);
 
     @Modifying
     @Transactional

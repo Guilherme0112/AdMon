@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
+import com.br.AdMon.dao.UsuarioDao;
+import com.br.AdMon.exceptions.ChangeNameException;
+import com.br.AdMon.exceptions.ChangePasswordException;
 import com.br.AdMon.models.Usuarios;
 import com.br.AdMon.service.ServiceAuth;
 import com.br.AdMon.service.ServiceUsuario;
@@ -24,6 +27,9 @@ public class PerfilController {
 
     @Autowired
     private ServiceUsuario usuarioService;
+
+    @Autowired
+    private UsuarioDao usuarioRepository;
 
     @Autowired
     private ServiceAuth authService;
@@ -39,12 +45,57 @@ public class PerfilController {
             return mv;
         }
 
+        Usuarios session = (Usuarios) http.getAttribute("session");
+        Usuarios user = usuarioRepository.findByEmail(session.getEmail());
+
+        mv.addObject("nome", user.getNome());
         mv.setViewName("perfil/perfil");
+
         return mv;
     }
 
-    @PostMapping("/perfil/editar")
-    public ModelAndView PerfilSenhaPost(@RequestParam String senhaAntiga, @RequestParam String senhaNova, HttpSession http) throws  Exception{
+    @PostMapping("/senha/editar")
+    public ModelAndView PerfilSenhaPost(@RequestParam String senhaAntiga, @RequestParam String senhaNova, HttpSession http) throws ChangePasswordException, Exception{
+
+        ModelAndView mv = new ModelAndView();
+
+        if(!Util.isAuth(http)){
+
+            mv.setViewName("redirect:/auth/login");
+            return mv;
+        }
+
+        try{
+
+            // Busca o usuario da sessão
+            Usuarios session = (Usuarios) http.getAttribute("session");
+            Usuarios user = usuarioRepository.findByEmail(session.getEmail());
+
+            // Verifica se a senha corresponde a do banco
+            if(!Util.verificaSenha(senhaAntiga, user.getSenha())){
+                throw new ChangePasswordException("A senha está incorreta");
+            }
+            
+            // Altera a senha no banco de dados
+            usuarioService.alterarSenha(session.getEmail(), senhaNova);
+            mv.addObject("msgSucess", "A senha foi trocada com sucesso");
+            mv.setViewName("perfil/perfil");
+            
+        } catch (ChangePasswordException err){
+
+            mv.addObject("msgError", err.getMessage());
+            mv.setViewName("perfil/perfil");
+
+        } catch (Exception err){
+
+            System.out.println(err.getMessage());
+        }
+
+        return mv;
+    }
+
+    @PostMapping("/nome/editar")
+    public ModelAndView TrocarNome(@RequestParam String nome, @RequestParam String senha, HttpSession http) throws ChangeNameException{
 
         ModelAndView mv = new ModelAndView();
 
@@ -57,27 +108,15 @@ public class PerfilController {
         try{
 
             Usuarios session = (Usuarios) http.getAttribute("session");
-            Usuarios usuario = usuarioService.loginUsuario(session.getEmail(), senhaAntiga);
+            usuarioService.alterarNome(nome, session.getEmail(), senha);
+            mv.setViewName("redirect:/perfil/editar");
 
-            if(usuario == null){
+        } catch (ChangeNameException e) {
 
-                mv.addObject("msgError", "Erro ao atualizar senha. Tente novamente mais tarde");
-                mv.setViewName("perfil/perfil");
-            }
-
-            if(!Util.verificaSenha(senhaNova, senhaAntiga)){
-                throw new Exception("A senha está incorreta");
-            }
-            
-            usuarioService.alterarSenha(session.getEmail(), senhaNova);
-            mv.setViewName("redirect:/dashboard");
-            
-        } catch (Exception err){
-
-            mv.addObject("msgError", err.getMessage());
+            mv.addObject("msgNameError", e.getMessage());
             mv.setViewName("perfil/perfil");
         }
-
+        
         return mv;
     }
 
@@ -96,7 +135,7 @@ public class PerfilController {
             try {
 
                 Usuarios session = (Usuarios) http.getAttribute("session");
-                usuarioService.DeletarUsuario(session.getEmail());
+                usuarioService.deletarUsuario(session.getEmail());
                 authService.Logout(http);
 
             } catch (Exception e) {

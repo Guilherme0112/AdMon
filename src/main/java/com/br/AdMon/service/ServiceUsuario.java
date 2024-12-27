@@ -8,6 +8,7 @@ import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
 import com.br.AdMon.dao.GanhoDao;
 import com.br.AdMon.dao.UsuarioDao;
+import com.br.AdMon.exceptions.ChangeNameException;
 import com.br.AdMon.exceptions.ChangePasswordException;
 import com.br.AdMon.exceptions.EmailExistsException;
 import com.br.AdMon.exceptions.VerifyAuthException;
@@ -92,7 +93,7 @@ public class ServiceUsuario {
         }
     }
 
-    public void DeletarUsuario(String email) throws Exception{
+    public void deletarUsuario(String email) throws Exception{
 
         try{
             // Deletar dados do usuário
@@ -109,6 +110,31 @@ public class ServiceUsuario {
         } catch (Exception e){
 
             throw new Exception("Erro: ", e);
+        }
+    }
+
+    public void alterarNome(String nome, String email, String senha) throws ChangeNameException{
+        
+        try{
+        
+            // Valida o nome
+            if(nome.length() < 2 || nome.length() > 55){
+                throw new ChangeNameException("O nome deve ter entre 2 e 55 caracteres");
+            }
+
+            Usuarios user = usuarioRepository.findByEmail(email);
+
+            // Verifica se a senha está correta
+            if(!Util.verificaSenha(senha, user.getSenha())){
+                throw new ChangeNameException("A senha está incorreta");
+            }
+
+            usuarioRepository.updateName(email, nome);
+
+        } catch (ChangeNameException e){
+            
+            throw new ChangeNameException(e.getMessage());
+
         }
     }
 }
