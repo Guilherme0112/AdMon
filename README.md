@@ -1,3 +1,7 @@
+<div> 
+    <img src="https://i.imgur.com/tBeKHsv.png">
+</div>
+
 # AdMon 
 
 <p>
@@ -19,4 +23,6 @@
 <p>Tenha o <a href="https://www.java.com/pt-BR/">Java</a> instalado.</p>
 <p>Tenha o <a href="https://www.oracle.com/br/java/technologies/downloads/">JDK</a> instalado.</p>
 <p>Importe o arquivo do banco de dados em <code>src/main/java/com/br/AdMon/database/admon.sql</code></p>
+<p>Renomeie o arquivo <code>.env_example</code> para <code>.env</code></p>
+<p>Insira as credenciais requeridas no arquivo <code>.env</code></p>
 <p>Inicie seu projeto e acesse <code>localhost:8080</code></p>
