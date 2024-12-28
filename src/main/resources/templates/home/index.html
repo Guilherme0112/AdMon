@@ -7,6 +7,7 @@
     <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="css/media-query/index.css">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
     <title>AdMon</title>
 </head>
 <body>
@@ -32,7 +33,7 @@
 
         </section>
 
-        <hr>
+        <hr style="border: transparent;">
 
         <!-- Segunda parte da página -->
         <section>
@@ -62,7 +63,7 @@
             </div>
         </section>
 
-        <hr>
+        <hr style="border: transparent;">
 
         <!-- Terceira parte da página -->
         <section style="width: 100%; border-radius: 10px; display: flex; flex-wrap: wrap; justify-content: space-around; padding: 10px; margin: 20px;">
@@ -75,7 +76,7 @@
             </div>
         </section>
 
-        <hr>
+        <hr style="border: transparent;">
 
         <!-- Quarta parte da página -->
         <section style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center;">
@@ -108,6 +109,11 @@
     <footer th:replace="components/component :: footer"></footer>
 
     <!-- Scripts -->
-    <script src="js/scripts.js"></script>
+    <script type="module">
+        import linkOfCalender from '/js/functions/linkOfCalender.js';
+        linkOfCalender();
+    </script>
+    
+    <script src="/js/scripts.js"></script>
 </body>
 </html>

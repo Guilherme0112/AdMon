@@ -37,11 +37,6 @@ fetchData("/dashboard_grafico_1")
             currency: 'BRL'
         });
 
-        //  Ajusta o link para a data atual
-        const linkMonthNow = document.getElementById("dataNowMonth");
-        const dateNow = new Date();
-        linkMonthNow.href = "/calendario/" + (dateNow.getMonth() + 1) + "/" + dateNow.getFullYear();
-
         // Desativa o load e exibe os dados após o carregamento
         document.getElementById("valor").innerHTML = numeroFormatado;
         document.getElementById('dado_1').style.display = "block";
