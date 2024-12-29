@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/register.css">
     <link rel="stylesheet" href="/css/add-conta.css">
     <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
@@ -51,6 +52,8 @@
             <div th:if="${erro_exception}" class="box-errors">
                 <p class="errors" style="text-align: start;" th:text="${erro_exception}"></p>
             </div>
+
+            <p style="color: #0b8a26;">Ao criar a conta, você aceita os <a th:href="@{/termos}" id="dataNowMonth" style="color: #0b8a26;">termos de uso</a> do site.</p>
 
             <button id="submit">Registrar</button>
         </form>

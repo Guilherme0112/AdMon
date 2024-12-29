@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/add-conta.css">
+    <title>Erro</title>
+    <style>
+        h1{
+            color: #06613b;
+            text-align: center;
+            width: 100%;
+            margin: 20px 0;
+            text-decoration: underline;
+        }
+        h3{
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .box-info{
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:replace="components/component :: header"></header>
+
+    <div th:replace="components/component :: nav"></div>
+
+    <main class="box-info">
+        
+    </main>
+
+    <!-- Scripts -->
+     <script src="../js/scripts.js"></script>
+</body>
+
+</html>

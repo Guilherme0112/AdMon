@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt_BR" xmlns:th="https://www.thymelaef.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/add-conta.css">
+    <title>Termos de Uso</title>
+    <style>
+        h1{
+            color: #06613b;
+            text-align: center;
+            width: 100%;
+            margin: 20px 0;
+            text-decoration: underline;
+        }
+        h3{
+            width: 100%;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .box-info{
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Componente header importado do diretório /components/component.html -->
+    <header th:replace="components/component :: header"></header>
+
+    <div th:replace="components/component :: nav"></div>
+
+    <main class="box-info">
+        <h1>Termos de Uso</h1>
+        <h3>Uso Responsável do Admon</h3>
+
+        <pre>
+            1.1. O Admon é destinado à organização financeira pessoal e não deve ser utilizado para finalidades ilegais ou
+            não autorizadas.
+
+            1.2. Você é responsável por garantir a segurança e a confidencialidade de suas informações de acesso. Não
+            compartilhe suas credenciais com terceiros.
+        </pre>
+
+        <h3>Relatório de Bugs e Problemas</h3>
+
+        <pre>
+            2.1. Caso identifique qualquer falha ou bug no sistema, pedimos que entre em contato pelo email teste@gmail.com.
+            Sua colaboração nos ajuda a melhorar continuamente nossos serviços.
+
+            2.2. Relatar falhas de forma transparente e detalhada é essencial para que possamos corrigir rapidamente os
+            problemas.
+        </pre>
+
+        <h3 id="privacidade">Privacidade e Proteção de Dados</h3>
+
+        <pre>
+            3.1. A proteção de seus dados pessoais é uma prioridade para o Admon. Adotamos medidas de segurança para
+            garantir a confidencialidade e a integridade das informações armazenadas em nosso sistema.
+
+            3.2. O vazamento de dados pessoais é considerado crime, de acordo com a legislação vigente. Qualquer tentativa
+            de acesso não autorizado ou uso indevido dos dados será investigada e poderá resultar em ações legais.
+        </pre>
+        <h3>Limitação de Responsabilidade</h3>
+
+        <pre>
+            4.1. O Admon não se responsabiliza por eventuais perdas financeiras decorrentes de erros no uso do sistema ou
+            por informações incorretas fornecidas pelos usuários.
+
+            4.2. Apesar de nossos esforços para manter o site seguro e funcional, não garantimos que o sistema estará livre
+            de erros ou interrupções a qualquer momento.
+        </pre>
+
+        <h3>Alterações nos Termos de Uso</h3>
+
+        <pre>
+            5.1. O Admon reserva-se o direito de modificar estes Termos de Uso a qualquer momento. Notificações sobre
+            mudanças serão enviadas aos usuários cadastrados.
+
+            5.2. O uso continuado do site após a publicação de alterações implica a aceitação dos novos termos.
+        </pre>
+
+        <h3>Contato</h3>
+
+        <pre>
+            Para dúvidas, sugestões ou relatos de problemas, entre em contato pelo email teste@gmail.com. Nossa equipe está
+            à disposição para ajudar.
+
+            Agradecemos por utilizar o Admon. Estamos comprometidos em oferecer a melhor experiência para a gestão de suas
+            finanças pessoais.
+        </pre>
+    </main>
+
+    <!-- Scripts -->
+     <script src="../js/scripts.js"></script>
+</body>
+
+</html>

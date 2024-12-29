@@ -43,4 +43,22 @@ public class HomeController {
 
         return mv;
     }
+
+    @GetMapping("/termos")
+    public ModelAndView TermosDeUso(){
+
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("others/termos_de_uso");
+        return mv;
+    }
+
+    @GetMapping("/erro")
+    public ModelAndView Fallback(){
+
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("others/fallback");
+        return mv;
+    }
 }
