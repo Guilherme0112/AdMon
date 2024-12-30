@@ -2,6 +2,7 @@ package com.br.AdMon.controllers;
 
 
 import java.math.BigInteger;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.GanhoDao;
+import com.br.AdMon.exceptions.SaveGanhoException;
 import com.br.AdMon.models.Ganhos;
 import com.br.AdMon.models.Usuarios;
 
@@ -24,7 +26,7 @@ import jakarta.validation.Valid;
 public class GanhosController {
 
     @Autowired
-    private GanhoDao ganhorepositorio;
+    private GanhoDao ganhoRepository;
 
     @GetMapping("/ganhos/criar")
     public ModelAndView InserirGanhos(Ganhos ganho, HttpSession http){
@@ -58,7 +60,7 @@ public class GanhosController {
             Usuarios session = (Usuarios) http.getAttribute("session");
 
             ganho.setUserEmail(session.getEmail());
-            ganhorepositorio.save(ganho);
+            ganhoRepository.save(ganho);
             mv.setViewName("redirect:/dashboard");            
         }
 
@@ -76,7 +78,7 @@ public class GanhosController {
         }
 
         Usuarios session = (Usuarios) http.getAttribute("session");
-        Ganhos ganhos = ganhorepositorio.findByEmailAndId(session.getEmail(), id);
+        Ganhos ganhos = ganhoRepository.findByEmailAndId(session.getEmail(), id);
 
         if (ganhos != null) {
 
@@ -92,7 +94,7 @@ public class GanhosController {
     }
 
     @PostMapping("/ganhos/editar")
-    public ModelAndView EditarGanhoPost(@Valid Ganhos ganho, BindingResult br, HttpSession http){
+    public ModelAndView EditarGanhoPost(@Valid Ganhos ganho, BindingResult br, HttpSession http) throws SaveGanhoException{
         
         ModelAndView mv = new ModelAndView();
         
@@ -100,7 +102,6 @@ public class GanhosController {
             mv.setViewName("redirect:/auth/login");
             return mv;
         }
-        Usuarios session = (Usuarios) http.getAttribute("session");
 
         if(br.hasErrors()){
 
@@ -109,9 +110,28 @@ public class GanhosController {
             return mv;
         } 
 
-        ganho.setUserEmail(session.getEmail());
-        ganhorepositorio.save(ganho);
-        mv.setViewName("redirect:/dashboard");
+        try {
+
+            Usuarios session = (Usuarios) http.getAttribute("session");
+            
+            Optional<Ganhos> ganhoUser = ganhoRepository.findById(ganho.getId());
+            Ganhos ganhoUserEdit = ganhoUser.get();
+
+            if(ganhoUserEdit.getUserEmail() != session.getEmail()){
+                throw new SaveGanhoException("Não foi possível editar este registro. Tente novamente mais tarde");
+            }
+
+            ganho.setUserEmail(session.getEmail());
+            ganhoRepository.save(ganho);
+
+            mv.setViewName("redirect:/dashboard");
+
+        } catch (SaveGanhoException e) {
+            
+            mv.addObject("erro_vali", e.getMessage());
+            mv.addObject("ganho", ganho);
+            mv.setViewName("ganhos/editar-ganho");
+        }
 
         return mv;
     }
@@ -123,7 +143,7 @@ public class GanhosController {
             return "redirect:/auth/login";
         }
 
-        ganhorepositorio.deleteById(id);
+        ganhoRepository.deleteById(id);
         return "redirect:/dashboard";
     }
 }

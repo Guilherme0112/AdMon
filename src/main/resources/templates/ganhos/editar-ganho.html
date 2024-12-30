@@ -42,7 +42,9 @@
                 <label for="checkJustForMonthNow" style="margin: 2px 0 0 5px;">Somente para este mês</label>
             </div>
 
-            
+            <div th:if="${erro_vali}">
+                <p class="errors" th:text="${erro_vali}"></p>
+            </div>
 
             <button>Enviar</button>
         </form>

@@ -17,7 +17,7 @@
     <main>
 
         <!-- Formulário -->
-        <form action="/editConta" method="post" th:object="${contas}">
+        <form action="/conta/editar" method="post" th:object="${contas}">
 
             <h1>Editar Conta</h1>
             <input type="hidden" th:field="*{id}">
@@ -40,17 +40,6 @@
             <input type="date" th:value="${vencimento}" name="vencimento">
             <div class="box-errors" th:if="${#fields.hasErrors('vencimento')}">
                 <p class="errors" th:errors="*{vencimento}"></p>
-            </div>
-
-            <!-- Checkbox para todos os meses -->
-            <div style="width: 100%; display: flex; justify-content: start;">
-                <input type="checkbox" id="checkJustForMonthNow" style="width: 15px; height: 15px;">
-                <label for="checkJustForMonthNow" style="margin: 2px 0 0 5px;">Escolher quantidade de meses</label>
-            </div>
-
-            <div style="display: none;" id="div-check">
-                <label for="amountMonths">Quantidade de meses:</label>
-                <input type="number" name="meses" id="amountMonths">
             </div>
 
             <button>Enviar</button>

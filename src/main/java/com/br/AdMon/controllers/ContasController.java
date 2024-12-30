@@ -3,6 +3,7 @@ package com.br.AdMon.controllers;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.br.AdMon.Util.Util;
 import com.br.AdMon.dao.ContaDao;
+import com.br.AdMon.dao.UsuarioDao;
 import com.br.AdMon.exceptions.SaveContaException;
 import com.br.AdMon.models.Contas;
 import com.br.AdMon.models.Usuarios;
@@ -32,6 +34,9 @@ public class ContasController {
 
     @Autowired
     private ServiceContas serviceConta;
+
+    @Autowired
+    private UsuarioDao usuarioRepository;
 
     // Adicionar Contas
     @GetMapping("/contas/criar")
@@ -124,8 +129,8 @@ public class ContasController {
         return mv;
     }
 
-    @PostMapping("editConta")
-    public ModelAndView Editar(@Valid Contas conta, BindingResult br, HttpSession http){
+    @PostMapping("/conta/editar")
+    public ModelAndView Editar(@Valid Contas conta, BindingResult br, HttpSession http) throws SaveContaException, Exception{
 
         ModelAndView mv = new ModelAndView();
 
@@ -133,13 +138,37 @@ public class ContasController {
 
             mv.addObject("contas", conta);
             mv.setViewName("contas/editar-conta");
+            return mv;
             
-        } else { 
+        } 
 
+        try {
+
+            // Sessão
             Usuarios session = (Usuarios) http.getAttribute("session");
+            
+            Optional<Usuarios> contaUser = usuarioRepository.findById(conta.getId());
+            Usuarios contaUserEdit = contaUser.get();
+
+            // Verifica se a conta pertence ao usuario
+            if(contaUserEdit.getEmail() != session.getEmail()){
+                throw new SaveContaException("Não foi possível editar este registro. Tente novamente mais tarde");
+            }
+
             conta.setUserEmail(session.getEmail());
             contarepositorio.save(conta);
+
             mv.setViewName("redirect:/dashboard");
+
+        } catch (SaveContaException e) {
+
+            mv.addObject("contas", conta);
+            mv.setViewName("contas/editar-conta");
+            mv.addObject("erro_vali", e.getMessage());
+
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
         }
 
         return mv;
