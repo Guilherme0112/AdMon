@@ -53,12 +53,4 @@ public class HomeController {
         return mv;
     }
 
-    @GetMapping("/erro")
-    public ModelAndView Fallback(){
-
-        ModelAndView mv = new ModelAndView();
-
-        mv.setViewName("others/fallback");
-        return mv;
-    }
 }

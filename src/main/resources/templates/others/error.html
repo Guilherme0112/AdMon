@@ -13,16 +13,13 @@
             color: #06613b;
             text-align: center;
             width: 100%;
-            margin: 20px 0;
-            text-decoration: underline;
-        }
-        h3{
-            width: 100%;
-            margin: 20px 0;
-            text-align: center;
+            margin: 10px 0;
         }
         .box-info{
-            height: auto;
+            height: 150px;
+            flex-wrap: wrap;
+            text-align: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -35,7 +32,11 @@
     <div th:replace="components/component :: nav"></div>
 
     <main class="box-info">
-        
+        <div th:if="${error}">
+            <h1>Ocorreu um erro!</h1>
+            <p th:text="${error}"></p>
+            <p th:text="${status}"></p>
+        </div>
     </main>
 
     <!-- Scripts -->
