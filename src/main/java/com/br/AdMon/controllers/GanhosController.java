@@ -114,10 +114,13 @@ public class GanhosController {
 
             Usuarios session = (Usuarios) http.getAttribute("session");
             
-            Optional<Ganhos> ganhoUser = ganhoRepository.findById(ganho.getId());
-            Ganhos ganhoUserEdit = ganhoUser.get();
+            Ganhos ganhoEdit = ganhoRepository.findGanhoById(ganho.getId());
 
-            if(ganhoUserEdit.getUserEmail() != session.getEmail()){
+            if(ganhoEdit == null){
+                throw new SaveGanhoException("Ocorreu aalgum erro. Tente novamente mais tarde");
+            }
+
+            if(!ganhoEdit.getUserEmail().equals(session.getEmail())){
                 throw new SaveGanhoException("Não foi possível editar este registro. Tente novamente mais tarde");
             }
 

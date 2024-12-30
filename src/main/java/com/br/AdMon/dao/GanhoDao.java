@@ -8,11 +8,16 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.br.AdMon.models.Contas;
 import com.br.AdMon.models.Ganhos;
 
 import jakarta.transaction.Transactional;
 
 public interface GanhoDao extends JpaRepository<Ganhos, BigInteger>{
+
+    @Query("SELECT g FROM Ganhos g WHERE g.id = :id")
+    Ganhos findGanhoById(@Param("id") BigInteger id);
+
     @Query(value = "SELECT * FROM ganhos WHERE criado >= DATE_SUB(CURDATE(), INTERVAL 28 DAY)", nativeQuery = true)
     List<Ganhos> findGanhosLastMonth();
 

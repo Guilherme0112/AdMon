@@ -10,7 +10,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ModelAndView handleException(Exception exception) {
-        ModelAndView modelAndView = new ModelAndView("error"); // Nome do template HTML
+        ModelAndView modelAndView = new ModelAndView("others/error"); 
         modelAndView.addObject("message", exception.getMessage());
         modelAndView.addObject("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
         modelAndView.addObject("error", "Erro Interno do Servidor");

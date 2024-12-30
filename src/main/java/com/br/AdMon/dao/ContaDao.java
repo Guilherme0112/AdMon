@@ -16,6 +16,9 @@ import jakarta.transaction.Transactional;
 @Repository
 public interface ContaDao extends JpaRepository<Contas, BigInteger>{
 
+    @Query("SELECT c FROM Contas c WHERE c.id = :id")
+    Contas findContaById(@Param("id") BigInteger id);
+
     @Query(value = "SELECT * FROM contas WHERE criado >= DATE_SUB(CURDATE(), INTERVAL 28 DAY)", nativeQuery = true)
     List<Contas> findContasLastMonth();
 

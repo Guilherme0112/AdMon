@@ -3,7 +3,6 @@ package com.br.AdMon.controllers;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -129,32 +128,41 @@ public class ContasController {
         return mv;
     }
 
-    @PostMapping("/conta/editar")
+    @PostMapping("/contas/editar")
     public ModelAndView Editar(@Valid Contas conta, BindingResult br, HttpSession http) throws SaveContaException, Exception{
 
+        
         ModelAndView mv = new ModelAndView();
-
+        
         if(br.hasErrors()){
-
+            
             mv.addObject("contas", conta);
             mv.setViewName("contas/editar-conta");
             return mv;
             
         } 
-
+        
         try {
-
+            
+    
             // Sessão
             Usuarios session = (Usuarios) http.getAttribute("session");
             
-            Optional<Usuarios> contaUser = usuarioRepository.findById(conta.getId());
-            Usuarios contaUserEdit = contaUser.get();
+            Contas contaUser = contarepositorio.findContaById(conta.getId());
+
+            // Verifica se o registro existe
+            if(contaUser == null){
+                throw new SaveContaException("Ocorreu algum erro. Tente novamente mais tarde");
+            }
+            
+            System.out.println(contaUser.getUserEmail() + " | " + session.getEmail());
 
             // Verifica se a conta pertence ao usuario
-            if(contaUserEdit.getEmail() != session.getEmail()){
+            if(!contaUser.getUserEmail().equals(session.getEmail())){
                 throw new SaveContaException("Não foi possível editar este registro. Tente novamente mais tarde");
             }
 
+            
             conta.setUserEmail(session.getEmail());
             contarepositorio.save(conta);
 
@@ -167,8 +175,8 @@ public class ContasController {
             mv.addObject("erro_vali", e.getMessage());
 
         } catch (Exception e) {
-
-            System.out.println(e.getMessage());
+            
+            System.out.println("Exception: " + e.getMessage());
         }
 
         return mv;
